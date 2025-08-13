@@ -1,132 +1,217 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Launch Kit — Your Business Name</title>
-  <meta name="description" content="Simple, modern starter page for your business.">
-  <style>
-    :root{
-      --bg:#0f172a;       /* slate-900 */
-      --fg:#e2e8f0;       /* slate-200 */
-      --muted:#94a3b8;    /* slate-400 */
-      --card:#0b1226;     /* slightly lighter than bg */
-      --brand:#6366f1;    /* indigo-500 */
-      --brand-2:#22d3ee;  /* cyan-400 */
-      --border:rgba(255,255,255,.08);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; background:
-        radial-gradient(1200px 1200px at 80% -10%, rgba(34,211,238,.12), transparent 40%),
-        radial-gradient(1000px 1000px at 0% 0%, rgba(99,102,241,.15), transparent 35%),
-        var(--bg);
-      color:var(--fg); font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
-    }
-    a{text-decoration:none; color:inherit}
-    .wrap{max-width:1080px; margin:0 auto; padding:0 20px}
-    header{position:sticky; top:0; backdrop-filter: blur(8px); background:linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.6)); border-bottom:1px solid var(--border)}
-    .nav{display:flex; align-items:center; justify-content:space-between; height:64px}
-    .brand{font-weight:700; letter-spacing:.2px}
-    .nav a{padding:8px 10px; color:var(--fg); opacity:.9}
-    .nav a:hover{opacity:1}
-    .hero{padding:64px 0 32px}
-    .eyebrow{color:var(--muted); font-size:12px; letter-spacing:.18em; text-transform:uppercase}
-    h1{font-size: clamp(28px, 4vw, 44px); line-height:1.15; margin:12px 0 12px}
-    .sub{color:var(--muted); max-width:720px}
-    .cta-row{display:flex; gap:12px; margin-top:20px; flex-wrap:wrap}
-    .btn{display:inline-block; padding:12px 18px; border-radius:999px; border:1px solid var(--border); background:linear-gradient(90deg, var(--brand), var(--brand-2)); color:#0b1020; font-weight:700}
-    .btn.secondary{background:transparent; color:var(--fg)}
-    .grid{display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin:36px 0}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--border); border-radius:14px; padding:18px}
-    .card h3{margin:0 0 6px; font-size:18px}
-    .section{margin:28px 0}
-    footer{border-top:1px solid var(--border); margin-top:32px}
-    .foot{height:64px; display:flex; align-items:center; color:var(--muted)}
-    /* prompts section */
-    #prompts .sub{margin-top:4px}
-    #prompts textarea{
-      width:100%; height:180px; margin-top:10px;
-      background:#0b1226; color:#e2e8f0; border:1px solid var(--border);
-      border-radius:10px; padding:12px;
-      font-family:ui-monospace, SFMono-Regular, Menlo, monospace; line-height:1.4
-    }
-    #prompts .copy-row{display:flex; justify-content:space-between; align-items:center; gap:12px}
-    .copy-btn{
-      padding:8px 12px; border-radius:10px; border:1px solid var(--border);
-      background:linear-gradient(90deg, var(--brand), var(--brand-2)); color:#0b1020; font-weight:700; cursor:pointer
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>StartSimpleAI — Launch Kit Generator</title>
+<meta name="description" content="Generate a clean Launch Kit JSON for any small business niche.">
+<style>
+  :root{
+    --bg:#0f172a;       /* slate-900 */
+    --fg:#e2e8f0;       /* slate-200 */
+    --muted:#94a3b8;    /* slate-400 */
+    --card:#0b1226;     /* slightly lighter than bg */
+    --brand:#6366f1;    /* indigo-500 */
+    --brand-2:#22d3ee;  /* cyan-400 */
+    --border:rgba(255,255,255,.08);
+    --ok:#22c55e;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:
+      radial-gradient(1200px 1200px at 80% -10%, rgba(34,211,238,.12), transparent 40%),
+      radial-gradient(1000px 1000px at 0% 0%, rgba(99,102,241,.15), transparent 35%),
+      var(--bg);
+    color:var(--fg); font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+  }
+  a{text-decoration:none; color:inherit}
+  .wrap{max-width:1100px; margin:0 auto; padding:24px}
+  header{position:sticky; top:0; backdrop-filter: blur(8px); background:linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.6)); border-bottom:1px solid var(--border)}
+  .nav{display:flex; align-items:center; justify-content:space-between; height:64px}
+  .brand{font-weight:700; letter-spacing:.2px}
+  .nav a{padding:8px 10px; color:var(--fg); opacity:.9}
+  .nav a:hover{opacity:1}
+  .grid{display:grid; gap:16px; grid-template-columns: 1.1fr .9fr}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--border); border-radius:14px; padding:18px}
+  h1{font-size: clamp(26px, 3.8vw, 40px); line-height:1.15; margin:16px 0 10px}
+  .eyebrow{color:var(--muted); font-size:12px; letter-spacing:.18em; text-transform:uppercase}
+  label{display:block; font-size:14px; color:var(--muted); margin:12px 0 6px}
+  input, textarea{
+    width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border);
+    background:#0b1226; color:var(--fg); outline:none;
+  }
+  textarea{min-height:100px; resize:vertical}
+  .row{display:grid; gap:12px; grid-template-columns: 1fr 1fr}
+  .btn{
+    display:inline-block; padding:10px 14px; border-radius:999px; border:1px solid var(--border);
+    background:linear-gradient(90deg, var(--brand), var(--brand-2)); color:#0b1020; font-weight:700; cursor:pointer
+  }
+  .btn.ghost{background:transparent; color:var(--fg)}
+  .btnbar{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+  .small{font-size:12px; color:var(--muted)}
+  pre, .output{
+    white-space:pre-wrap; word-break:break-word; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    background:#0b1226; color:var(--fg); border:1px solid var(--border); border-radius:10px; padding:12px; min-height:220px
+  }
+  .ok{color:var(--ok)}
+  .tabs{display:flex; gap:8px; margin:8px 0 12px}
+  .tab{
+    padding:8px 10px; border-radius:10px; border:1px solid var(--border);
+    background:transparent; color:var(--fg); cursor:pointer; opacity:.85
+  }
+  .tab.active{background:linear-gradient(90deg, var(--brand), var(--brand-2)); color:#0b1020; font-weight:700; opacity:1}
+  .hidden{display:none}
+  .notice{border-left:3px solid var(--brand); padding-left:10px; margin:8px 0; color:var(--muted)}
+</style>
 </head>
 <body>
   <header>
     <div class="wrap nav">
-      <div class="brand">Launch Kit</div>
+      <div class="brand">StartSimpleAI — Launch Kit Generator</div>
       <nav>
-        <a href="/">Home</a>
-        <a href="/services.html">Services</a>
-        <a href="/about.html">About</a>
-        <a href="/contact.html">Contact</a>
+        <a href="#builder">Builder</a>
         <a href="#prompts">Prompts</a>
+        <a href="#output">Output</a>
       </nav>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="hero">
-      <div class="eyebrow">Built to convert</div>
-      <h1>Your clean, modern homepage that actually looks good</h1>
-      <p class="sub">Short, plain‑English promise of value. Say what you do, who it’s for, and the outcome in one sentence. Keep it real and simple.</p>
-      <div class="cta-row">
-        <a class="btn" href="/contact.html">Get a Free Quote</a>
-        <a class="btn secondary" href="/services.html">See Services</a>
-      </div>
-    </section>
+    <div class="eyebrow">Launch Kits</div>
+    <h1>Generate clean, compliant JSON for any small business</h1>
+    <p class="notice">Tip: Don’t paste backticks (```); use this page’s buttons to copy JSON cleanly.</p>
 
-    <section class="grid">
-      <div class="card">
-        <h3>Clear Value</h3>
-        <p>Explain the benefit in 1–2 lines. No fluff, just why it helps the visitor.</p>
-      </div>
-      <div class="card">
-        <h3>Proof</h3>
-        <p>Back it up with experience, reviews, partners, or results.</p>
-      </div>
-      <div class="card">
-        <h3>Action</h3>
-        <p>Make the next step obvious: call, book, or message.</p>
-      </div>
-    </section>
-
-    <section class="section card">
-      <h3 style="margin-top:0">Simple Pitch</h3>
-      <p>1 short paragraph that sums up your service and why people choose you over alternatives.</p>
-    </section>
-
-    <!-- Prompts Section -->
-    <section id="prompts" class="section card">
-      <h2 style="margin-top:0">Launch Kit Prompts</h2>
-      <p class="sub">Copy these into StartSimpleAI to generate a Launch Kit JSON.</p>
-
-      <!-- System Prompt -->
-      <div class="prompt-block" style="margin:18px 0">
-        <div class="copy-row">
-          <h3 style="margin:0">System Prompt</h3>
-          <button class="copy-btn" data-target="#systemPrompt">Copy</button>
+    <div class="grid" id="builder">
+      <!-- LEFT: FORM -->
+      <section class="card">
+        <h3 style="margin:0 0 8px">Inputs</h3>
+        <div class="row">
+          <div>
+            <label>Business Name</label>
+            <input id="businessName" placeholder="Prime Cut Landscaping" />
+          </div>
+          <div>
+            <label>Industry</label>
+            <input id="industry" placeholder="Landscaping / Lawn Care" />
+          </div>
         </div>
-        <textarea id="systemPrompt" readonly>
+
+        <div class="row">
+          <div>
+            <label>City</label>
+            <input id="locationCity" placeholder="Baltimore" />
+          </div>
+          <div>
+            <label>State</label>
+            <input id="locationState" placeholder="MD" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Owner Background (optional)</label>
+            <input id="ownerBackground" placeholder="Minority veteran-owned" />
+          </div>
+          <div>
+            <label>Years Experience (optional)</label>
+            <input id="yearsExperience" type="number" min="0" placeholder="15" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Selling Points (comma-separated)</label>
+            <input id="sellingPoints" placeholder="licensed & insured, eco-friendly, reliable scheduling" />
+          </div>
+          <div>
+            <label>Tone (optional)</label>
+            <input id="tone" placeholder="Friendly, professional, plain-English" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Phone (optional)</label>
+            <input id="phone" placeholder="" />
+          </div>
+          <div>
+            <label>Email (optional)</label>
+            <input id="email" placeholder="" />
+          </div>
+        </div>
+
+        <div>
+          <label>Address (optional)</label>
+          <input id="address" placeholder="Baltimore, MD" />
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Services Offered (comma-separated)</label>
+            <input id="servicesOffered" placeholder="Lawn Mowing & Maintenance, Landscape Design & Installation" />
+          </div>
+          <div>
+            <label>Competitor Angle (optional)</label>
+            <input id="competitorAngle" placeholder="Reliable, veteran-owned, eco-friendly" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Audience (optional)</label>
+            <input id="audience" placeholder="Homeowners" />
+          </div>
+          <div>
+            <label>Website Goals (comma-separated)</label>
+            <input id="websiteGoals" placeholder="book calls, collect leads, show portfolio" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Brand Color Hint (optional)</label>
+            <input id="brandColorHint" placeholder="deep green + warm accents" />
+          </div>
+          <div>
+            <label>Font Hint (optional)</label>
+            <input id="fontHint" placeholder="rounded sans for headlines" />
+          </div>
+        </div>
+
+        <div>
+          <label>Compliance Notes (optional)</label>
+          <input id="complianceNotes" placeholder="no guarantees; fair-housing compliant" />
+        </div>
+
+        <div class="btnbar">
+          <button class="btn" id="generateBtn">Generate JSON</button>
+          <button class="btn ghost" id="clearBtn">Clear</button>
+        </div>
+        <p class="small">We’ll fill safe defaults if something’s missing (no fake licenses or made-up contact info).</p>
+      </section>
+
+      <!-- RIGHT: PROMPTS -->
+      <section class="card" id="prompts">
+        <h3 style="margin:0 0 8px">Prompts</h3>
+        <div class="tabs">
+          <button class="tab active" data-tab="system">System</button>
+          <button class="tab" data-tab="user">User</button>
+        </div>
+
+        <div id="systemTab">
+          <p class="small">Copy → paste as the system message.</p>
+          <textarea id="systemPrompt" readonly>
 You are StartSimpleAI, an expert small-business brand strategist. Your only job is to generate a complete “Launch Kit” for any niche (minority-owned, trades, small business, real estate, services, e-commerce). Return only the specified JSON. Never add commentary, tips, Markdown, or extra keys. When inputs are missing, make reasonable, safe assumptions and still return valid JSON. Optimize for clarity, brevity, conversion, and plain English. Avoid jargon. All strings are single-line (no newlines). Tone is confident, friendly, professional. Guardrails: If missing→yearsExperience:5; ownerBackground:omit; contact:empty strings; services:4–6 typical; location:"". Compliance: don’t invent licensure/credentials; real estate uses Fair Housing-safe language; no guarantees. Formatting: no nulls; arrays present; exactly two homepage sections. Length caps: heroH1 ≤80; subhead ≤160; paragraphs ≤240; ad ≤60; SEO title ≤60; SEO desc ≤155. Branding: accessible color combos; neutral palette + 1–2 accents, guided by brandColorHint/industry. Local SEO: include city+state if provided. Safety: never invent PII.
-        </textarea>
-      </div>
-
-      <!-- User Input Template -->
-      <div class="prompt-block" style="margin:18px 0">
-        <div class="copy-row">
-          <h3 style="margin:0">User Input Template</h3>
-          <button class="copy-btn" data-target="#userTemplate">Copy</button>
+          </textarea>
+          <div class="btnbar">
+            <button class="btn" data-copy="#systemPrompt">Copy System Prompt</button>
+          </div>
         </div>
-        <textarea id="userTemplate" readonly style="height:260px">
+
+        <div id="userTab" class="hidden">
+          <p class="small">Copy → paste as the user message template.</p>
+          <textarea id="userTemplate" readonly>
 Return only valid JSON for a small-business Launch Kit. No commentary.
 
 INPUT:
@@ -160,29 +245,174 @@ OUTPUT (exact shape):
   "ads":["Ad headline 1","Ad headline 2","Ad headline 3","Ad headline 4"],
   "seo":{"title":"","description":"","keywords":"keyword1, keyword2, keyword3"}
 }
-        </textarea>
+          </textarea>
+          <div class="btnbar">
+            <button class="btn" data-copy="#userTemplate">Copy User Template</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- OUTPUT -->
+    <section class="card" id="output" style="margin-top:16px">
+      <h3 style="margin:0 0 8px">Launch Kit JSON</h3>
+      <div class="btnbar">
+        <button class="btn" id="copyJson">Copy JSON</button>
+        <button class="btn ghost" id="downloadJson">Download JSON</button>
       </div>
+      <div class="output" id="jsonOut">{ /* Click “Generate JSON” to see your output here */ }</div>
+      <p class="small">If you saw page code earlier, it was likely pasted with backticks or served as text. Use this file as plain HTML.</p>
     </section>
   </main>
 
-  <footer>
-    <div class="wrap foot">© 2025 Your Business</div>
-  </footer>
+<script>
+/* Tabs */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    const tab = t.dataset.tab;
+    document.getElementById('systemTab').classList.toggle('hidden', tab!=='system');
+    document.getElementById('userTab').classList.toggle('hidden', tab!=='user');
+  });
+});
 
-  <script>
-    document.querySelectorAll('.copy-btn').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const target = document.querySelector(btn.getAttribute('data-target'));
-        target.select(); target.setSelectionRange(0, 99999);
-        navigator.clipboard.writeText(target.value).then(()=>{
-          const prev = btn.textContent;
-          btn.textContent = 'Copied!';
-          setTimeout(()=>btn.textContent = prev, 1200);
-        });
-      });
-    });
-  </script>
+/* Copy helpers */
+function copySel(sel){
+  const el = document.querySelector(sel);
+  const txt = el.value || el.textContent;
+  navigator.clipboard.writeText(txt).then(()=>alert('Copied!'));
+}
+document.querySelectorAll('[data-copy]').forEach(btn=>{
+  btn.addEventListener('click', ()=>copySel(btn.getAttribute('data-copy')));
+});
+
+/* Inputs -> JSON generator */
+const byId = id => document.getElementById(id);
+function toList(val){
+  if(!val) return [];
+  return val.split(',').map(s=>s.trim()).filter(Boolean);
+}
+function safeStr(v){ return (v ?? '').toString(); }
+function hex(x){ return /^#([0-9a-fA-F]{6})$/.test(x) ? x : x; } // placeholder (colors are assigned later)
+
+function defaultServices(industry){
+  // minimal generic defaults if none provided
+  const map = {
+    'landscaping / lawn care': ['Lawn Mowing & Maintenance','Landscape Design & Installation','Mulching','Seasonal Cleanups'],
+    'residential electrician': ['Troubleshooting','Panel Upgrades','EV Charger Installs','Lighting Design','Emergency Service'],
+    'residential real estate': ['Buyer Representation','Seller Listing Services','Home Valuation','Open House Management','Offer Strategy']
+  };
+  const key = (industry||'').toLowerCase();
+  return map[key] || ['Consultation','Core Service','Premium Service','Seasonal/On-Demand'];
+}
+
+function paletteFromHint(hint){
+  const h = (hint||'').toLowerCase();
+  if(h.includes('green')) return {primary:'#2E7D32',secondary:'#8BC34A',accent:'#FFC107',neutralDark:'#1F2937',neutralLight:'#F5F5F5'};
+  if(h.includes('navy')||h.includes('gold')) return {primary:'#0F172A',secondary:'#1E293B',accent:'#D4AF37',neutralDark:'#111827',neutralLight:'#F3F4F6'};
+  if(h.includes('blue')||h.includes('orange')) return {primary:'#1E3A8A',secondary:'#2563EB',accent:'#F59E0B',neutralDark:'#0B1226',neutralLight:'#F3F4F6'};
+  return {primary:'#6366F1',secondary:'#22D3EE',accent:'#F59E0B',neutralDark:'#0B1226',neutralLight:'#F5F5F5'};
+}
+
+function buildJson(){
+  const businessName = safeStr(byId('businessName').value);
+  const industry = safeStr(byId('industry').value);
+  const locationCity = safeStr(byId('locationCity').value);
+  const locationState = safeStr(byId('locationState').value);
+  const ownerBackground = safeStr(byId('ownerBackground').value);
+  const yearsExperience = byId('yearsExperience').value ? Number(byId('yearsExperience').value) : 5;
+  const sellingPoints = toList(byId('sellingPoints').value);
+  const tone = safeStr(byId('tone').value);
+  const phone = safeStr(byId('phone').value);
+  const email = safeStr(byId('email').value);
+  const address = safeStr(byId('address').value);
+  const servicesOffered = toList(byId('servicesOffered').value);
+  const competitorAngle = safeStr(byId('competitorAngle').value);
+  const audience = safeStr(byId('audience').value);
+  const websiteGoals = toList(byId('websiteGoals').value);
+  const brandColorHint = safeStr(byId('brandColorHint').value);
+  const fontHint = safeStr(byId('fontHint').value);
+  const complianceNotes = safeStr(byId('complianceNotes').value);
+
+  const services = (servicesOffered.length? servicesOffered : defaultServices(industry)).slice(0,6).map(name=>({
+    name,
+    desc: `Professional ${name.toLowerCase()} to help you get results without hassle.`,
+    cta: 'Book Now'
+  }));
+
+  const colors = paletteFromHint(brandColorHint);
+
+  const cityState = (locationCity && locationState) ? `${locationCity}, ${locationState}` : '';
+  const titleBits = [businessName||'Your Business', industry||'Services', cityState].filter(Boolean).join(' | ');
+  const descBits = [
+    businessName||'Your business', 'offers', (industry||'services').toLowerCase(), cityState ? `in ${cityState}` : '',
+    yearsExperience ? `${yearsExperience}+ years experience.` : ''
+  ].filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
+
+  const kit = {
+    homepage:{
+      heroH1: businessName ? `${businessName} — ${industry||'Services'}` : 'Trusted Local Experts',
+      subhead: sellingPoints.length ? sellingPoints.slice(0,3).join(' • ') : 'Professional, reliable, and friendly service.',
+      ctaPrimary: 'Get Started',
+      sections:[
+        { heading:'What You Get', paragraph:'Clear pricing, great communication, and dependable results. We handle the work so you can focus on what matters.' },
+        { heading:'Why Choose Us', paragraph: ownerBackground ? `${ownerBackground}. ${yearsExperience}+ years of experience serving our community.` : `${yearsExperience}+ years of experience serving our community.` }
+      ]
+    },
+    about:{ headline:'Built on Service, Focused on Results', body:`${businessName||'Our team'} provides ${industry||'professional services'} with a focus on quality, transparency, and care. We believe in honest work, clear communication, and steady improvement.` },
+    services,
+    contact:{ headline:'Get in Touch', paragraph:'Request a free, no-obligation quote.', phone: phone||'', email: email||'', address: address||'', cta:'Request a Quote' },
+    brand:{ colors, fonts:{ heading:'Montserrat, sans-serif', body:'Open Sans, sans-serif' } },
+    social:[
+      'Before/After post highlighting a recent project.',
+      'Customer testimonial with a short quote.',
+      'Quick tip relevant to your industry that saves time or money.',
+      'Short timelapse or behind-the-scenes clip.',
+      'Weekly availability or booking reminder.'
+    ],
+    ads:[
+      `${industry||'Local Services'} in ${cityState||'Your Area'}`,
+      `Fast, Friendly ${industry||'Service'} — Free Quote`,
+      `${yearsExperience}+ Years of Trusted Work`,
+      `${businessName||'Top-Rated Team'} — Book Today`
+    ],
+    seo:{
+      title: titleBits.slice(0,60),
+      description: descBits.slice(0,155),
+      keywords: [industry||'services', locationCity, locationState].filter(Boolean).join(', ') || 'local services'
+    }
+  };
+
+  return kit;
+}
+
+/* Render JSON and actions */
+const out = document.getElementById('jsonOut');
+document.getElementById('generateBtn').addEventListener('click', ()=>{
+  const json = buildJson();
+  out.textContent = JSON.stringify(json, null, 2);
+  out.classList.add('ok');
+  location.hash = '#output';
+});
+document.getElementById('clearBtn').addEventListener('click', ()=>{
+  document.querySelectorAll('input').forEach(i=>i.value='');
+  out.textContent = '{ /* Click “Generate JSON” to see your output here */ }';
+  out.classList.remove('ok');
+});
+document.getElementById('copyJson').addEventListener('click', ()=>{
+  const text = out.textContent;
+  navigator.clipboard.writeText(text).then(()=>alert('JSON copied!'));
+});
+document.getElementById('downloadJson').addEventListener('click', ()=>{
+  const blob = new Blob([out.textContent], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'launch-kit.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+</script>
 </body>
 </html>
-
 
