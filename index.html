@@ -7,14 +7,8 @@
 <meta name="description" content="Generate a clean Launch Kit JSON for any small business niche.">
 <style>
   :root{
-    --bg:#0f172a;       /* slate-900 */
-    --fg:#e2e8f0;       /* slate-200 */
-    --muted:#94a3b8;    /* slate-400 */
-    --card:#0b1226;     /* slightly lighter than bg */
-    --brand:#6366f1;    /* indigo-500 */
-    --brand-2:#22d3ee;  /* cyan-400 */
-    --ok:#22c55e;
-    --danger:#ef4444;
+    --bg:#0f172a; --fg:#e2e8f0; --muted:#94a3b8; --card:#0b1226;
+    --brand:#6366f1; --brand-2:#22d3ee; --ok:#22c55e; --danger:#ef4444;
     --border:rgba(255,255,255,.08);
   }
   *{box-sizing:border-box}
@@ -28,13 +22,14 @@
   }
   a{text-decoration:none; color:inherit}
   .wrap{max-width:1100px; margin:0 auto; padding:24px}
-  header{position:sticky; top:0; backdrop-filter: blur(8px); background:linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.6)); border-bottom:1px solid var(--border); z-index:10}
+  header{position:sticky; top:0; backdrop-filter: blur(8px);
+    background:linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.6));
+    border-bottom:1px solid var(--border); z-index:10}
   .nav{display:flex; align-items:center; justify-content:space-between; height:64px}
   .brand{font-weight:700; letter-spacing:.2px}
   .nav a{padding:8px 10px; color:var(--fg); opacity:.9}
   .nav a:hover{opacity:1}
-  .grid{display:grid; gap:16px; grid-template-columns: 1.1fr .9fr}
-  @media (max-width: 900px){ .grid{grid-template-columns: 1fr} }
+  .grid{display:grid; gap:16px; grid-template-columns: 1fr}
   .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--border); border-radius:14px; padding:18px}
   h1{font-size: clamp(26px, 3.8vw, 40px); line-height:1.15; margin:16px 0 10px}
   h2,h3{margin:0 0 8px}
@@ -60,17 +55,9 @@
     background:#0b1226; color:var(--fg); border:1px solid var(--border); border-radius:10px; padding:12px; min-height:220px
   }
   .ok{color:var(--ok)}
-  .tabs{display:flex; gap:8px; margin:8px 0 12px}
-  .tab{
-    padding:8px 10px; border-radius:10px; border:1px solid var(--border);
-    background:transparent; color:var(--fg); cursor:pointer; opacity:.85
-  }
-  .tab.active{background:linear-gradient(90deg, var(--brand), var(--brand-2)); color:#0b1020; font-weight:700; opacity:1}
-  .hidden{display:none}
   .notice{border-left:3px solid var(--brand); padding-left:10px; margin:8px 0; color:var(--muted)}
   .error{border-color: rgba(239,68,68,.6)!important}
   .error-msg{color:var(--danger); font-size:12px; margin-top:6px}
-  .pill{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px dashed var(--border); border-radius:999px; color:var(--muted); font-size:12px}
   .toast{
     position: fixed; right:16px; bottom:16px; background:linear-gradient(90deg, var(--brand), var(--brand-2));
     color:#0b1020; padding:10px 14px; border-radius:10px; font-weight:700; opacity:0; transform:translateY(10px);
@@ -88,7 +75,6 @@
       <div class="brand">StartSimpleAI — Launch Kit Generator</div>
       <nav>
         <a href="#builder">Builder</a>
-        <a href="#prompts">Prompts</a>
         <a href="#output">Output</a>
       </nav>
     </div>
@@ -96,191 +82,79 @@
 
   <main class="wrap">
     <div class="eyebrow">Launch Kits</div>
-    <h1>Generate clean, compliant JSON for any small business</h1>
-    <p class="notice">Tip: We autosave your inputs. Use the buttons here to copy/download valid JSON (no stray backticks).</p>
+    <h1>Form in, JSON out — no prompts shown</h1>
+    <p class="notice">We autosave your inputs. Use the buttons to copy or download valid JSON (no stray backticks).</p>
 
-    <div class="grid" id="builder">
-      <!-- LEFT: FORM -->
-      <section class="card">
-        <h3>Inputs</h3>
+    <!-- BUILDER -->
+    <section class="card" id="builder">
+      <h3>Inputs</h3>
 
-        <div class="row">
-          <div>
-            <label>Business Name <span class="pill">required</span></label>
-            <input id="businessName" placeholder="Prime Cut Landscaping" />
-            <div class="error-msg hidden" id="err-business">Please enter a business name.</div>
-          </div>
-          <div>
-            <label>Industry <span class="pill">required</span></label>
-            <input id="industry" placeholder="Landscaping / Lawn Care" />
-            <div class="error-msg hidden" id="err-industry">Please enter an industry.</div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div>
-            <label>City</label>
-            <input id="locationCity" placeholder="Baltimore" />
-          </div>
-          <div>
-            <label>State</label>
-            <input id="locationState" placeholder="MD" />
-          </div>
-        </div>
-
-        <div class="row">
-          <div>
-            <label>Owner Background (optional)</label>
-            <input id="ownerBackground" placeholder="Minority veteran-owned" />
-          </div>
-          <div>
-            <label>Years Experience (optional)</label>
-            <input id="yearsExperience" type="number" min="0" placeholder="15" />
-          </div>
-        </div>
-
-        <div class="row">
-          <div>
-            <label>Selling Points (comma-separated)</label>
-            <input id="sellingPoints" placeholder="licensed & insured, eco-friendly, reliable scheduling" />
-          </div>
-          <div>
-            <label>Tone (optional)</label>
-            <input id="tone" placeholder="Friendly, professional, plain-English" />
-          </div>
-        </div>
-
-        <div class="row">
-          <div>
-            <label>Phone (optional)</label>
-            <input id="phone" placeholder="" />
-          </div>
-          <div>
-            <label>Email (optional)</label>
-            <input id="email" placeholder="" />
-          </div>
-        </div>
-
+      <div class="row">
         <div>
-          <label>Address (optional)</label>
-          <input id="address" placeholder="Baltimore, MD" />
+          <label>Business Name <span style="opacity:.65">(required)</span></label>
+          <input id="businessName" placeholder="Prime Cut Landscaping" />
+          <div class="error-msg hidden" id="err-business">Please enter a business name.</div>
         </div>
-
-        <div class="row">
-          <div>
-            <label>Services Offered (comma-separated)</label>
-            <input id="servicesOffered" placeholder="Lawn Mowing & Maintenance, Landscape Design & Installation" />
-          </div>
-          <div>
-            <label>Competitor Angle (optional)</label>
-            <input id="competitorAngle" placeholder="Reliable, veteran-owned, eco-friendly" />
-          </div>
-        </div>
-
-        <div class="row">
-          <div>
-            <label>Audience (optional)</label>
-            <input id="audience" placeholder="Homeowners" />
-          </div>
-          <div>
-            <label>Website Goals (comma-separated)</label>
-            <input id="websiteGoals" placeholder="book calls, collect leads, show portfolio" />
-          </div>
-        </div>
-
-        <div class="row">
-          <div>
-            <label>Brand Color Hint (optional)</label>
-            <input id="brandColorHint" placeholder="deep green + warm accents" />
-          </div>
-          <div>
-            <label>Font Hint (optional)</label>
-            <input id="fontHint" placeholder="rounded sans for headlines" />
-          </div>
-        </div>
-
         <div>
-          <label>Compliance Notes (optional)</label>
-          <input id="complianceNotes" placeholder="no guarantees; fair-housing compliant" />
+          <label>Industry <span style="opacity:.65">(required)</span></label>
+          <input id="industry" placeholder="Landscaping / Lawn Care" />
+          <div class="error-msg hidden" id="err-industry">Please enter an industry.</div>
         </div>
+      </div>
 
-        <div class="btnbar">
-          <button class="btn" id="generateBtn">Generate JSON</button>
-          <button class="btn ghost" id="clearBtn">Clear</button>
+      <div class="row">
+        <div><label>City</label><input id="locationCity" placeholder="Baltimore" /></div>
+        <div><label>State</label><input id="locationState" placeholder="MD" /></div>
+      </div>
+
+      <div class="row">
+        <div><label>Owner Background (optional)</label><input id="ownerBackground" placeholder="Minority veteran-owned" /></div>
+        <div><label>Years Experience (optional)</label><input id="yearsExperience" type="number" min="0" placeholder="15" /></div>
+      </div>
+
+      <div class="row">
+        <div><label>Selling Points (comma-separated)</label><input id="sellingPoints" placeholder="licensed & insured, eco-friendly, reliable scheduling" /></div>
+        <div><label>Tone (optional)</label><input id="tone" placeholder="Friendly, professional, plain-English" /></div>
+      </div>
+
+      <div class="row">
+        <div><label>Phone (optional)</label><input id="phone" placeholder="" /></div>
+        <div><label>Email (optional)</label><input id="email" placeholder="" /></div>
+      </div>
+
+      <div><label>Address (optional)</label><input id="address" placeholder="Baltimore, MD" /></div>
+
+      <div class="row">
+        <div><label>Services Offered (comma-separated)</label><input id="servicesOffered" placeholder="Lawn Mowing & Maintenance, Landscape Design & Installation" /></div>
+        <div><label>Competitor Angle (optional)</label><input id="competitorAngle" placeholder="Reliable, veteran-owned, eco-friendly" /></div>
+      </div>
+
+      <div class="row">
+        <div><label>Audience (optional)</label><input id="audience" placeholder="Homeowners" /></div>
+        <div><label>Website Goals (comma-separated)</label><input id="websiteGoals" placeholder="book calls, collect leads, show portfolio" /></div>
+      </div>
+
+      <div class="row">
+        <div><label>Brand Color Hint (optional)</label><input id="brandColorHint" placeholder="deep green + warm accents" /></div>
+        <div><label>Font Hint (optional)</label><input id="fontHint" placeholder="rounded sans for headlines" /></div>
+      </div>
+
+      <div><label>Compliance Notes (optional)</label><input id="complianceNotes" placeholder="no guarantees; fair-housing compliant" /></div>
+
+      <div class="btnbar">
+        <button class="btn" id="generateBtn">Generate JSON</button>
+        <button class="btn ghost" id="clearBtn">Clear</button>
+      </div>
+
+      <!-- SEO PREVIEW -->
+      <div class="card" style="margin-top:12px">
+        <h3 style="margin-top:0">SEO Preview</h3>
+        <div class="seo-preview">
+          <div class="seo-title" id="seoTitlePrev">—</div>
+          <div class="muted" id="seoDescPrev">—</div>
         </div>
-        <p class="small">We’ll fill safe defaults if something’s missing (no fake licenses or made-up contact info).</p>
-
-        <!-- SEO PREVIEW -->
-        <div class="card" style="margin-top:12px">
-          <h3 style="margin-top:0">SEO Preview</h3>
-          <div class="seo-preview">
-            <div class="seo-title" id="seoTitlePrev">—</div>
-            <div class="muted" id="seoDescPrev">—</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- RIGHT: PROMPTS -->
-      <section class="card" id="prompts">
-        <h3>Prompts</h3>
-        <div class="tabs">
-          <button class="tab active" data-tab="system">System</button>
-          <button class="tab" data-tab="user">User</button>
-        </div>
-
-        <div id="systemTab">
-          <p class="small">Copy → paste as the system message.</p>
-          <textarea id="systemPrompt" readonly>
-You are StartSimpleAI, an expert small-business brand strategist. Your only job is to generate a complete “Launch Kit” for any niche (minority-owned, trades, small business, real estate, services, e-commerce). Return only the specified JSON. Never add commentary, tips, Markdown, or extra keys. When inputs are missing, make reasonable, safe assumptions and still return valid JSON. Optimize for clarity, brevity, conversion, and plain English. Avoid jargon. All strings are single-line (no newlines). Tone is confident, friendly, professional. Guardrails: If missing→yearsExperience:5; ownerBackground:omit; contact:empty strings; services:4–6 typical; location:"". Compliance: don’t invent licensure/credentials; real estate uses Fair Housing-safe language; no guarantees. Formatting: no nulls; arrays present; exactly two homepage sections. Length caps: heroH1 ≤80; subhead ≤160; paragraphs ≤240; ad ≤60; SEO title ≤60; SEO desc ≤155. Branding: accessible color combos; neutral palette + 1–2 accents, guided by brandColorHint/industry. Local SEO: include city+state if provided. Safety: never invent PII.
-          </textarea>
-          <div class="btnbar">
-            <button class="btn" data-copy="#systemPrompt">Copy System Prompt</button>
-          </div>
-        </div>
-
-        <div id="userTab" class="hidden">
-          <p class="small">Copy → paste as the user message template.</p>
-          <textarea id="userTemplate" readonly>
-Return only valid JSON for a small-business Launch Kit. No commentary.
-
-INPUT:
-- businessName: {{businessName}}
-- industry: {{industry}}
-- locationCity: {{locationCity}}
-- locationState: {{locationState}}
-- ownerBackground: {{ownerBackground}}
-- yearsExperience: {{yearsExperience}}
-- sellingPoints: {{sellingPoints}}
-- tone: {{tone}}
-- phone: {{phone}}
-- email: {{email}}
-- address: {{address}}
-- servicesOffered: {{servicesOffered}}
-- competitorAngle: {{competitorAngle}}
-- audience: {{audience}}
-- websiteGoals: {{websiteGoals}}
-- brandColorHint: {{brandColorHint}}
-- fontHint: {{fontHint}}
-- complianceNotes: {{complianceNotes}}
-
-OUTPUT (exact shape):
-{
-  "homepage":{"heroH1":"","subhead":"","ctaPrimary":"Get Started","sections":[{"heading":"","paragraph":""},{"heading":"","paragraph":""}]},
-  "about":{"headline":"","body":""},
-  "services":[{"name":"","desc":"","cta":"Book Now"}],
-  "contact":{"headline":"Get in Touch","paragraph":"Request a free, no-obligation quote.","phone":"","email":"","address":"","cta":"Request a Quote"},
-  "brand":{"colors":{"primary":"#000000","secondary":"#000000","accent":"#000000","neutralDark":"#222222","neutralLight":"#F5F5F5"},"fonts":{"heading":"Montserrat, sans-serif","body":"Open Sans, sans-serif"}},
-  "social":["Post idea 1","Post idea 2","Post idea 3","Post idea 4","Post idea 5"],
-  "ads":["Ad headline 1","Ad headline 2","Ad headline 3","Ad headline 4"],
-  "seo":{"title":"","description":"","keywords":"keyword1, keyword2, keyword3"}
-}
-          </textarea>
-          <div class="btnbar">
-            <button class="btn" data-copy="#userTemplate">Copy User Template</button>
-          </div>
-        </div>
-      </section>
-    </div>
+      </div>
+    </section>
 
     <!-- OUTPUT -->
     <section class="card" id="output" style="margin-top:16px">
@@ -290,14 +164,17 @@ OUTPUT (exact shape):
         <button class="btn ghost" id="downloadJson">Download JSON</button>
       </div>
       <div class="output" id="jsonOut">{ /* Click “Generate JSON” to see your output here */ }</div>
-      <p class="small">Validation: Business Name & Industry are required. We fill safe defaults elsewhere.</p>
+      <p class="small">Validation: Business Name & Industry are required. Safe defaults are used elsewhere; no fake licenses or PII.</p>
     </section>
   </main>
 
   <div class="toast" id="toast">Copied!</div>
 
 <script>
-/* Helpers */
+/* ======= CONFIG ======= */
+const useServer = false; // set to true when you add a server endpoint (keeps system prompt on the server)
+
+/* ======= HELPERS ======= */
 const $ = sel => document.querySelector(sel);
 const $$ = sel => Array.from(document.querySelectorAll(sel));
 const byId = id => document.getElementById(id);
@@ -305,27 +182,7 @@ function toList(val){ return (val||'').split(',').map(s=>s.trim()).filter(Boolea
 function safeStr(v){ return (v ?? '').toString() }
 function showToast(msg='Copied!'){ const t = byId('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 1200) }
 
-/* Tabs */
-$$('.tab').forEach(t=>{
-  t.addEventListener('click', ()=>{
-    $$('.tab').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active');
-    const tab = t.dataset.tab;
-    byId('systemTab').classList.toggle('hidden', tab!=='system');
-    byId('userTab').classList.toggle('hidden', tab!=='user');
-  });
-});
-
-/* Copy */
-$$('[data-copy]').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    const el = $(btn.getAttribute('data-copy'));
-    const txt = el.value || el.textContent;
-    navigator.clipboard.writeText(txt).then(()=>showToast());
-  });
-});
-
-/* Defaults */
+/* ======= DEFAULTS / GUARDRAILS (no prompt needed on client) ======= */
 function defaultServices(industry){
   const map = {
     'landscaping / lawn care': ['Lawn Mowing & Maintenance','Landscape Design & Installation','Mulching','Seasonal Cleanups'],
@@ -343,7 +200,30 @@ function paletteFromHint(hint){
   return {primary:'#6366F1',secondary:'#22D3EE',accent:'#F59E0B',neutralDark:'#0B1226',neutralLight:'#F5F5F5'};
 }
 
-/* Build kit */
+/* ======= COLLECT / BUILD ======= */
+const inputIds = ['businessName','industry','locationCity','locationState','ownerBackground','yearsExperience','sellingPoints','tone','phone','email','address','servicesOffered','competitorAngle','audience','websiteGoals','brandColorHint','fontHint','complianceNotes'];
+function collectInputs(){
+  return {
+    businessName: safeStr(byId('businessName').value),
+    industry: safeStr(byId('industry').value),
+    locationCity: safeStr(byId('locationCity').value),
+    locationState: safeStr(byId('locationState').value),
+    ownerBackground: safeStr(byId('ownerBackground').value),
+    yearsExperience: byId('yearsExperience').value ? Number(byId('yearsExperience').value) : 5,
+    sellingPoints: toList(byId('sellingPoints').value),
+    tone: safeStr(byId('tone').value),
+    phone: safeStr(byId('phone').value),
+    email: safeStr(byId('email').value),
+    address: safeStr(byId('address').value),
+    servicesOffered: toList(byId('servicesOffered').value),
+    competitorAngle: safeStr(byId('competitorAngle').value),
+    audience: safeStr(byId('audience').value),
+    websiteGoals: toList(byId('websiteGoals').value),
+    brandColorHint: safeStr(byId('brandColorHint').value),
+    fontHint: safeStr(byId('fontHint').value),
+    complianceNotes: safeStr(byId('complianceNotes').value),
+  };
+}
 function buildKit(inputs){
   const {
     businessName, industry, locationCity, locationState, ownerBackground,
@@ -401,79 +281,42 @@ function buildKit(inputs){
   };
 }
 
-/* Autosave & load */
-const inputIds = ['businessName','industry','locationCity','locationState','ownerBackground','yearsExperience','sellingPoints','tone','phone','email','address','servicesOffered','competitorAngle','audience','websiteGoals','brandColorHint','fontHint','complianceNotes'];
-function saveInputs(){
-  const data = {};
-  inputIds.forEach(id=> data[id] = byId(id).value );
-  localStorage.setItem('ssai_inputs', JSON.stringify(data));
-}
-function loadInputs(){
-  const raw = localStorage.getItem('ssai_inputs');
-  if(!raw) return;
-  const data = JSON.parse(raw);
-  inputIds.forEach(id=> { if(data[id] !== undefined) byId(id).value = data[id]; });
-}
-function collectInputs(){
-  return {
-    businessName: safeStr(byId('businessName').value),
-    industry: safeStr(byId('industry').value),
-    locationCity: safeStr(byId('locationCity').value),
-    locationState: safeStr(byId('locationState').value),
-    ownerBackground: safeStr(byId('ownerBackground').value),
-    yearsExperience: byId('yearsExperience').value ? Number(byId('yearsExperience').value) : 5,
-    sellingPoints: toList(byId('sellingPoints').value),
-    tone: safeStr(byId('tone').value),
-    phone: safeStr(byId('phone').value),
-    email: safeStr(byId('email').value),
-    address: safeStr(byId('address').value),
-    servicesOffered: toList(byId('servicesOffered').value),
-    competitorAngle: safeStr(byId('competitorAngle').value),
-    audience: safeStr(byId('audience').value),
-    websiteGoals: toList(byId('websiteGoals').value),
-    brandColorHint: safeStr(byId('brandColorHint').value),
-    fontHint: safeStr(byId('fontHint').value),
-    complianceNotes: safeStr(byId('complianceNotes').value),
-  };
-}
-
-/* Validation */
-function setError(el, msgEl, on){
-  el.classList.toggle('error', on);
-  msgEl.classList.toggle('hidden', !on);
-}
+/* ======= VALIDATION / AUTOSAVE / SEO PREVIEW ======= */
+function setError(el, msgEl, on){ el.classList.toggle('error', on); msgEl.classList.toggle('hidden', !on); }
 function validateRequired(){
   const b = byId('businessName'), i = byId('industry');
   const eb = byId('err-business'), ei = byId('err-industry');
   const be = !b.value.trim(), ie = !i.value.trim();
-  setError(b, eb, be);
-  setError(i, ei, ie);
+  setError(b, eb, be); setError(i, ei, ie);
   return !(be || ie);
 }
-
-/* Live SEO preview */
-function updateSeoPreview(){
-  const data = collectInputs();
-  const kit = buildKit(data);
-  byId('seoTitlePrev').textContent = kit.seo.title || '—';
-  byId('seoDescPrev').textContent = kit.seo.description || '—';
-}
-
-/* Events */
-inputIds.forEach(id=>{
-  byId(id).addEventListener('input', ()=>{ saveInputs(); updateSeoPreview(); });
-});
+function saveInputs(){ const data = {}; inputIds.forEach(id=> data[id] = byId(id).value ); localStorage.setItem('ssai_inputs', JSON.stringify(data)); }
+function loadInputs(){ const raw = localStorage.getItem('ssai_inputs'); if(!raw) return; const data = JSON.parse(raw); inputIds.forEach(id=> { if(data[id] !== undefined) byId(id).value = data[id]; }); }
+function updateSeoPreview(){ const kit = buildKit(collectInputs()); byId('seoTitlePrev').textContent = kit.seo.title || '—'; byId('seoDescPrev').textContent = kit.seo.description || '—'; }
+inputIds.forEach(id=> byId(id).addEventListener('input', ()=>{ saveInputs(); updateSeoPreview(); }));
 window.addEventListener('DOMContentLoaded', ()=>{ loadInputs(); updateSeoPreview(); });
 
-/* Generate / Clear / Copy / Download */
+/* ======= GENERATE / COPY / DOWNLOAD ======= */
 const out = byId('jsonOut');
-byId('generateBtn').addEventListener('click', ()=>{
-  if(!validateRequired()){
-    showToast('Please fix required fields');
-    return;
+byId('generateBtn').addEventListener('click', async ()=>{
+  if(!validateRequired()){ showToast('Please fix required fields'); return; }
+  const inputs = collectInputs();
+
+  if(useServer){
+    // OPTIONAL: If you add a server endpoint, post inputs there (system prompt lives server-side).
+    try{
+      const res = await fetch('/api/generate', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(inputs) });
+      const data = await res.json();
+      out.textContent = JSON.stringify(data, null, 2);
+    }catch(e){
+      showToast('Server error—using local generator');
+      out.textContent = JSON.stringify(buildKit(inputs), null, 2);
+    }
+  } else {
+    // Client-side generator (no prompts shown or needed)
+    out.textContent = JSON.stringify(buildKit(inputs), null, 2);
   }
-  const json = buildKit(collectInputs());
-  out.textContent = JSON.stringify(json, null, 2);
+
   out.classList.add('ok');
   location.hash = '#output';
   showToast('Generated!');
@@ -506,4 +349,5 @@ byId('downloadJson').addEventListener('click', ()=>{
 </script>
 </body>
 </html>
+
 
