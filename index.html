@@ -44,6 +44,19 @@
     .section{margin:28px 0}
     footer{border-top:1px solid var(--border); margin-top:32px}
     .foot{height:64px; display:flex; align-items:center; color:var(--muted)}
+    /* prompts section */
+    #prompts .sub{margin-top:4px}
+    #prompts textarea{
+      width:100%; height:180px; margin-top:10px;
+      background:#0b1226; color:#e2e8f0; border:1px solid var(--border);
+      border-radius:10px; padding:12px;
+      font-family:ui-monospace, SFMono-Regular, Menlo, monospace; line-height:1.4
+    }
+    #prompts .copy-row{display:flex; justify-content:space-between; align-items:center; gap:12px}
+    .copy-btn{
+      padding:8px 12px; border-radius:10px; border:1px solid var(--border);
+      background:linear-gradient(90deg, var(--brand), var(--brand-2)); color:#0b1020; font-weight:700; cursor:pointer
+    }
   </style>
 </head>
 <body>
@@ -55,6 +68,7 @@
         <a href="/services.html">Services</a>
         <a href="/about.html">About</a>
         <a href="/contact.html">Contact</a>
+        <a href="#prompts">Prompts</a>
       </nav>
     </div>
   </header>
@@ -89,11 +103,86 @@
       <h3 style="margin-top:0">Simple Pitch</h3>
       <p>1 short paragraph that sums up your service and why people choose you over alternatives.</p>
     </section>
+
+    <!-- Prompts Section -->
+    <section id="prompts" class="section card">
+      <h2 style="margin-top:0">Launch Kit Prompts</h2>
+      <p class="sub">Copy these into StartSimpleAI to generate a Launch Kit JSON.</p>
+
+      <!-- System Prompt -->
+      <div class="prompt-block" style="margin:18px 0">
+        <div class="copy-row">
+          <h3 style="margin:0">System Prompt</h3>
+          <button class="copy-btn" data-target="#systemPrompt">Copy</button>
+        </div>
+        <textarea id="systemPrompt" readonly>
+You are StartSimpleAI, an expert small-business brand strategist. Your only job is to generate a complete “Launch Kit” for any niche (minority-owned, trades, small business, real estate, services, e-commerce). Return only the specified JSON. Never add commentary, tips, Markdown, or extra keys. When inputs are missing, make reasonable, safe assumptions and still return valid JSON. Optimize for clarity, brevity, conversion, and plain English. Avoid jargon. All strings are single-line (no newlines). Tone is confident, friendly, professional. Guardrails: If missing→yearsExperience:5; ownerBackground:omit; contact:empty strings; services:4–6 typical; location:"". Compliance: don’t invent licensure/credentials; real estate uses Fair Housing-safe language; no guarantees. Formatting: no nulls; arrays present; exactly two homepage sections. Length caps: heroH1 ≤80; subhead ≤160; paragraphs ≤240; ad ≤60; SEO title ≤60; SEO desc ≤155. Branding: accessible color combos; neutral palette + 1–2 accents, guided by brandColorHint/industry. Local SEO: include city+state if provided. Safety: never invent PII.
+        </textarea>
+      </div>
+
+      <!-- User Input Template -->
+      <div class="prompt-block" style="margin:18px 0">
+        <div class="copy-row">
+          <h3 style="margin:0">User Input Template</h3>
+          <button class="copy-btn" data-target="#userTemplate">Copy</button>
+        </div>
+        <textarea id="userTemplate" readonly style="height:260px">
+Return only valid JSON for a small-business Launch Kit. No commentary.
+
+INPUT:
+- businessName: {{businessName}}
+- industry: {{industry}}
+- locationCity: {{locationCity}}
+- locationState: {{locationState}}
+- ownerBackground: {{ownerBackground}}
+- yearsExperience: {{yearsExperience}}
+- sellingPoints: {{sellingPoints}}
+- tone: {{tone}}
+- phone: {{phone}}
+- email: {{email}}
+- address: {{address}}
+- servicesOffered: {{servicesOffered}}
+- competitorAngle: {{competitorAngle}}
+- audience: {{audience}}
+- websiteGoals: {{websiteGoals}}
+- brandColorHint: {{brandColorHint}}
+- fontHint: {{fontHint}}
+- complianceNotes: {{complianceNotes}}
+
+OUTPUT (exact shape):
+{
+  "homepage":{"heroH1":"","subhead":"","ctaPrimary":"Get Started","sections":[{"heading":"","paragraph":""},{"heading":"","paragraph":""}]},
+  "about":{"headline":"","body":""},
+  "services":[{"name":"","desc":"","cta":"Book Now"}],
+  "contact":{"headline":"Get in Touch","paragraph":"Request a free, no-obligation quote.","phone":"","email":"","address":"","cta":"Request a Quote"},
+  "brand":{"colors":{"primary":"#000000","secondary":"#000000","accent":"#000000","neutralDark":"#222222","neutralLight":"#F5F5F5"},"fonts":{"heading":"Montserrat, sans-serif","body":"Open Sans, sans-serif"}},
+  "social":["Post idea 1","Post idea 2","Post idea 3","Post idea 4","Post idea 5"],
+  "ads":["Ad headline 1","Ad headline 2","Ad headline 3","Ad headline 4"],
+  "seo":{"title":"","description":"","keywords":"keyword1, keyword2, keyword3"}
+}
+        </textarea>
+      </div>
+    </section>
   </main>
 
   <footer>
     <div class="wrap foot">© 2025 Your Business</div>
   </footer>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const target = document.querySelector(btn.getAttribute('data-target'));
+        target.select(); target.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(target.value).then(()=>{
+          const prev = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(()=>btn.textContent = prev, 1200);
+        });
+      });
+    });
+  </script>
 </body>
 </html>
+
 
