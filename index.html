@@ -3,149 +3,96 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{{seo.title}}</title>
-  <meta name="description" content="{{seo.description}}" />
+  <title>Launch Kit — Your Business Name</title>
+  <meta name="description" content="Simple, modern starter page for your business.">
   <style>
     :root{
-      --primary: {{brand.colors.primary}};
-      --secondary: {{brand.colors.secondary}};
-      --accent: {{brand.colors.accent}};
-      --dark: {{brand.colors.neutralDark}};
-      --light: {{brand.colors.neutralLight}};
+      --bg:#0f172a;       /* slate-900 */
+      --fg:#e2e8f0;       /* slate-200 */
+      --muted:#94a3b8;    /* slate-400 */
+      --card:#0b1226;     /* slightly lighter than bg */
+      --brand:#6366f1;    /* indigo-500 */
+      --brand-2:#22d3ee;  /* cyan-400 */
+      --border:rgba(255,255,255,.08);
     }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      font-family: {{brand.fonts.body}};
-      background: linear-gradient(180deg, var(--light) 0%, #ffffff 100%);
-      color: var(--dark);
-      margin:0
+      margin:0; background:
+        radial-gradient(1200px 1200px at 80% -10%, rgba(34,211,238,.12), transparent 40%),
+        radial-gradient(1000px 1000px at 0% 0%, rgba(99,102,241,.15), transparent 35%),
+        var(--bg);
+      color:var(--fg); font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
     }
-    header{
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      color:#fff;
-      padding: 20px 0 0;
-    }
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:16px; padding: 0 24px 16px;
-      max-width:1080px; margin:0 auto;
-    }
-    .brand{font-family: {{brand.fonts.heading}}; font-weight:700; letter-spacing:.02em}
-    nav a{
-      color:#fff; text-decoration:none; opacity:.95; padding:6px 10px; border-radius:8px;
-    }
-    nav a:hover{opacity:1; background-color:rgba(255,255,255,.12)}
-    footer{
-      background:#fff;
-      color: var(--dark);
-      padding: 24px 0;
-      border-top:1px solid rgba(0,0,0,0.08)
-    }
-    .container{
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 0 24px
-    }
-    h1,h2,h3{
-      font-family: {{brand.fonts.heading}};
-      margin:0 0 10px
-    }
-    .hero{
-      padding: 32px;
-      border-radius: 16px;
-      background:#fff;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.06);
-      margin-top:-30px
-    }
-    .cta{
-      background: var(--dark);
-      color: #fff;
-      padding: 12px 18px;
-      text-decoration:none;
-      display:inline-block;
-      border-radius: 999px;
-      border:1px solid var(--dark);
-      transition: transform .15s ease
-    }
-    .cta:hover{ transform: translateY(-1px) }
-    .section{
-      background:#fff;
-      padding:24px;
-      border-radius:16px;
-      box-shadow: 0 2px 14px rgba(0,0,0,0.05);
-      margin-bottom:18px
-    }
-    .kicker{
-      opacity:.9; font-size:14px; letter-spacing:.04em
-    }
-    .grid{
-      display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:16px;
-    }
-    .btn-row{display:flex; gap:10px; flex-wrap:wrap}
-    .btn-secondary{
-      background:#fff; color:var(--primary); border:1px solid var(--primary);
-      padding:10px 14px; border-radius:999px; text-decoration:none
-    }
+    a{text-decoration:none; color:inherit}
+    .wrap{max-width:1080px; margin:0 auto; padding:0 20px}
+    header{position:sticky; top:0; backdrop-filter: blur(8px); background:linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.6)); border-bottom:1px solid var(--border)}
+    .nav{display:flex; align-items:center; justify-content:space-between; height:64px}
+    .brand{font-weight:700; letter-spacing:.2px}
+    .nav a{padding:8px 10px; color:var(--fg); opacity:.9}
+    .nav a:hover{opacity:1}
+    .hero{padding:64px 0 32px}
+    .eyebrow{color:var(--muted); font-size:12px; letter-spacing:.18em; text-transform:uppercase}
+    h1{font-size: clamp(28px, 4vw, 44px); line-height:1.15; margin:12px 0 12px}
+    .sub{color:var(--muted); max-width:720px}
+    .cta-row{display:flex; gap:12px; margin-top:20px; flex-wrap:wrap}
+    .btn{display:inline-block; padding:12px 18px; border-radius:999px; border:1px solid var(--border); background:linear-gradient(90deg, var(--brand), var(--brand-2)); color:#0b1020; font-weight:700}
+    .btn.secondary{background:transparent; color:var(--fg)}
+    .grid{display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin:36px 0}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--border); border-radius:14px; padding:18px}
+    .card h3{margin:0 0 6px; font-size:18px}
+    .section{margin:28px 0}
+    footer{border-top:1px solid var(--border); margin-top:32px}
+    .foot{height:64px; display:flex; align-items:center; color:var(--muted)}
   </style>
 </head>
 <body>
   <header>
-    <div class="topbar">
-      <div>
-        <div class="kicker">Launch Kit</div>
-        <div class="brand">{{homepage.heroH1}}</div>
-      </div>
+    <div class="wrap nav">
+      <div class="brand">Launch Kit</div>
       <nav>
-        <a href="/index.html">Home</a>
-        <a href="/about.html">About</a>
+        <a href="/">Home</a>
         <a href="/services.html">Services</a>
+        <a href="/about.html">About</a>
         <a href="/contact.html">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main class="container" style="padding: 32px 0 40px;">
-    <!-- Hero -->
+  <main class="wrap">
     <section class="hero">
-      <h1>{{homepage.heroH1}}</h1>
-      <p>{{homepage.subhead}}</p>
-      <div class="btn-row">
-        <a class="cta" href="/contact.html">{{homepage.ctaPrimary}}</a>
-        <a class="btn-secondary" href="/services.html">Explore Services</a>
+      <div class="eyebrow">Built to convert</div>
+      <h1>Your clean, modern homepage that actually looks good</h1>
+      <p class="sub">Short, plain‑English promise of value. Say what you do, who it’s for, and the outcome in one sentence. Keep it real and simple.</p>
+      <div class="cta-row">
+        <a class="btn" href="/contact.html">Get a Free Quote</a>
+        <a class="btn secondary" href="/services.html">See Services</a>
       </div>
     </section>
 
-    <!-- Benefits -->
-    <section class="section">
-      <h2>{{homepage.sections.[0].heading}}</h2>
-      <p>{{homepage.sections.[0].paragraph}}</p>
-    </section>
-
-    <!-- Credibility / Proof -->
-    <section class="section">
-      <h2>{{homepage.sections.[1].heading}}</h2>
-      <p>{{homepage.sections.[1].paragraph}}</p>
-    </section>
-
-    <!-- Optional service teasers if provided -->
-    {{#if services}}
-    <section class="section">
-      <h2>What We Offer</h2>
-      <div class="grid">
-        {{#each services}}
-          <div class="section" style="margin:0; box-shadow:none; border:1px solid rgba(0,0,0,.06)">
-            <h3>{{this.name}}</h3>
-            <p>{{this.desc}}</p>
-            <a class="btn-secondary" href="/contact.html">{{this.cta}}</a>
-          </div>
-        {{/each}}
+    <section class="grid">
+      <div class="card">
+        <h3>Clear Value</h3>
+        <p>Explain the benefit in 1–2 lines. No fluff, just why it helps the visitor.</p>
+      </div>
+      <div class="card">
+        <h3>Proof</h3>
+        <p>Back it up with experience, reviews, partners, or results.</p>
+      </div>
+      <div class="card">
+        <h3>Action</h3>
+        <p>Make the next step obvious: call, book, or message.</p>
       </div>
     </section>
-    {{/if}}
+
+    <section class="section card">
+      <h3 style="margin-top:0">Simple Pitch</h3>
+      <p>1 short paragraph that sums up your service and why people choose you over alternatives.</p>
+    </section>
   </main>
 
   <footer>
-    <div class="container">© {{seo.title}}</div>
+    <div class="wrap foot">© 2025 Your Business</div>
   </footer>
 </body>
 </html>
