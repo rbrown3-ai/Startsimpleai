@@ -1,73 +1,152 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="StartSimpleAI - AI-Powered Tools for Small Businesses, Trades, and Entrepreneurs">
-  <title>StartSimpleAI - Coming Soon</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{seo.title}}</title>
+  <meta name="description" content="{{seo.description}}" />
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0b0c10, #1f2833);
+    :root{
+      --primary: {{brand.colors.primary}};
+      --secondary: {{brand.colors.secondary}};
+      --accent: {{brand.colors.accent}};
+      --dark: {{brand.colors.neutralDark}};
+      --light: {{brand.colors.neutralLight}};
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family: {{brand.fonts.body}};
+      background: linear-gradient(180deg, var(--light) 0%, #ffffff 100%);
+      color: var(--dark);
+      margin:0
+    }
+    header{
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color:#fff;
+      padding: 20px 0 0;
+    }
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; padding: 0 24px 16px;
+      max-width:1080px; margin:0 auto;
+    }
+    .brand{font-family: {{brand.fonts.heading}}; font-weight:700; letter-spacing:.02em}
+    nav a{
+      color:#fff; text-decoration:none; opacity:.95; padding:6px 10px; border-radius:8px;
+    }
+    nav a:hover{opacity:1; background-color:rgba(255,255,255,.12)}
+    footer{
+      background:#fff;
+      color: var(--dark);
+      padding: 24px 0;
+      border-top:1px solid rgba(0,0,0,0.08)
+    }
+    .container{
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px
+    }
+    h1,h2,h3{
+      font-family: {{brand.fonts.heading}};
+      margin:0 0 10px
+    }
+    .hero{
+      padding: 32px;
+      border-radius: 16px;
+      background:#fff;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+      margin-top:-30px
+    }
+    .cta{
+      background: var(--dark);
       color: #fff;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      padding: 12px 18px;
+      text-decoration:none;
+      display:inline-block;
+      border-radius: 999px;
+      border:1px solid var(--dark);
+      transition: transform .15s ease
     }
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
+    .cta:hover{ transform: translateY(-1px) }
+    .section{
+      background:#fff;
+      padding:24px;
+      border-radius:16px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.05);
+      margin-bottom:18px
     }
-    p {
-      font-size: 1.2rem;
-      max-width: 500px;
-      margin: 0 auto 20px;
+    .kicker{
+      opacity:.9; font-size:14px; letter-spacing:.04em
     }
-    .email-box {
-      margin-top: 20px;
+    .grid{
+      display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:16px;
     }
-    input[type="email"] {
-      padding: 10px;
-      width: 250px;
-      border: none;
-      border-radius: 4px 0 0 4px;
-      outline: none;
-    }
-    button {
-      padding: 10px 15px;
-      border: none;
-      background-color: #66fcf1;
-      color: #0b0c10;
-      font-weight: bold;
-      border-radius: 0 4px 4px 0;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #45a29e;
-    }
-    footer {
-      position: absolute;
-      bottom: 10px;
-      font-size: 0.9rem;
-      color: #c5c6c7;
+    .btn-row{display:flex; gap:10px; flex-wrap:wrap}
+    .btn-secondary{
+      background:#fff; color:var(--primary); border:1px solid var(--primary);
+      padding:10px 14px; border-radius:999px; text-decoration:none
     }
   </style>
 </head>
 <body>
-  <h1>🚀 StartSimpleAI</h1>
-  <p>AI-powered solutions for small businesses, blue-collar trades, real estate, and minority entrepreneurs. We're launching soon — stay tuned!</p>
-  
-  <div class="email-box">
-    <form action="mailto:your-email@startsimpleai.com" method="POST" enctype="text/plain">
-      <input type="email" name="email" placeholder="Enter your email" required />
-      <button type="submit">Notify Me</button>
-    </form>
-  </div>
+  <header>
+    <div class="topbar">
+      <div>
+        <div class="kicker">Launch Kit</div>
+        <div class="brand">{{homepage.heroH1}}</div>
+      </div>
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/services.html">Services</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-  <footer>© 2025 StartSimpleAI. All rights reserved.</footer>
+  <main class="container" style="padding: 32px 0 40px;">
+    <!-- Hero -->
+    <section class="hero">
+      <h1>{{homepage.heroH1}}</h1>
+      <p>{{homepage.subhead}}</p>
+      <div class="btn-row">
+        <a class="cta" href="/contact.html">{{homepage.ctaPrimary}}</a>
+        <a class="btn-secondary" href="/services.html">Explore Services</a>
+      </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="section">
+      <h2>{{homepage.sections.[0].heading}}</h2>
+      <p>{{homepage.sections.[0].paragraph}}</p>
+    </section>
+
+    <!-- Credibility / Proof -->
+    <section class="section">
+      <h2>{{homepage.sections.[1].heading}}</h2>
+      <p>{{homepage.sections.[1].paragraph}}</p>
+    </section>
+
+    <!-- Optional service teasers if provided -->
+    {{#if services}}
+    <section class="section">
+      <h2>What We Offer</h2>
+      <div class="grid">
+        {{#each services}}
+          <div class="section" style="margin:0; box-shadow:none; border:1px solid rgba(0,0,0,.06)">
+            <h3>{{this.name}}</h3>
+            <p>{{this.desc}}</p>
+            <a class="btn-secondary" href="/contact.html">{{this.cta}}</a>
+          </div>
+        {{/each}}
+      </div>
+    </section>
+    {{/if}}
+  </main>
+
+  <footer>
+    <div class="container">© {{seo.title}}</div>
+  </footer>
 </body>
 </html>
+
