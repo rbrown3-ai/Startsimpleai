@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>StartSimpleAI — Launch Kit Generator</title>
-<meta name="description" content="Generate a clean Launch Kit JSON for any small business niche.">
+<title>StartSimpleAI — Site Maker</title>
+<meta name="description" content="Answer a few questions. Instantly preview and download a one‑page starter website.">
 <style>
   :root{
     --bg:#0f172a; --fg:#e2e8f0; --muted:#94a3b8; --card:#0b1226;
-    --brand:#6366f1; --brand-2:#22d3ee; --ok:#22c55e; --danger:#ef4444;
     --border:rgba(255,255,255,.08);
+    --brand:#6366f1; --brand2:#22d3ee;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -21,333 +21,337 @@
     color:var(--fg); font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
   }
   a{text-decoration:none; color:inherit}
-  .wrap{max-width:1100px; margin:0 auto; padding:24px}
-  header{position:sticky; top:0; backdrop-filter: blur(8px);
+  header{position:sticky; top:0; z-index:10; backdrop-filter: blur(8px);
     background:linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.6));
-    border-bottom:1px solid var(--border); z-index:10}
-  .nav{display:flex; align-items:center; justify-content:space-between; height:64px}
-  .brand{font-weight:700; letter-spacing:.2px}
-  .nav a{padding:8px 10px; color:var(--fg); opacity:.9}
-  .nav a:hover{opacity:1}
-  .grid{display:grid; gap:16px; grid-template-columns: 1fr}
+    border-bottom:1px solid var(--border)}
+  .wrap{max-width:1200px; margin:0 auto; padding:16px 20px}
+  .nav{display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .brand{font-weight:800; letter-spacing:.2px}
+  .pill{font-size:12px; color:var(--muted)}
+  .layout{display:grid; gap:16px; grid-template-columns: 0.95fr 1.05fr; padding:20px}
+  @media (max-width: 1000px){ .layout{grid-template-columns:1fr} }
   .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--border); border-radius:14px; padding:18px}
-  h1{font-size: clamp(26px, 3.8vw, 40px); line-height:1.15; margin:16px 0 10px}
+  h1{font-size: clamp(24px, 3.5vw, 36px); line-height:1.15; margin:8px 0}
   h2,h3{margin:0 0 8px}
-  .eyebrow{color:var(--muted); font-size:12px; letter-spacing:.18em; text-transform:uppercase}
   label{display:block; font-size:13px; color:var(--muted); margin:12px 0 6px}
-  input, textarea{
+  input, textarea, select{
     width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border);
-    background:#0b1226; color:var(--fg); outline:none; transition: border-color .15s ease, box-shadow .15s ease;
+    background:#0b1226; color:var(--fg); outline:none; transition:border-color .15s, box-shadow .15s;
   }
-  input:focus, textarea:focus{ border-color: rgba(255,255,255,.18); box-shadow:0 0 0 3px rgba(99,102,241,.25) }
+  input:focus, textarea:focus, select:focus{ border-color: rgba(255,255,255,.18); box-shadow:0 0 0 3px rgba(99,102,241,.25) }
   textarea{min-height:100px; resize:vertical}
   .row{display:grid; gap:12px; grid-template-columns: 1fr 1fr}
   @media (max-width: 700px){ .row{grid-template-columns:1fr} }
   .btn{
     display:inline-block; padding:10px 14px; border-radius:999px; border:1px solid var(--border);
-    background:linear-gradient(90deg, var(--brand), var(--brand-2)); color:#0b1020; font-weight:700; cursor:pointer
+    background:linear-gradient(90deg, var(--brand), var(--brand2)); color:#0b1020; font-weight:700; cursor:pointer
   }
   .btn.ghost{background:transparent; color:var(--fg)}
   .btnbar{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
-  .small{font-size:12px; color:var(--muted)}
-  .output{
-    white-space:pre-wrap; word-break:break-word; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
-    background:#0b1226; color:var(--fg); border:1px solid var(--border); border-radius:10px; padding:12px; min-height:220px
-  }
-  .ok{color:var(--ok)}
-  .notice{border-left:3px solid var(--brand); padding-left:10px; margin:8px 0; color:var(--muted)}
-  .error{border-color: rgba(239,68,68,.6)!important}
-  .error-msg{color:var(--danger); font-size:12px; margin-top:6px}
-  .toast{
-    position: fixed; right:16px; bottom:16px; background:linear-gradient(90deg, var(--brand), var(--brand-2));
-    color:#0b1020; padding:10px 14px; border-radius:10px; font-weight:700; opacity:0; transform:translateY(10px);
-    transition: all .2s ease; z-index:50;
-  }
-  .toast.show{opacity:1; transform:translateY(0)}
-  .seo-preview{display:flex; flex-direction:column; gap:6px; margin-top:10px}
-  .seo-title{font-weight:700}
   .muted{color:var(--muted)}
+  .error{border-color: rgba(239,68,68,.6)!important}
+  .error-msg{color:#ef4444; font-size:12px; margin-top:6px}
+  /* Preview panel */
+  .preview{
+    height:82vh; min-height:520px; border:1px solid var(--border); border-radius:14px; overflow:hidden;
+    background:#0b1226;
+  }
+  .preview-header{
+    display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px
+  }
+  iframe{width:100%; height:100%; border:0; background:#fff}
 </style>
 </head>
 <body>
   <header>
     <div class="wrap nav">
-      <div class="brand">StartSimpleAI — Launch Kit Generator</div>
-      <nav>
-        <a href="#builder">Builder</a>
-        <a href="#output">Output</a>
-      </nav>
+      <div>
+        <div class="brand">StartSimpleAI — Site Maker</div>
+        <div class="pill">Answer a few questions → live preview → download your starter site</div>
+      </div>
+      <div class="btnbar">
+        <button class="btn" id="openNew">Open Preview in New Tab</button>
+        <button class="btn" id="downloadPage">Download index.html</button>
+      </div>
     </div>
   </header>
 
-  <main class="wrap">
-    <div class="eyebrow">Launch Kits</div>
-    <h1>Form in, JSON out — no prompts shown</h1>
-    <p class="notice">We autosave your inputs. Use the buttons to copy or download valid JSON (no stray backticks).</p>
-
-    <!-- BUILDER -->
-    <section class="card" id="builder">
-      <h3>Inputs</h3>
+  <div class="layout">
+    <!-- LEFT: FORM -->
+    <section class="card">
+      <h3 style="margin-top:0">Inputs</h3>
 
       <div class="row">
         <div>
-          <label>Business Name <span style="opacity:.65">(required)</span></label>
-          <input id="businessName" placeholder="Prime Cut Landscaping" />
-          <div class="error-msg hidden" id="err-business">Please enter a business name.</div>
+          <label>Business Name <span class="muted">(required)</span></label>
+          <input id="businessName" placeholder="StartSimpleAI" />
+          <div class="error-msg hidden" id="err-business">Enter a business name.</div>
         </div>
         <div>
-          <label>Industry <span style="opacity:.65">(required)</span></label>
-          <input id="industry" placeholder="Landscaping / Lawn Care" />
-          <div class="error-msg hidden" id="err-industry">Please enter an industry.</div>
+          <label>Industry <span class="muted">(required)</span></label>
+          <input id="industry" placeholder="AI Startup / Tools" />
+          <div class="error-msg hidden" id="err-industry">Enter an industry.</div>
         </div>
       </div>
 
       <div class="row">
-        <div><label>City</label><input id="locationCity" placeholder="Baltimore" /></div>
-        <div><label>State</label><input id="locationState" placeholder="MD" /></div>
+        <div><label>City</label><input id="locationCity" placeholder="Atlanta" /></div>
+        <div><label>State</label><input id="locationState" placeholder="GA" /></div>
       </div>
 
       <div class="row">
-        <div><label>Owner Background (optional)</label><input id="ownerBackground" placeholder="Minority veteran-owned" /></div>
-        <div><label>Years Experience (optional)</label><input id="yearsExperience" type="number" min="0" placeholder="15" /></div>
+        <div><label>Selling Points (comma-separated)</label><input id="sellingPoints" placeholder="Fast setup, No code, Launch in minutes" /></div>
+        <div><label>Years Experience</label><input id="yearsExperience" type="number" min="0" value="5" /></div>
       </div>
 
       <div class="row">
-        <div><label>Selling Points (comma-separated)</label><input id="sellingPoints" placeholder="licensed & insured, eco-friendly, reliable scheduling" /></div>
-        <div><label>Tone (optional)</label><input id="tone" placeholder="Friendly, professional, plain-English" /></div>
-      </div>
-
-      <div class="row">
-        <div><label>Phone (optional)</label><input id="phone" placeholder="" /></div>
-        <div><label>Email (optional)</label><input id="email" placeholder="" /></div>
-      </div>
-
-      <div><label>Address (optional)</label><input id="address" placeholder="Baltimore, MD" /></div>
-
-      <div class="row">
-        <div><label>Services Offered (comma-separated)</label><input id="servicesOffered" placeholder="Lawn Mowing & Maintenance, Landscape Design & Installation" /></div>
-        <div><label>Competitor Angle (optional)</label><input id="competitorAngle" placeholder="Reliable, veteran-owned, eco-friendly" /></div>
-      </div>
-
-      <div class="row">
-        <div><label>Audience (optional)</label><input id="audience" placeholder="Homeowners" /></div>
-        <div><label>Website Goals (comma-separated)</label><input id="websiteGoals" placeholder="book calls, collect leads, show portfolio" /></div>
-      </div>
-
-      <div class="row">
-        <div><label>Brand Color Hint (optional)</label><input id="brandColorHint" placeholder="deep green + warm accents" /></div>
-        <div><label>Font Hint (optional)</label><input id="fontHint" placeholder="rounded sans for headlines" /></div>
-      </div>
-
-      <div><label>Compliance Notes (optional)</label><input id="complianceNotes" placeholder="no guarantees; fair-housing compliant" /></div>
-
-      <div class="btnbar">
-        <button class="btn" id="generateBtn">Generate JSON</button>
-        <button class="btn ghost" id="clearBtn">Clear</button>
-      </div>
-
-      <!-- SEO PREVIEW -->
-      <div class="card" style="margin-top:12px">
-        <h3 style="margin-top:0">SEO Preview</h3>
-        <div class="seo-preview">
-          <div class="seo-title" id="seoTitlePrev">—</div>
-          <div class="muted" id="seoDescPrev">—</div>
+        <div><label>Services Offered (comma-separated)</label><input id="servicesOffered" placeholder="Setup, Branding, Basic SEO" /></div>
+        <div>
+          <label>Theme</label>
+          <select id="theme">
+            <option value="indigo">Indigo / Cyan</option>
+            <option value="green">Green / Gold</option>
+            <option value="navy">Navy / Sand</option>
+            <option value="charcoal">Charcoal / Electric</option>
+          </select>
         </div>
       </div>
-    </section>
 
-    <!-- OUTPUT -->
-    <section class="card" id="output" style="margin-top:16px">
-      <h3>Launch Kit JSON</h3>
-      <div class="btnbar">
-        <button class="btn" id="copyJson">Copy JSON</button>
-        <button class="btn ghost" id="downloadJson">Download JSON</button>
+      <div class="row">
+        <div><label>Phone</label><input id="phone" placeholder="" /></div>
+        <div><label>Email</label><input id="email" placeholder="" /></div>
       </div>
-      <div class="output" id="jsonOut">{ /* Click “Generate JSON” to see your output here */ }</div>
-      <p class="small">Validation: Business Name & Industry are required. Safe defaults are used elsewhere; no fake licenses or PII.</p>
-    </section>
-  </main>
+      <div><label>Address</label><input id="address" placeholder="US — Remote" /></div>
 
-  <div class="toast" id="toast">Copied!</div>
+      <div class="btnbar">
+        <button class="btn" id="generateSite">Generate Site</button>
+        <button class="btn ghost" id="clear">Clear</button>
+      </div>
+      <p class="muted" style="margin-top:8px">We use safe defaults when info is missing. No prompts are exposed.</p>
+    </section>
+
+    <!-- RIGHT: LIVE PREVIEW -->
+    <section class="card">
+      <div class="preview-header">
+        <h3 style="margin:0">Live Preview</h3>
+        <div class="muted">Updates when you click “Generate Site”.</div>
+      </div>
+      <div class="preview">
+        <iframe id="previewFrame" title="Site Preview"></iframe>
+      </div>
+    </section>
+  </div>
 
 <script>
-/* ======= CONFIG ======= */
-const useServer = false; // set to true when you add a server endpoint (keeps system prompt on the server)
-
-/* ======= HELPERS ======= */
-const $ = sel => document.querySelector(sel);
-const $$ = sel => Array.from(document.querySelectorAll(sel));
+/* ------------ Helpers ------------ */
+const $ = s => document.querySelector(s);
 const byId = id => document.getElementById(id);
 function toList(val){ return (val||'').split(',').map(s=>s.trim()).filter(Boolean) }
-function safeStr(v){ return (v ?? '').toString() }
-function showToast(msg='Copied!'){ const t = byId('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 1200) }
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
 
-/* ======= DEFAULTS / GUARDRAILS (no prompt needed on client) ======= */
-function defaultServices(industry){
-  const map = {
-    'landscaping / lawn care': ['Lawn Mowing & Maintenance','Landscape Design & Installation','Mulching','Seasonal Cleanups'],
-    'residential electrician': ['Troubleshooting','Panel Upgrades','EV Charger Installs','Lighting Design','Emergency Service'],
-    'residential real estate': ['Buyer Representation','Seller Listing Services','Home Valuation','Open House Management','Offer Strategy']
-  };
-  const key = (industry||'').toLowerCase();
-  return map[key] || ['Consultation','Core Service','Premium Service','Seasonal/On-Demand'];
-}
-function paletteFromHint(hint){
-  const h = (hint||'').toLowerCase();
-  if(h.includes('green')) return {primary:'#2E7D32',secondary:'#8BC34A',accent:'#FFC107',neutralDark:'#1F2937',neutralLight:'#F5F5F5'};
-  if(h.includes('navy')||h.includes('gold')) return {primary:'#0F172A',secondary:'#1E293B',accent:'#D4AF37',neutralDark:'#111827',neutralLight:'#F3F4F6'};
-  if(h.includes('blue')||h.includes('orange')) return {primary:'#1E3A8A',secondary:'#2563EB',accent:'#F59E0B',neutralDark:'#0B1226',neutralLight:'#F3F4F6'};
-  return {primary:'#6366F1',secondary:'#22D3EE',accent:'#F59E0B',neutralDark:'#0B1226',neutralLight:'#F5F5F5'};
+/* ------------ Palettes (themes) ------------ */
+function palette(theme){
+  switch(theme){
+    case 'green':    return {primary:'#2E7D32', secondary:'#8BC34A', accent:'#D4AF37', dark:'#111827', light:'#F3F4F6'};
+    case 'navy':     return {primary:'#0F172A', secondary:'#1E293B', accent:'#D4AF37', dark:'#0B1226', light:'#F3F4F6'};
+    case 'charcoal': return {primary:'#111827', secondary:'#334155', accent:'#22D3EE', dark:'#0B1226', light:'#F5F5F5'};
+    default:         return {primary:'#6366F1', secondary:'#22D3EE', accent:'#F59E0B', dark:'#0B1226', light:'#F5F5F5'};
+  }
 }
 
-/* ======= COLLECT / BUILD ======= */
-const inputIds = ['businessName','industry','locationCity','locationState','ownerBackground','yearsExperience','sellingPoints','tone','phone','email','address','servicesOffered','competitorAngle','audience','websiteGoals','brandColorHint','fontHint','complianceNotes'];
-function collectInputs(){
-  return {
-    businessName: safeStr(byId('businessName').value),
-    industry: safeStr(byId('industry').value),
-    locationCity: safeStr(byId('locationCity').value),
-    locationState: safeStr(byId('locationState').value),
-    ownerBackground: safeStr(byId('ownerBackground').value),
-    yearsExperience: byId('yearsExperience').value ? Number(byId('yearsExperience').value) : 5,
-    sellingPoints: toList(byId('sellingPoints').value),
-    tone: safeStr(byId('tone').value),
-    phone: safeStr(byId('phone').value),
-    email: safeStr(byId('email').value),
-    address: safeStr(byId('address').value),
-    servicesOffered: toList(byId('servicesOffered').value),
-    competitorAngle: safeStr(byId('competitorAngle').value),
-    audience: safeStr(byId('audience').value),
-    websiteGoals: toList(byId('websiteGoals').value),
-    brandColorHint: safeStr(byId('brandColorHint').value),
-    fontHint: safeStr(byId('fontHint').value),
-    complianceNotes: safeStr(byId('complianceNotes').value),
-  };
-}
-function buildKit(inputs){
+/* ------------ Site generator (single page) ------------ */
+function buildHTML(data){
   const {
-    businessName, industry, locationCity, locationState, ownerBackground,
-    yearsExperience, sellingPoints, tone, phone, email, address,
-    servicesOffered, competitorAngle, audience, websiteGoals, brandColorHint,
-    fontHint, complianceNotes
-  } = inputs;
-
-  const services = (servicesOffered.length? servicesOffered : defaultServices(industry)).slice(0,6).map(name=>({
-    name,
-    desc: `Professional ${name.toLowerCase()} to help you get results without hassle.`,
-    cta: 'Book Now'
-  }));
-  const colors = paletteFromHint(brandColorHint);
+    businessName, industry, locationCity, locationState, sellingPoints,
+    yearsExperience, servicesOffered, phone, email, address, theme
+  } = data;
+  const colors = palette(theme);
   const cityState = (locationCity && locationState) ? `${locationCity}, ${locationState}` : '';
+  const title = [businessName||'Your Startup', industry||'Services', cityState].filter(Boolean).join(' | ');
+  const desc = `${businessName||'We'} offer ${(industry||'startup services').toLowerCase()} ${cityState?`in ${cityState}`:''}. ${yearsExperience||5}+ years experience.`.replace(/\s+/g,' ').trim();
 
-  const titleBits = [businessName||'Your Business', industry||'Services', cityState].filter(Boolean).join(' | ');
-  const descBits = [
-    businessName||'Your business', 'offers', (industry||'services').toLowerCase(), cityState ? `in ${cityState}` : '',
-    (yearsExperience? `${yearsExperience}+ years experience.` : '')
-  ].filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
+  const services = (servicesOffered.length? servicesOffered : ['Setup','Branding','Basic SEO']).slice(0,6);
+  const bullets = sellingPoints.length ? sellingPoints.slice(0,3) : ['Fast setup','No code','Launch in minutes'];
 
-  return {
-    homepage:{
-      heroH1: businessName ? `${businessName} — ${industry||'Services'}` : 'Trusted Local Experts',
-      subhead: sellingPoints.length ? sellingPoints.slice(0,3).join(' • ') : 'Professional, reliable, and friendly service.',
-      ctaPrimary: 'Get Started',
-      sections:[
-        { heading:'What You Get', paragraph:'Clear pricing, great communication, and dependable results. We handle the work so you can focus on what matters.' },
-        { heading:'Why Choose Us', paragraph: ownerBackground ? `${ownerBackground}. ${yearsExperience||5}+ years of experience serving our community.` : `${yearsExperience||5}+ years of experience serving our community.` }
-      ]
-    },
-    about:{ headline:'Built on Service, Focused on Results', body:`${businessName||'Our team'} provides ${industry||'professional services'} with a focus on quality, transparency, and care. We believe in honest work, clear communication, and steady improvement.` },
-    services,
-    contact:{ headline:'Get in Touch', paragraph:'Request a free, no-obligation quote.', phone: phone||'', email: email||'', address: address||'', cta:'Request a Quote' },
-    brand:{ colors, fonts:{ heading:'Montserrat, sans-serif', body:'Open Sans, sans-serif' } },
-    social:[
-      'Before/After post highlighting a recent project.',
-      'Customer testimonial with a short quote.',
-      'Quick tip relevant to your industry that saves time or money.',
-      'Short timelapse or behind-the-scenes clip.',
-      'Weekly availability or booking reminder.'
-    ],
-    ads:[
-      `${industry||'Local Services'} in ${cityState||'Your Area'}`,
-      `Fast, Friendly ${industry||'Service'} — Free Quote`,
-      `${(yearsExperience||5)}+ Years of Trusted Work`,
-      `${businessName||'Top-Rated Team'} — Book Today`
-    ],
-    seo:{
-      title: titleBits.slice(0,60),
-      description: descBits.slice(0,155),
-      keywords: [industry||'services', locationCity, locationState].filter(Boolean).join(', ') || 'local services'
+  const servicesGrid = services.map(s=>`
+    <div class="card mini">
+      <h3>${esc(s)}</h3>
+      <p>Professional ${esc(s.toLowerCase())} to help you move faster.</p>
+      <a class="btn ghost" href="#contact">Get Started</a>
+    </div>
+  `).join('');
+
+  return `<!doctype html><html lang="en"><head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>${esc(title)}</title>
+  <meta name="description" content="${esc(desc)}"/>
+  <style>
+    :root{
+      --bg:#0f172a; --fg:#e2e8f0; --muted:#94a3b8; --card:#0b1226; --border:rgba(255,255,255,.08);
+      --primary:${colors.primary}; --secondary:${colors.secondary}; --accent:${colors.accent}; --dark:${colors.dark}; --light:${colors.light};
     }
-  };
+    *{box-sizing:border-box}
+    body{
+      margin:0; background:
+        radial-gradient(1200px 1200px at 80% -10%, rgba(34,211,238,.12), transparent 40%),
+        radial-gradient(1000px 1000px at 0% 0%, rgba(99,102,241,.15), transparent 35%), var(--bg);
+      color:var(--fg); font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+    }
+    a{text-decoration:none; color:inherit}
+    .wrap{max-width:1100px; margin:0 auto; padding:24px}
+    header{position:sticky; top:0; backdrop-filter: blur(8px);
+      background:linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.6)); border-bottom:1px solid var(--border)}
+    .nav{display:flex; align-items:center; justify-content:space-between; height:64px}
+    .brand{font-weight:800; letter-spacing:.2px}
+    .nav a{padding:8px 10px; color:var(--fg); opacity:.9}
+    .nav a:hover{opacity:1}
+    .hero{display:grid; gap:16px; grid-template-columns:1.1fr .9fr}
+    @media (max-width: 900px){ .hero{grid-template-columns:1fr} }
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--border); border-radius:14px; padding:18px}
+    h1{font-size: clamp(28px, 5vw, 44px); line-height:1.1; margin:10px 0}
+    h2,h3{margin:0 0 8px}
+    .btn{display:inline-block; padding:10px 14px; border-radius:999px; border:1px solid var(--border);
+         background:linear-gradient(90deg, var(--primary), var(--accent)); color:#0b1020; font-weight:700}
+    .btn.ghost{background:transparent; color:var(--fg)}
+    .grid{display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))}
+    .mini{border:1px solid var(--border); background:transparent}
+    footer{border-top:1px solid var(--border); margin-top:32px}
+    .foot{height:64px; display:flex; align-items:center; color:var(--muted)}
+    .kicker{color:var(--muted); font-size:12px; letter-spacing:.18em; text-transform:uppercase}
+    .bullets{display:flex; gap:8px; flex-wrap:wrap; margin:10px 0}
+    .bullet{border:1px dashed var(--border); border-radius:999px; padding:6px 10px; font-size:12px; color:var(--muted)}
+    .contact{display:grid; gap:10px; grid-template-columns: 1fr 1fr}
+    @media (max-width: 700px){ .contact{grid-template-columns:1fr} }
+  </style>
+</head><body>
+<header>
+  <div class="wrap nav">
+    <div class="brand">${esc(businessName || 'Your Startup')}</div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero" id="home">
+    <div class="card">
+      <div class="kicker">Built to launch</div>
+      <h1>${esc(businessName || 'Launch in minutes')}</h1>
+      <p>${esc(industry || 'AI tooling')} — ${esc(cityState || 'Remote / US')}</p>
+      <div class="bullets">
+        ${bullets.map(b=>`<span class="bullet">${esc(b)}</span>`).join('')}
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:4px">
+        <a class="btn" href="#contact">Get Started</a>
+        <a class="btn ghost" href="#services">See Services</a>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Why choose us</h2>
+      <p>${esc((yearsExperience||5) + '+ years building useful tools. Clear pricing, clean design, and fast turnarounds. No fluff — just working software.')}</p>
+    </div>
+  </section>
+
+  <section class="card" id="services" style="margin-top:16px">
+    <h2>Services</h2>
+    <div class="grid" style="margin-top:8px">
+      ${servicesGrid}
+    </div>
+  </section>
+
+  <section class="card" id="contact" style="margin-top:16px">
+    <h2>Contact</h2>
+    <div class="contact">
+      <div><strong>Phone:</strong> ${esc(phone||'')}</div>
+      <div><strong>Email:</strong> ${esc(email||'')}</div>
+      <div><strong>Address:</strong> ${esc(address||'')}</div>
+      <div><strong>Hours:</strong> Mon–Fri</div>
+    </div>
+    <div style="margin-top:12px"><a class="btn" href="#">Request a Quote</a></div>
+  </section>
+</main>
+
+<footer><div class="wrap foot">© ${new Date().getFullYear()} ${esc(businessName || 'Your Startup')}</div></footer>
+</body></html>`;
 }
 
-/* ======= VALIDATION / AUTOSAVE / SEO PREVIEW ======= */
-function setError(el, msgEl, on){ el.classList.toggle('error', on); msgEl.classList.toggle('hidden', !on); }
-function validateRequired(){
+/* ------------ State & actions ------------ */
+const inputIds = ['businessName','industry','locationCity','locationState','sellingPoints','yearsExperience','servicesOffered','phone','email','address','theme'];
+function getInputs(){
+  return {
+    businessName: byId('businessName').value.trim(),
+    industry: byId('industry').value.trim(),
+    locationCity: byId('locationCity').value.trim(),
+    locationState: byId('locationState').value.trim(),
+    sellingPoints: toList(byId('sellingPoints').value),
+    yearsExperience: Number(byId('yearsExperience').value || 5),
+    servicesOffered: toList(byId('servicesOffered').value),
+    phone: byId('phone').value.trim(),
+    email: byId('email').value.trim(),
+    address: byId('address').value.trim(),
+    theme: byId('theme').value
+  };
+}
+function validate(){
+  let ok = true;
   const b = byId('businessName'), i = byId('industry');
   const eb = byId('err-business'), ei = byId('err-industry');
   const be = !b.value.trim(), ie = !i.value.trim();
-  setError(b, eb, be); setError(i, ei, ie);
-  return !(be || ie);
+  b.classList.toggle('error', be); eb.classList.toggle('hidden', !be); if(be) ok=false;
+  i.classList.toggle('error', ie); ei.classList.toggle('hidden', !ie); if(ie) ok=false;
+  return ok;
 }
-function saveInputs(){ const data = {}; inputIds.forEach(id=> data[id] = byId(id).value ); localStorage.setItem('ssai_inputs', JSON.stringify(data)); }
-function loadInputs(){ const raw = localStorage.getItem('ssai_inputs'); if(!raw) return; const data = JSON.parse(raw); inputIds.forEach(id=> { if(data[id] !== undefined) byId(id).value = data[id]; }); }
-function updateSeoPreview(){ const kit = buildKit(collectInputs()); byId('seoTitlePrev').textContent = kit.seo.title || '—'; byId('seoDescPrev').textContent = kit.seo.description || '—'; }
-inputIds.forEach(id=> byId(id).addEventListener('input', ()=>{ saveInputs(); updateSeoPreview(); }));
-window.addEventListener('DOMContentLoaded', ()=>{ loadInputs(); updateSeoPreview(); });
+function updatePreview(){
+  const data = getInputs();
+  const html = buildHTML(data);
+  const frame = byId('previewFrame');
+  frame.srcdoc = html;
+  return html;
+}
 
-/* ======= GENERATE / COPY / DOWNLOAD ======= */
-const out = byId('jsonOut');
-byId('generateBtn').addEventListener('click', async ()=>{
-  if(!validateRequired()){ showToast('Please fix required fields'); return; }
-  const inputs = collectInputs();
+/* Autosave */
+function save(){ const o={}; inputIds.forEach(id=>o[id]=byId(id).value); localStorage.setItem('ssai_site_inputs', JSON.stringify(o)); }
+function load(){ const raw=localStorage.getItem('ssai_site_inputs'); if(!raw) return; const o=JSON.parse(raw); inputIds.forEach(id=>{ if(o[id]!==undefined) byId(id).value=o[id]; }); }
+inputIds.forEach(id=> byId(id).addEventListener('input', save));
+window.addEventListener('DOMContentLoaded', ()=>{ load(); updatePreview(); });
 
-  if(useServer){
-    // OPTIONAL: If you add a server endpoint, post inputs there (system prompt lives server-side).
-    try{
-      const res = await fetch('/api/generate', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(inputs) });
-      const data = await res.json();
-      out.textContent = JSON.stringify(data, null, 2);
-    }catch(e){
-      showToast('Server error—using local generator');
-      out.textContent = JSON.stringify(buildKit(inputs), null, 2);
-    }
-  } else {
-    // Client-side generator (no prompts shown or needed)
-    out.textContent = JSON.stringify(buildKit(inputs), null, 2);
-  }
-
-  out.classList.add('ok');
-  location.hash = '#output';
-  showToast('Generated!');
+/* Buttons */
+byId('generateSite').addEventListener('click', ()=>{
+  if(!validate()) return;
+  updatePreview();
 });
-byId('clearBtn').addEventListener('click', ()=>{
+byId('clear').addEventListener('click', ()=>{
   inputIds.forEach(id=> byId(id).value='');
-  localStorage.removeItem('ssai_inputs');
-  out.textContent = '{ /* Click “Generate JSON” to see your output here */ }';
-  out.classList.remove('ok');
-  updateSeoPreview();
-  showToast('Cleared');
+  localStorage.removeItem('ssai_site_inputs');
+  updatePreview();
 });
-byId('copyJson').addEventListener('click', ()=>{
-  const text = out.textContent;
-  if(!text || text.includes('Click “Generate JSON”')){ showToast('Nothing to copy'); return; }
-  navigator.clipboard.writeText(text).then(()=>showToast('JSON copied'));
-});
-byId('downloadJson').addEventListener('click', ()=>{
-  const text = out.textContent;
-  if(!text || text.includes('Click “Generate JSON”')){ showToast('Nothing to download'); return; }
-  const name = (byId('businessName').value || 'launch-kit').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
-  const blob = new Blob([text], {type:'application/json'});
+
+/* Download & open */
+byId('downloadPage').addEventListener('click', ()=>{
+  if(!validate()) return;
+  const html = updatePreview();
+  const blob = new Blob([html], {type:'text/html'});
   const a = document.createElement('a');
+  const name = (byId('businessName').value || 'site').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
   a.href = URL.createObjectURL(blob);
-  a.download = `launch-kit-${name || 'site'}.json`;
+  a.download = `index-${name||'starter'}.html`;
   a.click();
   URL.revokeObjectURL(a.href);
-  showToast('Downloaded');
+});
+byId('openNew').addEventListener('click', ()=>{
+  if(!validate()) return;
+  const html = updatePreview();
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+  setTimeout(()=>URL.revokeObjectURL(url), 30000);
 });
 </script>
 </body>
 </html>
+
 
 
