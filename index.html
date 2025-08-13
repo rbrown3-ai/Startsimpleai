@@ -13,8 +13,9 @@
     --card:#0b1226;     /* slightly lighter than bg */
     --brand:#6366f1;    /* indigo-500 */
     --brand-2:#22d3ee;  /* cyan-400 */
-    --border:rgba(255,255,255,.08);
     --ok:#22c55e;
+    --danger:#ef4444;
+    --border:rgba(255,255,255,.08);
   }
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -27,22 +28,26 @@
   }
   a{text-decoration:none; color:inherit}
   .wrap{max-width:1100px; margin:0 auto; padding:24px}
-  header{position:sticky; top:0; backdrop-filter: blur(8px); background:linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.6)); border-bottom:1px solid var(--border)}
+  header{position:sticky; top:0; backdrop-filter: blur(8px); background:linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.6)); border-bottom:1px solid var(--border); z-index:10}
   .nav{display:flex; align-items:center; justify-content:space-between; height:64px}
   .brand{font-weight:700; letter-spacing:.2px}
   .nav a{padding:8px 10px; color:var(--fg); opacity:.9}
   .nav a:hover{opacity:1}
   .grid{display:grid; gap:16px; grid-template-columns: 1.1fr .9fr}
+  @media (max-width: 900px){ .grid{grid-template-columns: 1fr} }
   .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--border); border-radius:14px; padding:18px}
   h1{font-size: clamp(26px, 3.8vw, 40px); line-height:1.15; margin:16px 0 10px}
+  h2,h3{margin:0 0 8px}
   .eyebrow{color:var(--muted); font-size:12px; letter-spacing:.18em; text-transform:uppercase}
-  label{display:block; font-size:14px; color:var(--muted); margin:12px 0 6px}
+  label{display:block; font-size:13px; color:var(--muted); margin:12px 0 6px}
   input, textarea{
     width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border);
-    background:#0b1226; color:var(--fg); outline:none;
+    background:#0b1226; color:var(--fg); outline:none; transition: border-color .15s ease, box-shadow .15s ease;
   }
+  input:focus, textarea:focus{ border-color: rgba(255,255,255,.18); box-shadow:0 0 0 3px rgba(99,102,241,.25) }
   textarea{min-height:100px; resize:vertical}
   .row{display:grid; gap:12px; grid-template-columns: 1fr 1fr}
+  @media (max-width: 700px){ .row{grid-template-columns:1fr} }
   .btn{
     display:inline-block; padding:10px 14px; border-radius:999px; border:1px solid var(--border);
     background:linear-gradient(90deg, var(--brand), var(--brand-2)); color:#0b1020; font-weight:700; cursor:pointer
@@ -50,7 +55,7 @@
   .btn.ghost{background:transparent; color:var(--fg)}
   .btnbar{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
   .small{font-size:12px; color:var(--muted)}
-  pre, .output{
+  .output{
     white-space:pre-wrap; word-break:break-word; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
     background:#0b1226; color:var(--fg); border:1px solid var(--border); border-radius:10px; padding:12px; min-height:220px
   }
@@ -63,6 +68,18 @@
   .tab.active{background:linear-gradient(90deg, var(--brand), var(--brand-2)); color:#0b1020; font-weight:700; opacity:1}
   .hidden{display:none}
   .notice{border-left:3px solid var(--brand); padding-left:10px; margin:8px 0; color:var(--muted)}
+  .error{border-color: rgba(239,68,68,.6)!important}
+  .error-msg{color:var(--danger); font-size:12px; margin-top:6px}
+  .pill{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px dashed var(--border); border-radius:999px; color:var(--muted); font-size:12px}
+  .toast{
+    position: fixed; right:16px; bottom:16px; background:linear-gradient(90deg, var(--brand), var(--brand-2));
+    color:#0b1020; padding:10px 14px; border-radius:10px; font-weight:700; opacity:0; transform:translateY(10px);
+    transition: all .2s ease; z-index:50;
+  }
+  .toast.show{opacity:1; transform:translateY(0)}
+  .seo-preview{display:flex; flex-direction:column; gap:6px; margin-top:10px}
+  .seo-title{font-weight:700}
+  .muted{color:var(--muted)}
 </style>
 </head>
 <body>
@@ -80,20 +97,23 @@
   <main class="wrap">
     <div class="eyebrow">Launch Kits</div>
     <h1>Generate clean, compliant JSON for any small business</h1>
-    <p class="notice">Tip: Don’t paste backticks (```); use this page’s buttons to copy JSON cleanly.</p>
+    <p class="notice">Tip: We autosave your inputs. Use the buttons here to copy/download valid JSON (no stray backticks).</p>
 
     <div class="grid" id="builder">
       <!-- LEFT: FORM -->
       <section class="card">
-        <h3 style="margin:0 0 8px">Inputs</h3>
+        <h3>Inputs</h3>
+
         <div class="row">
           <div>
-            <label>Business Name</label>
+            <label>Business Name <span class="pill">required</span></label>
             <input id="businessName" placeholder="Prime Cut Landscaping" />
+            <div class="error-msg hidden" id="err-business">Please enter a business name.</div>
           </div>
           <div>
-            <label>Industry</label>
+            <label>Industry <span class="pill">required</span></label>
             <input id="industry" placeholder="Landscaping / Lawn Care" />
+            <div class="error-msg hidden" id="err-industry">Please enter an industry.</div>
           </div>
         </div>
 
@@ -189,11 +209,20 @@
           <button class="btn ghost" id="clearBtn">Clear</button>
         </div>
         <p class="small">We’ll fill safe defaults if something’s missing (no fake licenses or made-up contact info).</p>
+
+        <!-- SEO PREVIEW -->
+        <div class="card" style="margin-top:12px">
+          <h3 style="margin-top:0">SEO Preview</h3>
+          <div class="seo-preview">
+            <div class="seo-title" id="seoTitlePrev">—</div>
+            <div class="muted" id="seoDescPrev">—</div>
+          </div>
+        </div>
       </section>
 
       <!-- RIGHT: PROMPTS -->
       <section class="card" id="prompts">
-        <h3 style="margin:0 0 8px">Prompts</h3>
+        <h3>Prompts</h3>
         <div class="tabs">
           <button class="tab active" data-tab="system">System</button>
           <button class="tab" data-tab="user">User</button>
@@ -255,49 +284,49 @@ OUTPUT (exact shape):
 
     <!-- OUTPUT -->
     <section class="card" id="output" style="margin-top:16px">
-      <h3 style="margin:0 0 8px">Launch Kit JSON</h3>
+      <h3>Launch Kit JSON</h3>
       <div class="btnbar">
         <button class="btn" id="copyJson">Copy JSON</button>
         <button class="btn ghost" id="downloadJson">Download JSON</button>
       </div>
       <div class="output" id="jsonOut">{ /* Click “Generate JSON” to see your output here */ }</div>
-      <p class="small">If you saw page code earlier, it was likely pasted with backticks or served as text. Use this file as plain HTML.</p>
+      <p class="small">Validation: Business Name & Industry are required. We fill safe defaults elsewhere.</p>
     </section>
   </main>
 
+  <div class="toast" id="toast">Copied!</div>
+
 <script>
+/* Helpers */
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+const byId = id => document.getElementById(id);
+function toList(val){ return (val||'').split(',').map(s=>s.trim()).filter(Boolean) }
+function safeStr(v){ return (v ?? '').toString() }
+function showToast(msg='Copied!'){ const t = byId('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 1200) }
+
 /* Tabs */
-document.querySelectorAll('.tab').forEach(t=>{
+$$('.tab').forEach(t=>{
   t.addEventListener('click', ()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    $$('.tab').forEach(x=>x.classList.remove('active'));
     t.classList.add('active');
     const tab = t.dataset.tab;
-    document.getElementById('systemTab').classList.toggle('hidden', tab!=='system');
-    document.getElementById('userTab').classList.toggle('hidden', tab!=='user');
+    byId('systemTab').classList.toggle('hidden', tab!=='system');
+    byId('userTab').classList.toggle('hidden', tab!=='user');
   });
 });
 
-/* Copy helpers */
-function copySel(sel){
-  const el = document.querySelector(sel);
-  const txt = el.value || el.textContent;
-  navigator.clipboard.writeText(txt).then(()=>alert('Copied!'));
-}
-document.querySelectorAll('[data-copy]').forEach(btn=>{
-  btn.addEventListener('click', ()=>copySel(btn.getAttribute('data-copy')));
+/* Copy */
+$$('[data-copy]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const el = $(btn.getAttribute('data-copy'));
+    const txt = el.value || el.textContent;
+    navigator.clipboard.writeText(txt).then(()=>showToast());
+  });
 });
 
-/* Inputs -> JSON generator */
-const byId = id => document.getElementById(id);
-function toList(val){
-  if(!val) return [];
-  return val.split(',').map(s=>s.trim()).filter(Boolean);
-}
-function safeStr(v){ return (v ?? '').toString(); }
-function hex(x){ return /^#([0-9a-fA-F]{6})$/.test(x) ? x : x; } // placeholder (colors are assigned later)
-
+/* Defaults */
 function defaultServices(industry){
-  // minimal generic defaults if none provided
   const map = {
     'landscaping / lawn care': ['Lawn Mowing & Maintenance','Landscape Design & Installation','Mulching','Seasonal Cleanups'],
     'residential electrician': ['Troubleshooting','Panel Upgrades','EV Charger Installs','Lighting Design','Emergency Service'],
@@ -306,7 +335,6 @@ function defaultServices(industry){
   const key = (industry||'').toLowerCase();
   return map[key] || ['Consultation','Core Service','Premium Service','Seasonal/On-Demand'];
 }
-
 function paletteFromHint(hint){
   const h = (hint||'').toLowerCase();
   if(h.includes('green')) return {primary:'#2E7D32',secondary:'#8BC34A',accent:'#FFC107',neutralDark:'#1F2937',neutralLight:'#F5F5F5'};
@@ -315,49 +343,37 @@ function paletteFromHint(hint){
   return {primary:'#6366F1',secondary:'#22D3EE',accent:'#F59E0B',neutralDark:'#0B1226',neutralLight:'#F5F5F5'};
 }
 
-function buildJson(){
-  const businessName = safeStr(byId('businessName').value);
-  const industry = safeStr(byId('industry').value);
-  const locationCity = safeStr(byId('locationCity').value);
-  const locationState = safeStr(byId('locationState').value);
-  const ownerBackground = safeStr(byId('ownerBackground').value);
-  const yearsExperience = byId('yearsExperience').value ? Number(byId('yearsExperience').value) : 5;
-  const sellingPoints = toList(byId('sellingPoints').value);
-  const tone = safeStr(byId('tone').value);
-  const phone = safeStr(byId('phone').value);
-  const email = safeStr(byId('email').value);
-  const address = safeStr(byId('address').value);
-  const servicesOffered = toList(byId('servicesOffered').value);
-  const competitorAngle = safeStr(byId('competitorAngle').value);
-  const audience = safeStr(byId('audience').value);
-  const websiteGoals = toList(byId('websiteGoals').value);
-  const brandColorHint = safeStr(byId('brandColorHint').value);
-  const fontHint = safeStr(byId('fontHint').value);
-  const complianceNotes = safeStr(byId('complianceNotes').value);
+/* Build kit */
+function buildKit(inputs){
+  const {
+    businessName, industry, locationCity, locationState, ownerBackground,
+    yearsExperience, sellingPoints, tone, phone, email, address,
+    servicesOffered, competitorAngle, audience, websiteGoals, brandColorHint,
+    fontHint, complianceNotes
+  } = inputs;
 
   const services = (servicesOffered.length? servicesOffered : defaultServices(industry)).slice(0,6).map(name=>({
     name,
     desc: `Professional ${name.toLowerCase()} to help you get results without hassle.`,
     cta: 'Book Now'
   }));
-
   const colors = paletteFromHint(brandColorHint);
-
   const cityState = (locationCity && locationState) ? `${locationCity}, ${locationState}` : '';
+
   const titleBits = [businessName||'Your Business', industry||'Services', cityState].filter(Boolean).join(' | ');
   const descBits = [
     businessName||'Your business', 'offers', (industry||'services').toLowerCase(), cityState ? `in ${cityState}` : '',
-    yearsExperience ? `${yearsExperience}+ years experience.` : ''
+    (yearsExperience? `${yearsExperience}+ years experience.` : '')
   ].filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
 
-  const kit = {
+  return {
     homepage:{
       heroH1: businessName ? `${businessName} — ${industry||'Services'}` : 'Trusted Local Experts',
       subhead: sellingPoints.length ? sellingPoints.slice(0,3).join(' • ') : 'Professional, reliable, and friendly service.',
       ctaPrimary: 'Get Started',
       sections:[
         { heading:'What You Get', paragraph:'Clear pricing, great communication, and dependable results. We handle the work so you can focus on what matters.' },
-        { heading:'Why Choose Us', paragraph: ownerBackground ? `${ownerBackground}. ${yearsExperience}+ years of experience serving our community.` : `${yearsExperience}+ years of experience serving our community.` }
+        { heading:'Why Choose Us', paragraph: ownerBackground ? `${ownerBackground}. ${yearsExperience||5}+ years of experience serving our community.` : `${yearsExperience||5}+ years of experience serving our community.` }
       ]
     },
     about:{ headline:'Built on Service, Focused on Results', body:`${businessName||'Our team'} provides ${industry||'professional services'} with a focus on quality, transparency, and care. We believe in honest work, clear communication, and steady improvement.` },
@@ -374,7 +390,7 @@ function buildJson(){
     ads:[
       `${industry||'Local Services'} in ${cityState||'Your Area'}`,
       `Fast, Friendly ${industry||'Service'} — Free Quote`,
-      `${yearsExperience}+ Years of Trusted Work`,
+      `${(yearsExperience||5)}+ Years of Trusted Work`,
       `${businessName||'Top-Rated Team'} — Book Today`
     ],
     seo:{
@@ -383,34 +399,109 @@ function buildJson(){
       keywords: [industry||'services', locationCity, locationState].filter(Boolean).join(', ') || 'local services'
     }
   };
-
-  return kit;
 }
 
-/* Render JSON and actions */
-const out = document.getElementById('jsonOut');
-document.getElementById('generateBtn').addEventListener('click', ()=>{
-  const json = buildJson();
+/* Autosave & load */
+const inputIds = ['businessName','industry','locationCity','locationState','ownerBackground','yearsExperience','sellingPoints','tone','phone','email','address','servicesOffered','competitorAngle','audience','websiteGoals','brandColorHint','fontHint','complianceNotes'];
+function saveInputs(){
+  const data = {};
+  inputIds.forEach(id=> data[id] = byId(id).value );
+  localStorage.setItem('ssai_inputs', JSON.stringify(data));
+}
+function loadInputs(){
+  const raw = localStorage.getItem('ssai_inputs');
+  if(!raw) return;
+  const data = JSON.parse(raw);
+  inputIds.forEach(id=> { if(data[id] !== undefined) byId(id).value = data[id]; });
+}
+function collectInputs(){
+  return {
+    businessName: safeStr(byId('businessName').value),
+    industry: safeStr(byId('industry').value),
+    locationCity: safeStr(byId('locationCity').value),
+    locationState: safeStr(byId('locationState').value),
+    ownerBackground: safeStr(byId('ownerBackground').value),
+    yearsExperience: byId('yearsExperience').value ? Number(byId('yearsExperience').value) : 5,
+    sellingPoints: toList(byId('sellingPoints').value),
+    tone: safeStr(byId('tone').value),
+    phone: safeStr(byId('phone').value),
+    email: safeStr(byId('email').value),
+    address: safeStr(byId('address').value),
+    servicesOffered: toList(byId('servicesOffered').value),
+    competitorAngle: safeStr(byId('competitorAngle').value),
+    audience: safeStr(byId('audience').value),
+    websiteGoals: toList(byId('websiteGoals').value),
+    brandColorHint: safeStr(byId('brandColorHint').value),
+    fontHint: safeStr(byId('fontHint').value),
+    complianceNotes: safeStr(byId('complianceNotes').value),
+  };
+}
+
+/* Validation */
+function setError(el, msgEl, on){
+  el.classList.toggle('error', on);
+  msgEl.classList.toggle('hidden', !on);
+}
+function validateRequired(){
+  const b = byId('businessName'), i = byId('industry');
+  const eb = byId('err-business'), ei = byId('err-industry');
+  const be = !b.value.trim(), ie = !i.value.trim();
+  setError(b, eb, be);
+  setError(i, ei, ie);
+  return !(be || ie);
+}
+
+/* Live SEO preview */
+function updateSeoPreview(){
+  const data = collectInputs();
+  const kit = buildKit(data);
+  byId('seoTitlePrev').textContent = kit.seo.title || '—';
+  byId('seoDescPrev').textContent = kit.seo.description || '—';
+}
+
+/* Events */
+inputIds.forEach(id=>{
+  byId(id).addEventListener('input', ()=>{ saveInputs(); updateSeoPreview(); });
+});
+window.addEventListener('DOMContentLoaded', ()=>{ loadInputs(); updateSeoPreview(); });
+
+/* Generate / Clear / Copy / Download */
+const out = byId('jsonOut');
+byId('generateBtn').addEventListener('click', ()=>{
+  if(!validateRequired()){
+    showToast('Please fix required fields');
+    return;
+  }
+  const json = buildKit(collectInputs());
   out.textContent = JSON.stringify(json, null, 2);
   out.classList.add('ok');
   location.hash = '#output';
+  showToast('Generated!');
 });
-document.getElementById('clearBtn').addEventListener('click', ()=>{
-  document.querySelectorAll('input').forEach(i=>i.value='');
+byId('clearBtn').addEventListener('click', ()=>{
+  inputIds.forEach(id=> byId(id).value='');
+  localStorage.removeItem('ssai_inputs');
   out.textContent = '{ /* Click “Generate JSON” to see your output here */ }';
   out.classList.remove('ok');
+  updateSeoPreview();
+  showToast('Cleared');
 });
-document.getElementById('copyJson').addEventListener('click', ()=>{
+byId('copyJson').addEventListener('click', ()=>{
   const text = out.textContent;
-  navigator.clipboard.writeText(text).then(()=>alert('JSON copied!'));
+  if(!text || text.includes('Click “Generate JSON”')){ showToast('Nothing to copy'); return; }
+  navigator.clipboard.writeText(text).then(()=>showToast('JSON copied'));
 });
-document.getElementById('downloadJson').addEventListener('click', ()=>{
-  const blob = new Blob([out.textContent], {type:'application/json'});
+byId('downloadJson').addEventListener('click', ()=>{
+  const text = out.textContent;
+  if(!text || text.includes('Click “Generate JSON”')){ showToast('Nothing to download'); return; }
+  const name = (byId('businessName').value || 'launch-kit').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+  const blob = new Blob([text], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'launch-kit.json';
+  a.download = `launch-kit-${name || 'site'}.json`;
   a.click();
   URL.revokeObjectURL(a.href);
+  showToast('Downloaded');
 });
 </script>
 </body>
