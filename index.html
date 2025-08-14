@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>StartSimpleAI — Single‑Page Site Maker</title>
-<meta name="description" content="Answer a few questions. Instantly generate a one‑page starter website. Upgrade to a premium build via 3LEVELS.">
+<title>StartSimpleAI — Real‑Time Site Builder</title>
+<meta name="description" content="Answer a few questions. Instantly preview and download a one‑page starter website. Upgrade to a premium build via 3LEVELS.">
 <style>
   :root{
     --bg:#0f172a; --fg:#e2e8f0; --muted:#94a3b8; --card:#0b1226;
@@ -24,10 +24,11 @@
   header{position:sticky; top:0; z-index:10; backdrop-filter: blur(8px);
     background:linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.6));
     border-bottom:1px solid var(--border)}
-  .wrap{max-width:900px; margin:0 auto; padding:16px 20px}
+  .wrap{max-width:1200px; margin:0 auto; padding:16px 20px}
   .nav{display:flex; align-items:center; justify-content:space-between; gap:12px}
   .brand{font-weight:800; letter-spacing:.2px}
-  .pill{font-size:12px; color:var(--muted)}
+  .layout{display:grid; gap:16px; grid-template-columns: 0.9fr 1.1fr; padding:20px}
+  @media (max-width: 1000px){ .layout{grid-template-columns:1fr} }
   .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid var(--border); border-radius:14px; padding:18px}
   h1{font-size: clamp(24px, 3.5vw, 36px); line-height:1.15; margin:8px 0}
   h2,h3{margin:0 0 8px}
@@ -49,41 +50,42 @@
   .muted{color:var(--muted)}
   .error{border-color: rgba(239,68,68,.6)!important}
   .error-msg{color:#ef4444; font-size:12px; margin-top:6px}
-  .notice{border-left:3px solid var(--brand); padding-left:10px; margin:8px 0; color:var(--muted)}
-  .output{
-    white-space:pre-wrap; word-break:break-word; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
-    background:#0b1226; color:var(--fg); border:1px solid var(--border); border-radius:10px; padding:12px; min-height:220px
+  /* Preview panel */
+  .preview{
+    height:82vh; min-height:540px; border:1px solid var(--border); border-radius:14px; overflow:hidden;
+    background:#0b1226; position:relative;
   }
+  .preview__empty{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--muted);
+    font-size:14px; letter-spacing:.2px
+  }
+  iframe{width:100%; height:100%; border:0; background:#fff}
   .toast{
     position: fixed; right:16px; bottom:16px; background:linear-gradient(90deg, var(--brand), var(--brand2));
     color:#0b1020; padding:10px 14px; border-radius:10px; font-weight:700; opacity:0; transform:translateY(10px);
-    transition: all .2s ease; z-index:50;
+    transition: all .2s ease; z-index:100;
   }
   .toast.show{opacity:1; transform:translateY(0)}
-  .seo-preview{display:flex; flex-direction:column; gap:6px; margin-top:10px}
-  .seo-title{font-weight:700}
 </style>
 </head>
 <body>
   <header>
     <div class="wrap nav">
-      <div>
-        <div class="brand">StartSimpleAI — Site Maker</div>
-        <div class="pill">Answer a few questions → get a starter website → upgrade for the full build</div>
-      </div>
+      <div class="brand">StartSimpleAI — Site Maker</div>
       <div class="btnbar">
+        <a class="btn" id="upgradeTop" href="https://3lvls.com/contact" target="_blank" rel="noopener">Upgrade with 3LEVELS</a>
         <button class="btn" id="openNew">Open Preview</button>
         <button class="btn" id="downloadPage">Download Page</button>
       </div>
     </div>
   </header>
 
-  <main class="wrap">
+  <div class="layout">
+    <!-- LEFT: FORM -->
     <section class="card">
-      <h1 style="margin-top:0">Build Your Starter Website</h1>
-      <p class="notice">We’ll email your preview link. Then you can open or download your single‑page site. No prompts are exposed.</p>
+      <h3 style="margin-top:0">Tell us about your startup</h3>
 
-      <!-- Lead capture (required) -->
+      <!-- Lead capture -->
       <div class="row">
         <div>
           <label>Your Name <span class="muted">(required)</span></label>
@@ -91,22 +93,22 @@
           <div class="error-msg hidden" id="err-name">Enter your name.</div>
         </div>
         <div>
-          <label>Email <span class="muted">(required)</span></label>
+          <label>Contact Email <span class="muted">(required)</span></label>
           <input id="leadEmail" placeholder="you@example.com" />
           <div class="error-msg hidden" id="err-email">Enter a valid email.</div>
         </div>
       </div>
 
-      <!-- Business inputs -->
+      <!-- Business basics -->
       <div class="row" style="margin-top:6px">
         <div>
-          <label>Business Name <span class="muted">(required)</span></label>
+          <label>Startup / Product Name <span class="muted">(required)</span></label>
           <input id="businessName" placeholder="StartSimpleAI" />
-          <div class="error-msg hidden" id="err-business">Enter a business name.</div>
+          <div class="error-msg hidden" id="err-business">Enter a name.</div>
         </div>
         <div>
-          <label>Industry <span class="muted">(required)</span></label>
-          <input id="industry" placeholder="AI Startup / Tools" />
+          <label>Industry / Category <span class="muted">(required)</span></label>
+          <input id="industry" placeholder="AI tools / SaaS" />
           <div class="error-msg hidden" id="err-industry">Enter an industry.</div>
         </div>
       </div>
@@ -117,12 +119,12 @@
       </div>
 
       <div class="row">
-        <div><label>Selling Points (comma-separated)</label><input id="sellingPoints" placeholder="Fast setup, No code, Launch in minutes" /></div>
+        <div><label>Key Selling Points (comma-separated)</label><input id="sellingPoints" placeholder="Fast setup, No code, Launch in minutes" /></div>
         <div><label>Years Experience</label><input id="yearsExperience" type="number" min="0" value="5" /></div>
       </div>
 
       <div class="row">
-        <div><label>Services (comma-separated)</label><input id="servicesOffered" placeholder="Setup, Branding, Basic SEO" /></div>
+        <div><label>Offer / Services (comma-separated)</label><input id="servicesOffered" placeholder="Setup, Branding, Basic SEO" /></div>
         <div>
           <label>Theme</label>
           <select id="theme">
@@ -135,60 +137,63 @@
       </div>
 
       <div class="row">
-        <div><label>Phone</label><input id="phone" placeholder="" /></div>
-        <div><label>Email for site</label><input id="email" placeholder="" /></div>
+        <div><label>Phone (optional)</label><input id="phone" placeholder="" /></div>
+        <div><label>Public Email for site (optional)</label><input id="email" placeholder="" /></div>
       </div>
-      <div><label>Address</label><input id="address" placeholder="US — Remote" /></div>
+      <div><label>Address (optional)</label><input id="address" placeholder="US — Remote" /></div>
 
-      <div class="btnbar">
-        <button class="btn" id="generateSite">Generate</button>
-        <button class="btn ghost" id="clear">Clear</button>
+      <div class="row">
+        <div>
+          <label>Logo (optional)</label>
+          <input id="logo" type="file" accept="image/*" />
+          <div class="muted" style="margin-top:4px">PNG/SVG/JPG; we’ll embed it in your page.</div>
+        </div>
+        <div style="display:flex; align-items:flex-end">
+          <div class="btnbar" style="margin-top:0">
+            <button class="btn" id="generateSite">Generate / Update Preview</button>
+            <button class="btn ghost" id="clear">Clear</button>
+          </div>
+        </div>
       </div>
 
-      <!-- SEO PREVIEW -->
+      <p class="muted" style="margin-top:6px">No prompts shown. We generate the page behind the scenes and keep it fast & simple.</p>
+    </section>
+
+    <!-- RIGHT: LIVE PREVIEW -->
+    <section class="card">
+      <div style="display:flex; align-items:center; justify-content:space-between">
+        <h3 style="margin:0">Live Preview</h3>
+        <div class="muted">Click “Generate / Update Preview” to refresh.</div>
+      </div>
+      <div class="preview">
+        <div class="preview__empty" id="emptyState">Fill the form and hit “Generate” to see your site.</div>
+        <iframe id="previewFrame" title="Site Preview"></iframe>
+      </div>
+
+      <!-- Upgrade CTA under preview -->
       <div class="card" style="margin-top:12px">
-        <h3 style="margin-top:0">SEO Preview</h3>
-        <div class="seo-preview">
-          <div class="seo-title" id="seoTitlePrev">—</div>
-          <div class="muted" id="seoDescPrev">—</div>
+        <h3 style="margin:0 0 6px">Level up with 3LEVELS</h3>
+        <p class="muted" style="margin:0 0 10px">Want a full brand + multi‑page site (SEO, domain, hosting, analytics)? We’ll build it for you.</p>
+        <div class="btnbar">
+          <a class="btn" id="upgradeBottom" href="https://3lvls.com/contact" target="_blank" rel="noopener">Upgrade to Premium</a>
+          <span class="muted">From $199 — done‑for‑you build.</span>
         </div>
       </div>
     </section>
-
-    <!-- OUTPUT JSON (optional dev/debug) -->
-    <section class="card" id="output" style="margin-top:16px">
-      <h3>Generated JSON</h3>
-      <div class="btnbar">
-        <button class="btn" id="copyJson">Copy JSON</button>
-        <button class="btn ghost" id="downloadJson">Download JSON</button>
-      </div>
-      <div class="output" id="jsonOut">{ /* Click “Generate” to see your JSON */ }</div>
-      <p class="muted" style="margin-top:8px">You don’t need this JSON if you just want the page. Use “Open Preview” or “Download Page” up top.</p>
-    </section>
-
-    <!-- UPGRADE CTA -->
-    <section class="card" style="margin-top:16px">
-      <h3>Want the full build?</h3>
-      <p>Upgrade to a <strong>3LEVELS Premium Site</strong>: multi‑page, your brand, SEO, domain + hosting, analytics — done for you.</p>
-      <div class="btnbar">
-        <a class="btn" id="upgradeBtn" href="https://example.com/checkout" target="_blank" rel="noopener">Upgrade Now</a>
-        <span class="muted">From $199 — talk to us for custom needs.</span>
-      </div>
-    </section>
-  </main>
+  </div>
 
   <div class="toast" id="toast">Copied!</div>
 
 <script>
 /* ===================== CONFIG ===================== */
-const LEAD_WEBHOOK_URL = ""; // optional: set to your webhook/endpoint to receive leads (name, email, inputs)
+const LEAD_WEBHOOK_URL = ""; // optional: set to Formspree/Make/Airtable/Cloudflare function to receive leads
 
 /* ===================== HELPERS ===================== */
 const $ = s => document.querySelector(s);
 const byId = id => document.getElementById(id);
 function toList(val){ return (val||'').split(',').map(s=>s.trim()).filter(Boolean) }
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
-function showToast(msg='Copied!'){ const t = byId('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 1200) }
+function showToast(msg='Done'){ const t = byId('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 1200) }
 function isEmail(x){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(x||'') }
 
 /* ===================== THEMES ===================== */
@@ -201,9 +206,133 @@ function palette(theme){
   }
 }
 
-/* ===================== BUILD JSON ===================== */
+/* ===================== BUILD PAGE (single HTML) ===================== */
+let logoDataUrl = ""; // set after file upload
+function pageStyles(brand){
+  const c = brand.colors, f = brand.fonts;
+  return `
+  <style>
+    :root{
+      --bg:#f8fafc; --fg:#0f172a; --muted:#475569; --card:#ffffff; --border:rgba(0,0,0,.08);
+      --primary:${c.primary}; --secondary:${c.secondary}; --accent:${c.accent}; --dark:${c.dark}; --light:${c.light};
+    }
+    *{box-sizing:border-box}
+    body{margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 ${f.body};}
+    a{text-decoration:none; color:inherit}
+    .wrap{max-width:1080px; margin:0 auto; padding:24px}
+    header{position:sticky; top:0; background:linear-gradient(90deg, var(--primary), var(--accent)); color:#fff}
+    .nav{display:flex; align-items:center; justify-content:space-between; height:64px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px; font-family:${f.heading}}
+    .brand img{height:28px; width:auto}
+    .nav a{padding:8px 10px; color:#fff; opacity:.95}
+    .nav a:hover{opacity:1}
+    .card{background:#fff; border:1px solid var(--border); border-radius:14px; padding:18px; box-shadow:0 6px 24px rgba(0,0,0,.05)}
+    h1,h2,h3{font-family:${f.heading}; margin:0 0 8px}
+    .grid{display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))}
+    .btn{display:inline-block; padding:10px 14px; border-radius:999px; border:1px solid var(--border); background:var(--dark); color:#fff; font-weight:700}
+    .btn.ghost{background:#fff; color:var(--dark)}
+    .section{margin:16px 0}
+    footer{border-top:1px solid var(--border); margin-top:32px}
+    .foot{height:64px; display:flex; align-items:center; color:#64748b; justify-content:space-between}
+    .kicker{color:#64748b; font-size:12px; letter-spacing:.18em; text-transform:uppercase}
+    .bullets{display:flex; gap:8px; flex-wrap:wrap; margin:10px 0}
+    .bullet{border:1px dashed var(--border); border-radius:999px; padding:6px 10px; font-size:12px; color:#64748b}
+    .contact{display:grid; gap:10px; grid-template-columns: 1fr 1fr}
+    @media (max-width: 700px){ .contact{grid-template-columns:1fr} }
+    .watermark{font-size:12px; color:#94a3b8}
+  </style>`;
+}
+function buildPageHTML(data){
+  const {
+    businessName, industry, locationCity, locationState, sellingPoints,
+    yearsExperience, servicesOffered, phone, email, address, theme
+  } = data;
+  const colors = palette(theme);
+  const brand = { colors, fonts:{ heading:'Montserrat, sans-serif', body:'Open Sans, sans-serif' } };
+  const cityState = (locationCity && locationState) ? `${locationCity}, ${locationState}` : '';
+  const title = [businessName||'Your Startup', industry||'Services', cityState].filter(Boolean).join(' | ');
+  const desc = `${businessName||'We'} offer ${(industry||'startup services').toLowerCase()} ${cityState?`in ${cityState}`:''}. ${(yearsExperience||5)}+ years experience.`.replace(/\s+/g,' ').trim();
+  const services = (servicesOffered.length? servicesOffered : ['Setup','Branding','Basic SEO']).slice(0,6);
+  const bullets = sellingPoints.length ? sellingPoints.slice(0,3) : ['Fast setup','No code','Launch in minutes'];
+
+  const servicesGrid = services.map(s=>`
+    <div class="card" style="box-shadow:none">
+      <h3>${esc(s)}</h3>
+      <p>Professional ${esc(s.toLowerCase())} to help you move faster.</p>
+      <a class="btn ghost" href="#contact">Get Started</a>
+    </div>
+  `).join('');
+
+  const brandBlock = logoDataUrl
+    ? `<div class="brand"><img src="${logoDataUrl}" alt="${esc(businessName||'Logo')}"/><span>${esc(businessName||'Your Startup')}</span></div>`
+    : `<div class="brand"><span>${esc(businessName||'Your Startup')}</span></div>`;
+
+  return `<!doctype html><html lang="en"><head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>${esc(title)}</title>
+  <meta name="description" content="${esc(desc)}"/>
+  ${pageStyles(brand)}
+</head><body>
+<header>
+  <div class="wrap nav">
+    ${brandBlock}
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="section card" id="home">
+    <div class="kicker">Built to launch</div>
+    <h1>${esc(businessName || 'Launch in minutes')}</h1>
+    <p>${esc(industry || 'AI tooling')} — ${esc(cityState || 'Remote / US')}</p>
+    <div class="bullets">
+      ${bullets.map(b=>`<span class="bullet">${esc(b)}</span>`).join('')}
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:4px">
+      <a class="btn" href="#contact">Get Started</a>
+      <a class="btn ghost" href="#services">See Services</a>
+    </div>
+  </section>
+
+  <section class="section card">
+    <h2>Why choose us</h2>
+    <p>${esc((yearsExperience||5) + '+ years building useful tools. Clear pricing, clean design, and fast turnarounds. No fluff — just working software.')}</p>
+  </section>
+
+  ${services.length ? `
+  <section class="section card" id="services">
+    <h2>Services</h2>
+    <div class="grid" style="margin-top:8px">
+      ${servicesGrid}
+    </div>
+  </section>` : ''}
+
+  <section class="section card" id="contact">
+    <h2>Contact</h2>
+    <div class="contact">
+      <div><strong>Phone:</strong> ${esc(phone||'')}</div>
+      <div><strong>Email:</strong> ${esc(email||'')}</div>
+      <div><strong>Address:</strong> ${esc(address||'')}</div>
+      <div><strong>Hours:</strong> Mon–Fri</div>
+    </div>
+    <div style="margin-top:12px"><a class="btn" href="#">Request a Quote</a></div>
+  </section>
+</main>
+
+<footer><div class="wrap foot">
+  <span>© ${new Date().getFullYear()} ${esc(businessName || 'Your Startup')}</span>
+  <span class="watermark">Starter by StartSimpleAI · Premium by 3LEVELS</span>
+</div></footer>
+</body></html>`;
+}
+
+/* ===================== STATE & INPUTS ===================== */
 const inputIds = ['leadName','leadEmail','businessName','industry','locationCity','locationState','sellingPoints','yearsExperience','servicesOffered','theme','phone','email','address'];
-function collectInputs(){
+function getInputs(){
   return {
     leadName: byId('leadName').value.trim(),
     leadEmail: byId('leadEmail').value.trim(),
@@ -220,233 +349,73 @@ function collectInputs(){
     address: byId('address').value.trim()
   };
 }
-function defaultServices(industry){
-  const map = {
-    'ai startup / tools': ['Setup','Branding','Basic SEO','Landing Page'],
-    'landscaping / lawn care': ['Lawn Mowing & Maintenance','Landscape Design & Installation','Mulching','Seasonal Cleanups'],
-    'residential electrician': ['Troubleshooting','Panel Upgrades','EV Charger Installs','Lighting Design','Emergency Service'],
-    'residential real estate': ['Buyer Representation','Seller Listing','Home Valuation','Open House Management','Offer Strategy']
-  };
-  const key = ( (arguments[0]||'') + '' ).toLowerCase();
-  return map[key] || ['Consultation','Core Service','Premium Service','On‑Demand'];
-}
-function buildKit(inputs){
-  const {
-    businessName, industry, locationCity, locationState, sellingPoints,
-    yearsExperience, servicesOffered, phone, email, address, theme
-  } = inputs;
-
-  const services = (servicesOffered.length? servicesOffered : defaultServices(industry)).slice(0,6).map(name=>({
-    name,
-    desc: `Professional ${name.toLowerCase()} to help you move faster.`,
-    cta: 'Get Started'
-  }));
-  const colors = palette(theme);
-  const cityState = (locationCity && locationState) ? `${locationCity}, ${locationState}` : '';
-
-  const titleBits = [businessName||'Your Startup', industry||'Services', cityState].filter(Boolean).join(' | ');
-  const descBits = `${businessName||'We'} offer ${(industry||'startup services').toLowerCase()} ${cityState?`in ${cityState}`:''}. ${(yearsExperience||5)}+ years experience.`.replace(/\s+/g,' ').trim();
-
-  return {
-    homepage:{
-      heroH1: businessName || 'Launch in minutes',
-      subhead: (sellingPoints.length ? sellingPoints.slice(0,3).join(' • ') : 'Fast setup • No code • Launch in minutes'),
-      ctaPrimary: 'Get Started',
-      sections:[
-        { heading:'What You Get', paragraph:'Clear pricing, clean design, and fast turnarounds. No fluff — just working software.' },
-        { heading:'Why Us', paragraph:`${(yearsExperience||5)}+ years building useful tools and sites for founders.` }
-      ]
-    },
-    about:{ headline:'Built for speed, focused on results', body:`${businessName||'Our team'} builds ${industry||'launch sites'} designed to convert, with accessible design and simple copy that works.` },
-    services,
-    contact:{ headline:'Contact', paragraph:'Request a free, no‑obligation quote.', phone: phone||'', email: email||'', address: address||'', cta:'Request a Quote' },
-    brand:{ colors, fonts:{ heading:'Montserrat, sans-serif', body:'Open Sans, sans-serif' } },
-    seo:{
-      title: titleBits.slice(0,60),
-      description: descBits.slice(0,155),
-      keywords: [industry||'services', locationCity, locationState].filter(Boolean).join(', ') || 'startup, website'
-    }
-  };
-}
-
-/* ===================== VALIDATION / AUTOSAVE / SEO PREVIEW ===================== */
-function setErr(el, msgEl, on){ el.classList.toggle('error', on); msgEl.classList.toggle('hidden', !on); }
 function validate(){
   const n = byId('leadName'), e = byId('leadEmail'), b = byId('businessName'), i = byId('industry');
   const en = byId('err-name'), ee = byId('err-email'), eb = byId('err-business'), ei = byId('err-industry');
-  const nbad = !n.value.trim(), ebad = !b.value.trim(), ibad = !i.value.trim(), ebad = !isEmail(e.value);
-  setErr(n, en, nbad); setErr(e, ee, ebad); setErr(b, eb, ebad); setErr(i, ei, ibad);
-  return !(nbad || ebad || ebad || ibad);
-}
-function save(){ const o={}; inputIds.forEach(id=>o[id]=byId(id).value); localStorage.setItem('ssai_lead_inputs', JSON.stringify(o)); }
-function load(){ const raw=localStorage.getItem('ssai_lead_inputs'); if(!raw) return; const o=JSON.parse(raw); inputIds.forEach(id=>{ if(o[id]!==undefined) byId(id).value=o[id]; }); }
-function updateSeoPreview(){
-  const kit = buildKit(collectInputs());
-  byId('seoTitlePrev').textContent = kit.seo.title || '—';
-  byId('seoDescPrev').textContent = kit.seo.description || '—';
-}
-inputIds.forEach(id=> byId(id).addEventListener('input', ()=>{ save(); updateSeoPreview(); }));
-window.addEventListener('DOMContentLoaded', ()=>{ load(); updateSeoPreview(); });
-
-/* ===================== OUTPUT AREA ===================== */
-const out = byId('jsonOut');
-byId('copyJson').addEventListener('click', ()=>{
-  const text = out.textContent;
-  if(!text || text.includes('Click “Generate')) return showToast('Nothing to copy');
-  navigator.clipboard.writeText(text).then(()=>showToast('JSON copied'));
-});
-byId('downloadJson').addEventListener('click', ()=>{
-  const text = out.textContent;
-  if(!text || text.includes('Click “Generate')) return showToast('Nothing to download');
-  const name = (byId('businessName').value || 'launch-kit').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
-  const blob = new Blob([text], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `launch-kit-${name||'site'}.json`;
-  a.click();
-  URL.revokeObjectURL(a.href);
-  showToast('Downloaded');
-});
-
-/* ===================== PAGE GENERATOR (SINGLE PAGE) ===================== */
-function pageStyles(brand){
-  const c = brand.colors, f = brand.fonts;
-  return `
-  <style>
-    :root{
-      --bg:#0f172a; --fg:#0b1226; --muted:#475569; --card:#ffffff; --border:rgba(0,0,0,.08);
-      --primary:${c.primary}; --secondary:${c.secondary}; --accent:${c.accent}; --dark:${c.dark}; --light:${c.light};
-    }
-    *{box-sizing:border-box}
-    body{margin:0; background:#f8fafc; color:#0f172a; font:16px/1.6 ${f.body};}
-    a{text-decoration:none; color:inherit}
-    .wrap{max-width:1080px; margin:0 auto; padding:24px}
-    header{position:sticky; top:0; background:linear-gradient(90deg, var(--primary), var(--accent)); color:#fff}
-    .nav{display:flex; align-items:center; justify-content:space-between; height:64px}
-    .brand{font-weight:800; letter-spacing:.2px; font-family:${f.heading}}
-    .nav a{padding:8px 10px; color:#fff; opacity:.95}
-    .nav a:hover{opacity:1}
-    .card{background:#fff; border:1px solid var(--border); border-radius:14px; padding:18px; box-shadow:0 6px 24px rgba(0,0,0,.05)}
-    h1,h2,h3{font-family:${f.heading}; margin:0 0 8px}
-    .grid{display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))}
-    .btn{display:inline-block; padding:10px 14px; border-radius:999px; border:1px solid var(--border); background:var(--dark); color:#fff; font-weight:700}
-    .btn.ghost{background:#fff; color:var(--dark)}
-    .section{margin:16px 0}
-    footer{border-top:1px solid var(--border); margin-top:32px}
-    .foot{height:64px; display:flex; align-items:center; color:#475569}
-    .kicker{color:#64748b; font-size:12px; letter-spacing:.18em; text-transform:uppercase}
-    .bullets{display:flex; gap:8px; flex-wrap:wrap; margin:10px 0}
-    .bullet{border:1px dashed var(--border); border-radius:999px; padding:6px 10px; font-size:12px; color:#475569}
-    .contact{display:grid; gap:10px; grid-template-columns: 1fr 1fr}
-    @media (max-width: 700px){ .contact{grid-template-columns:1fr} }
-  </style>`;
-}
-function escHTML(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
-function buildPageHTML(kit){
-  const bullets = (kit.homepage?.subhead || '').split(' • ').filter(Boolean);
-  const services = kit.services || [];
-  return `<!doctype html><html lang="en"><head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>${escHTML(kit.seo?.title || 'Launch Site')}</title>
-  <meta name="description" content="${escHTML(kit.seo?.description || '')}"/>
-  ${pageStyles(kit.brand)}
-</head><body>
-<header>
-  <div class="wrap nav">
-    <div class="brand">${escHTML(kit.homepage?.heroH1 || 'Your Startup')}</div>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#services">Services</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </div>
-</header>
-
-<main class="wrap">
-  <section class="section card" id="home">
-    <div class="kicker">Built to launch</div>
-    <h1>${escHTML(kit.homepage?.heroH1 || 'Launch in minutes')}</h1>
-    <p>${escHTML(kit.homepage?.sections?.[1]?.paragraph || 'Clear pricing, clean design, and fast turnarounds.')}</p>
-    <div class="bullets">
-      ${bullets.map(b=>`<span class="bullet">${escHTML(b)}</span>`).join('')}
-    </div>
-    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:4px">
-      <a class="btn" href="#contact">${escHTML(kit.homepage?.ctaPrimary || 'Get Started')}</a>
-      <a class="btn ghost" href="#services">See Services</a>
-    </div>
-  </section>
-
-  <section class="section card">
-    <h2>${escHTML(kit.homepage?.sections?.[0]?.heading || 'What You Get')}</h2>
-    <p>${escHTML(kit.homepage?.sections?.[0]?.paragraph || 'Professional, reliable service with results that matter.')}</p>
-  </section>
-
-  ${services.length ? `
-  <section class="section card" id="services">
-    <h2>Services</h2>
-    <div class="grid" style="margin-top:8px">
-      ${services.map(s=>`
-        <div class="card" style="box-shadow:none">
-          <h3>${escHTML(s.name)}</h3>
-          <p>${escHTML(s.desc)}</p>
-          <a class="btn" href="#contact">${escHTML(s.cta || 'Get Started')}</a>
-        </div>`).join('')}
-    </div>
-  </section>` : ''}
-
-  <section class="section card" id="contact">
-    <h2>${escHTML(kit.contact?.headline || 'Contact')}</h2>
-    <p>${escHTML(kit.contact?.paragraph || 'Request a free, no‑obligation quote.')}</p>
-    <div class="contact">
-      <div><strong>Phone:</strong> ${escHTML(kit.contact?.phone || '')}</div>
-      <div><strong>Email:</strong> ${escHTML(kit.contact?.email || '')}</div>
-      <div><strong>Address:</strong> ${escHTML(kit.contact?.address || '')}</div>
-      <div><strong>Hours:</strong> Mon–Fri</div>
-    </div>
-    <div style="margin-top:12px"><a class="btn" href="#">${escHTML(kit.contact?.cta || 'Request a Quote')}</a></div>
-  </section>
-</main>
-
-<footer><div class="wrap foot">© ${new Date().getFullYear()} ${escHTML(kit.homepage?.heroH1 || 'Your Startup')}</div></footer>
-</body></html>`;
+  const badName = !n.value.trim(), badEmail = !isEmail(e.value), badBiz = !b.value.trim(), badInd = !i.value.trim();
+  n.classList.toggle('error', badName); en.classList.toggle('hidden', !badName);
+  e.classList.toggle('error', badEmail); ee.classList.toggle('hidden', !badEmail);
+  b.classList.toggle('error', badBiz);   eb.classList.toggle('hidden', !badBiz);
+  i.classList.toggle('error', badInd);   ei.classList.toggle('hidden', !badInd);
+  return !(badName || badEmail || badBiz || badInd);
 }
 
 /* ===================== LEAD SEND (optional) ===================== */
 async function sendLead(payload){
-  if(!LEAD_WEBHOOK_URL) return; // no‑op if not configured
+  if(!LEAD_WEBHOOK_URL) return;
   try{
     await fetch(LEAD_WEBHOOK_URL, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
-  }catch(e){ /* silent */ }
+  }catch(e){ /* ignore */ }
 }
 
-/* ===================== EVENTS ===================== */
-function updateSeo(){ const kit = buildKit(collectInputs()); byId('seoTitlePrev').textContent = kit.seo.title || '—'; byId('seoDescPrev').textContent = kit.seo.description || '—'; }
-inputIds.forEach(id=> byId(id).addEventListener('input', ()=>{ localStorage.setItem('ssai_lead_inputs', JSON.stringify(collectInputs())); updateSeo(); }));
-window.addEventListener('DOMContentLoaded', ()=>{ const raw=localStorage.getItem('ssai_lead_inputs'); if(raw){ const o=JSON.parse(raw); inputIds.forEach(id=>{ if(o[id]!==undefined) byId(id).value=o[id]; }); } updateSeo(); });
+/* ===================== LOGO UPLOAD ===================== */
+byId('logo').addEventListener('change', e=>{
+  const f = e.target.files && e.target.files[0];
+  if(!f) return;
+  const reader = new FileReader();
+  reader.onload = () => { logoDataUrl = reader.result; showToast('Logo added'); };
+  reader.readAsDataURL(f);
+});
 
+/* ===================== PREVIEW / ACTIONS ===================== */
+function updatePreview(){
+  const data = getInputs();
+  const html = buildPageHTML(data);
+  const frame = byId('previewFrame');
+  frame.srcdoc = html;
+  byId('emptyState').style.display = 'none';
+  return html;
+}
+
+/* Autosave core inputs (not files) */
+inputIds.forEach(id=> byId(id).addEventListener('input', ()=>{
+  const o = getInputs(); localStorage.setItem('ssai_builder_inputs', JSON.stringify(o));
+}));
+window.addEventListener('DOMContentLoaded', ()=>{
+  const raw = localStorage.getItem('ssai_builder_inputs');
+  if(raw){ const o = JSON.parse(raw); inputIds.forEach(id=>{ if(o[id]!==undefined) byId(id).value = o[id]; }); }
+});
+
+/* Buttons */
 byId('generateSite').addEventListener('click', async ()=>{
   if(!validate()) return;
-  const inputs = collectInputs();
-  const kit = buildKit(inputs);
-  out.textContent = JSON.stringify(kit, null, 2);
-  showToast('Generated');
-  // send lead (optional)
-  sendLead({type:'lead', leadName:inputs.leadName, leadEmail:inputs.leadEmail, businessName:inputs.businessName, industry:inputs.industry});
+  const inputs = getInputs();
+  updatePreview();
+  showToast('Preview updated');
+  // optional lead capture ping
+  sendLead({type:'lead', ...inputs, hasLogo: !!logoDataUrl});
 });
-
 byId('clear').addEventListener('click', ()=>{
   inputIds.forEach(id=> byId(id).value='');
-  localStorage.removeItem('ssai_lead_inputs');
-  out.textContent = '{ /* Click “Generate” to see your JSON */ }';
+  localStorage.removeItem('ssai_builder_inputs');
+  logoDataUrl = "";
+  byId('previewFrame').srcdoc = "";
+  byId('emptyState').style.display = '';
   showToast('Cleared');
-  updateSeo();
 });
-
 byId('downloadPage').addEventListener('click', ()=>{
-  const text = out.textContent||'';
-  if(!text || text.includes('Click “Generate')) return showToast('Generate first');
-  let kit; try{ kit=JSON.parse(text); }catch(e){ return showToast('Invalid JSON'); }
-  const html = buildPageHTML(kit);
+  const frame = byId('previewFrame');
+  const html = frame.srcdoc || updatePreview();
   const blob = new Blob([html], {type:'text/html'});
   const a = document.createElement('a');
   const name = (byId('businessName').value || 'site').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
@@ -456,12 +425,8 @@ byId('downloadPage').addEventListener('click', ()=>{
   URL.revokeObjectURL(a.href);
   showToast('Page downloaded');
 });
-
 byId('openNew').addEventListener('click', ()=>{
-  const text = out.textContent||'';
-  if(!text || text.includes('Click “Generate')) return showToast('Generate first');
-  let kit; try{ kit=JSON.parse(text); }catch(e){ return showToast('Invalid JSON'); }
-  const html = buildPageHTML(kit);
+  const html = byId('previewFrame').srcdoc || updatePreview();
   const blob = new Blob([html], {type:'text/html'});
   const url = URL.createObjectURL(blob);
   window.open(url, '_blank');
