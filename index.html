@@ -1145,15 +1145,35 @@
             ]);
         }
       function App() {
-    useEffect(() => {
-        document.body.className = "theme-cyberpunk";
-    }, []);
+  useEffect(() => {
+    document.body.className = "theme-cyberpunk";
+  }, []);
 
-    return React.createElement('div', { className: "min-h-screen" }, [
-        // your components go here
-        React.createElement(AIEffects, { key: 'effects' }),
-        React.createElement(AIChat, { key: 'chat' })
-    ]);
+  return React.createElement('div', { className: "min-h-screen" }, [
+    React.createElement(AIEffects, { key: 'effects' }),
+
+    // keep your header
+    React.createElement('header', { key: 'header', className: "header" },
+      React.createElement('div', { className: "max-w-7xl mx-auto px-6 py-4" },
+        React.createElement('div', { className: "flex items-center justify-between" }, [
+          React.createElement('h1', { key: 'title', className: "text-2xl font-bold brand-text" }, "StartSimpleAI"),
+          React.createElement('div', { key: 'status', className: "ai-status" }, "AI POWERED")
+        ])
+      )
+    ),
+
+    // keep your main content grid
+    React.createElement('main', { key: 'main', className: "max-w-7xl mx-auto px-6 py-8" }, [
+      React.createElement('div', { key: 'grid', className: "grid grid-cols-1 lg:grid-cols-2 gap-8" }, [
+        React.createElement(WebsiteBuilder, { key: 'builder' }),
+        React.createElement(LivePreview, { key: 'preview' })
+      ])
+    ]),
+
+    // chat widget at the bottom
+    React.createElement(AIChat, { key: 'chat' })
+  ]);
+}
 }
 
 
