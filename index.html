@@ -1,2852 +1,397 @@
 {
   "name": "startsimple-ai",
   "version": "1.0.0",
-  "description": "AI-powered business launchpad platform for blue-collar industries",
   "type": "module",
-  "license": "MIT",
   "scripts": {
-    "dev": "NODE_ENV=development tsx server/index.ts",
-    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
-    "start": "NODE_ENV=production node dist/index.js",
-    "check": "tsc",
-    "db:push": "drizzle-kit push"
+    "dev": "vite",
+    "build": "vite build"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.10.0",
-    "@jridgewell/trace-mapping": "^0.3.25",
-    "@neondatabase/serverless": "^0.10.4",
-    "@radix-ui/react-accordion": "^1.2.4",
-    "@radix-ui/react-alert-dialog": "^1.1.7",
-    "@radix-ui/react-aspect-ratio": "^1.1.3",
-    "@radix-ui/react-avatar": "^1.1.4",
-    "@radix-ui/react-checkbox": "^1.1.5",
-    "@radix-ui/react-collapsible": "^1.1.4",
-    "@radix-ui/react-context-menu": "^2.2.7",
-    "@radix-ui/react-dialog": "^1.1.7",
-    "@radix-ui/react-dropdown-menu": "^2.1.7",
-    "@radix-ui/react-hover-card": "^1.1.7",
-    "@radix-ui/react-label": "^2.1.3",
-    "@radix-ui/react-menubar": "^1.1.7",
-    "@radix-ui/react-navigation-menu": "^1.2.6",
-    "@radix-ui/react-popover": "^1.1.7",
-    "@radix-ui/react-progress": "^1.1.3",
-    "@radix-ui/react-radio-group": "^1.2.4",
-    "@radix-ui/react-scroll-area": "^1.2.4",
-    "@radix-ui/react-select": "^2.1.7",
-    "@radix-ui/react-separator": "^1.1.3",
-    "@radix-ui/react-slider": "^1.2.4",
-    "@radix-ui/react-slot": "^1.2.0",
-    "@radix-ui/react-switch": "^1.1.4",
-    "@radix-ui/react-tabs": "^1.1.4",
-    "@radix-ui/react-toast": "^1.2.7",
-    "@radix-ui/react-toggle": "^1.1.3",
-    "@radix-ui/react-toggle-group": "^1.1.3",
-    "@radix-ui/react-tooltip": "^1.2.0",
-    "@tanstack/react-query": "^5.60.5",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "cmdk": "^1.1.1",
-    "connect-pg-simple": "^10.0.0",
-    "date-fns": "^3.6.0",
-    "drizzle-orm": "^0.39.1",
-    "drizzle-zod": "^0.7.0",
-    "embla-carousel-react": "^8.6.0",
-    "express": "^4.21.2",
-    "express-session": "^1.18.1",
-    "framer-motion": "^11.13.1",
-    "input-otp": "^1.4.2",
-    "lucide-react": "^0.453.0",
-    "memorystore": "^1.6.7",
-    "nanoid": "^5.0.9",
-    "next-themes": "^0.4.6",
-    "passport": "^0.7.0",
-    "passport-local": "^1.0.0",
     "react": "^18.3.1",
-    "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
-    "react-hook-form": "^7.55.0",
-    "react-icons": "^5.4.0",
-    "react-resizable-panels": "^2.1.7",
-    "recharts": "^2.15.2",
-    "tailwind-merge": "^2.6.0",
-    "tailwindcss-animate": "^1.0.7",
-    "tw-animate-css": "^1.2.5",
-    "vaul": "^1.1.2",
-    "wouter": "^3.3.5",
-    "ws": "^8.18.0",
-    "zod": "^3.24.2",
-    "zod-validation-error": "^3.4.0"
+    "lucide-react": "^0.453.0",
+    "framer-motion": "^11.13.1"
   },
   "devDependencies": {
-    "@replit/vite-plugin-cartographer": "^0.2.8",
-    "@replit/vite-plugin-runtime-error-modal": "^0.0.3",
-    "@tailwindcss/typography": "^0.5.15",
-    "@tailwindcss/vite": "^4.1.3",
-    "@types/connect-pg-simple": "^7.0.3",
-    "@types/express": "4.17.21",
-    "@types/express-session": "^1.18.0",
-    "@types/node": "20.16.11",
-    "@types/passport": "^1.0.16",
-    "@types/passport-local": "^1.0.38",
-    "@types/react": "^18.3.11",
-    "@types/react-dom": "^18.3.1",
-    "@types/ws": "^8.5.13",
     "@vitejs/plugin-react": "^4.3.2",
-    "autoprefixer": "^10.4.20",
-    "drizzle-kit": "^0.30.4",
-    "esbuild": "^0.25.0",
-    "postcss": "^8.4.47",
     "tailwindcss": "^3.4.17",
-    "tsx": "^4.19.1",
-    "typescript": "5.6.3",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
     "vite": "^5.4.19"
-  },
-  "optionalDependencies": {
-    "bufferutil": "^4.0.8"
   }
 }
-
-=== tsconfig.json ===
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["client/src/*"],
-      "@assets/*": ["attached_assets/*"],
-      "@shared/*": ["shared/*"]
-    }
-  },
-  "include": ["client", "server", "shared"],
-  "references": [{ "path": "./tsconfig.node.json" }]
-}
-
-=== vite.config.ts ===
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
-import { resolve } from "path";
-
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  root: "client",
-  build: {
-    outDir: "../dist/public",
-    emptyOutDir: true,
-  },
-  resolve: {
-    alias: {
-      "@": resolve(__dirname, "client/src"),
-      "@shared": resolve(__dirname, "shared"),
-      "@assets": resolve(__dirname, "attached_assets"),
-    },
-  },
-  server: {
-    port: 3000,
-  },
-});
-
-=== tailwind.config.ts ===
-import type { Config } from "tailwindcss";
-import tailwindcssAnimate from "tailwindcss-animate";
-
-export default {
-  darkMode: ["class"],
-  content: [
-    "./client/**/*.{ts,tsx}",
-    "./shared/**/*.{ts,tsx}",
-  ],
-  theme: {
-    extend: {
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        chart: {
-          "1": "hsl(var(--chart-1))",
-          "2": "hsl(var(--chart-2))",
-          "3": "hsl(var(--chart-3))",
-          "4": "hsl(var(--chart-4))",
-          "5": "hsl(var(--chart-5))",
-        },
-      },
-    },
-  },
-  plugins: [tailwindcssAnimate],
-} satisfies Config;
-
-=== postcss.config.js ===
-export default {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-}
-
-=== components.json ===
-{
-  "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "default",
-  "rsc": false,
-  "tsx": true,
-  "tailwind": {
-    "config": "tailwind.config.ts",
-    "css": "client/src/index.css",
-    "baseColor": "slate",
-    "cssVariables": true,
-    "prefix": ""
-  },
-  "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils"
-  }
-}
-
-=== drizzle.config.ts ===
-import type { Config } from "drizzle-kit";
-
-export default {
-  schema: "./shared/schema.ts",
-  out: "./drizzle",
-  dialect: "postgresql",
-  dbCredentials: {
-    url: process.env.DATABASE_URL!,
-  },
-} satisfies Config;
-
-=== client/index.html ===
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StartSimple AI - AI-Powered Business Launchpad</title>
-    <meta name="description" content="Transform your blue-collar business with AI employees and professional websites. Instant setup for laundromats, painters, window washers, and more." />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
-
-=== client/src/main.tsx ===
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App";
-import "./index.css";
-
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
-
-=== client/src/index.css ===
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 94.0%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --radius: 0.5rem;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-/* Cyberpunk animations and effects */
-.ai-glow {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-  animation: pulse-glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes pulse-glow {
-  from {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-  }
-  to {
-    box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
-  }
-}
-
-.particle {
-  position: absolute;
-  background: linear-gradient(45deg, #3b82f6, #8b5cf6);
-  border-radius: 50%;
-  animation: float 6s ease-in-out infinite;
-  opacity: 0.6;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) translateX(0px);
-    opacity: 0.6;
-  }
-  33% {
-    transform: translateY(-20px) translateX(10px);
-    opacity: 0.8;
-  }
-  66% {
-    transform: translateY(10px) translateX(-10px);
-    opacity: 0.4;
-  }
-}
-
-.particle:nth-child(1) { left: 10%; animation-delay: 0s; width: 4px; height: 4px; }
-.particle:nth-child(2) { left: 20%; animation-delay: -2s; width: 6px; height: 6px; }
-.particle:nth-child(3) { left: 30%; animation-delay: -4s; width: 3px; height: 3px; }
-.particle:nth-child(4) { left: 40%; animation-delay: -1s; width: 5px; height: 5px; }
-.particle:nth-child(5) { left: 50%; animation-delay: -3s; width: 4px; height: 4px; }
-.particle:nth-child(6) { left: 60%; animation-delay: -5s; width: 7px; height: 7px; }
-.particle:nth-child(7) { left: 70%; animation-delay: -1.5s; width: 3px; height: 3px; }
-.particle:nth-child(8) { left: 80%; animation-delay: -2.5s; width: 5px; height: 5px; }
-.particle:nth-child(9) { left: 90%; animation-delay: -4.5s; width: 4px; height: 4px; }
-
-.cyber-border {
-  position: relative;
-  overflow: hidden;
-}
-
-.cyber-border::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.4), transparent);
-  animation: scan 2s linear infinite;
-}
-
-@keyframes scan {
-  0% { left: -100%; }
-  100% { left: 100%; }
-}
-
-.ai-typing::after {
-  content: '|';
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
-
-.gradient-text {
-  background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.hologram {
-  position: relative;
-  background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
-  border: 1px solid rgba(59, 130, 246, 0.3);
-}
-
-.hologram::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.8), transparent);
-  animation: hologram-scan 3s linear infinite;
-}
-
-@keyframes hologram-scan {
-  0% { top: 0%; }
-  100% { top: 100%; }
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(59, 130, 246, 0.1);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.5);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(59, 130, 246, 0.8);
-}
-
-=== client/src/App.tsx ===
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Switch, Route } from "wouter";
-import { Toaster } from "@/components/ui/toaster";
-import Dashboard from "@/pages/dashboard";
-import NotFound from "@/pages/not-found";
-
-const queryClient = new QueryClient();
-
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen bg-background">
-        <Switch>
-          <Route path="/" component={Dashboard} />
-          <Route component={NotFound} />
-        </Switch>
-        <Toaster />
-      </div>
-    </QueryClientProvider>
-  );
-}
-
-export default App;
-
-=== client/src/pages/dashboard.tsx ===
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { useToast } from "@/hooks/use-toast";
-import { Building2, Palette, Droplets, Briefcase, Bot, Calendar, Mail, Play, Square, RotateCcw, Users, TrendingUp, DollarSign, Activity, Download, ExternalLink, MessageSquare, Clock, CheckCircle } from "lucide-react";
-
-interface FormData {
-  industry: string;
-  businessName: string;
-  location: string;
-  phone: string;
-  email: string;
-  description: string;
-  colorPreset: string;
-  services?: string[];
-  hours?: string;
-  pricing?: string;
-}
-
-interface Lead {
-  id: string;
-  businessName: string;
-  industry: string;
-  name: string;
-  email: string;
-  phone: string;
-  timestamp: string;
-  notes?: string;
-}
-
-interface AIEmployee {
-  id: string;
-  name: string;
-  type: 'receptionist' | 'scheduler' | 'followup';
-  status: 'active' | 'idle' | 'stopped';
-  lastActivity: string;
-  conversationsToday: number;
-  responseTime: string;
-}
-
-const industries = [
-  { id: "laundromat", label: "Laundromat", icon: Building2, description: "Self-service and full-service laundry" },
-  { id: "painter", label: "Painter", icon: Palette, description: "Interior and exterior painting services" },
-  { id: "window_washing", label: "Window Washing", icon: Droplets, description: "Residential and commercial cleaning" },
-  { id: "generic", label: "Other Business", icon: Briefcase, description: "General service business" }
-];
-
-const colorPresets = [
-  { id: "blue", label: "Ocean Blue", primary: "#0ea5e9", secondary: "#0284c7" },
-  { id: "green", label: "Forest Green", primary: "#10b981", secondary: "#059669" },
-  { id: "purple", label: "Royal Purple", primary: "#8b5cf6", secondary: "#7c3aed" },
-  { id: "orange", label: "Sunset Orange", primary: "#f97316", secondary: "#ea580c" },
-  { id: "red", label: "Fire Red", primary: "#ef4444", secondary: "#dc2626" }
-];
-
-export default function Dashboard() {
-  const [formData, setFormData] = useState<FormData>({
-    industry: "",
-    businessName: "",
-    location: "",
-    phone: "",
-    email: "",
-    description: "",
-    colorPreset: "blue"
-  });
-  
-  const [generatedWebsite, setGeneratedWebsite] = useState<string>("");
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const [aiEmployees, setAiEmployees] = useState<AIEmployee[]>([
-    {
-      id: "1",
-      name: "AI Receptionist",
-      type: "receptionist",
-      status: "active",
-      lastActivity: "2 minutes ago",
-      conversationsToday: 23,
-      responseTime: "< 1s"
-    },
-    {
-      id: "2",
-      name: "AI Scheduler",
-      type: "scheduler",
-      status: "active",
-      lastActivity: "5 minutes ago",
-      conversationsToday: 12,
-      responseTime: "< 2s"
-    },
-    {
-      id: "3",
-      name: "AI Follow-up",
-      type: "followup",
-      status: "idle",
-      lastActivity: "1 hour ago",
-      conversationsToday: 8,
-      responseTime: "< 5s"
-    }
-  ]);
-
-  const [conversations, setConversations] = useState([
-    {
-      id: 1,
-      customer: "Sarah M.",
-      message: "What are your operating hours?",
-      response: "We're open 24/7 for self-service, with attendant available 8am-6pm daily. How can I help you today?",
-      timestamp: "2 min ago",
-      status: "resolved"
-    },
-    {
-      id: 2,
-      customer: "Mike R.",
-      message: "Do you offer pickup service?",
-      response: "Yes! We offer pickup and delivery service. I can schedule that for you. What's your preferred time?",
-      timestamp: "5 min ago",
-      status: "in-progress"
-    },
-    {
-      id: 3,
-      customer: "Jennifer L.",
-      message: "What's included in wash and fold?",
-      response: "Our wash and fold includes pre-sorting, washing, drying, and folding. $1.50/lb with 10lb minimum.",
-      timestamp: "8 min ago",
-      status: "resolved"
-    }
-  ]);
-
-  const { toast } = useToast();
-
-  useEffect(() => {
-    // Simulate real-time lead updates
-    const interval = setInterval(() => {
-      if (Math.random() > 0.7) {
-        const newLead: Lead = {
-          id: Date.now().toString(),
-          businessName: formData.businessName || "Demo Business",
-          industry: formData.industry || "laundromat",
-          name: ["John Doe", "Jane Smith", "Mike Johnson", "Sarah Wilson"][Math.floor(Math.random() * 4)],
-          email: `customer${Date.now()}@example.com`,
-          phone: `555-${Math.floor(Math.random() * 900) + 100}-${Math.floor(Math.random() * 9000) + 1000}`,
-          timestamp: new Date().toISOString(),
-          notes: "Interested in services"
-        };
-        setLeads(prev => [newLead, ...prev.slice(0, 9)]);
-        
-        toast({
-          title: "New Lead Captured!",
-          description: `${newLead.name} just submitted a contact form.`,
-        });
-      }
-    }, 15000);
-
-    return () => clearInterval(interval);
-  }, [formData.businessName, formData.industry, toast]);
-
-  useEffect(() => {
-    // Simulate AI employee activity updates
-    const interval = setInterval(() => {
-      setAiEmployees(prev => prev.map(employee => ({
-        ...employee,
-        conversationsToday: employee.status === 'active' ? 
-          employee.conversationsToday + Math.floor(Math.random() * 3) : 
-          employee.conversationsToday,
-        lastActivity: employee.status === 'active' ? 
-          `${Math.floor(Math.random() * 10) + 1} minutes ago` : 
-          employee.lastActivity
-      })));
-    }, 30000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleInputChange = (field: keyof FormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const generateWebsite = async () => {
-    if (!formData.industry || !formData.businessName) {
-      toast({
-        title: "Missing Information",
-        description: "Please select an industry and enter your business name.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setIsGenerating(true);
-    
-    // Simulate website generation
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    const selectedIndustry = industries.find(i => i.id === formData.industry);
-    const selectedColor = colorPresets.find(c => c.id === formData.colorPreset);
-
-    let industryContent = "";
-    
-    switch (formData.industry) {
-      case "laundromat":
-        industryContent = `
-          <section class="services py-16">
-            <div class="container mx-auto px-4">
-              <h2 class="text-3xl font-bold text-center mb-12">Our Services</h2>
-              <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center">
-                  <h3 class="text-xl font-semibold mb-4">Self-Service</h3>
-                  <p>24/7 access to modern machines with various load sizes</p>
-                </div>
-                <div class="text-center">
-                  <h3 class="text-xl font-semibold mb-4">Wash & Fold</h3>
-                  <p>Professional cleaning service starting at $1.50/lb</p>
-                </div>
-                <div class="text-center">
-                  <h3 class="text-xl font-semibold mb-4">Pickup & Delivery</h3>
-                  <p>Convenient service right to your door</p>
-                </div>
-              </div>
-            </div>
-          </section>`;
-        break;
-      case "painter":
-        industryContent = `
-          <section class="services py-16">
-            <div class="container mx-auto px-4">
-              <h2 class="text-3xl font-bold text-center mb-12">Painting Services</h2>
-              <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 class="text-xl font-semibold mb-4">Interior Painting</h3>
-                  <p>Transform your home with professional interior painting. We handle everything from prep to cleanup.</p>
-                </div>
-                <div>
-                  <h3 class="text-xl font-semibold mb-4">Exterior Painting</h3>
-                  <p>Protect and beautify your property with weather-resistant exterior painting solutions.</p>
-                </div>
-              </div>
-            </div>
-          </section>`;
-        break;
-      case "window_washing":
-        industryContent = `
-          <section class="services py-16">
-            <div class="container mx-auto px-4">
-              <h2 class="text-3xl font-bold text-center mb-12">Window Cleaning</h2>
-              <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 class="text-xl font-semibold mb-4">Residential</h3>
-                  <p>Keep your home's windows sparkling clean with our residential window washing service.</p>
-                </div>
-                <div>
-                  <h3 class="text-xl font-semibold mb-4">Commercial</h3>
-                  <p>Professional window cleaning for offices, stores, and commercial buildings.</p>
-                </div>
-              </div>
-            </div>
-          </section>`;
-        break;
-      default:
-        industryContent = `
-          <section class="services py-16">
-            <div class="container mx-auto px-4">
-              <h2 class="text-3xl font-bold text-center mb-12">Our Services</h2>
-              <div class="text-center">
-                <p class="text-lg">${formData.description || "Professional service you can trust."}</p>
-              </div>
-            </div>
-          </section>`;
-    }
-
-    const html = `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${formData.businessName} - ${selectedIndustry?.label}</title>
-    <meta name="description" content="${formData.description || `Professional ${selectedIndustry?.label.toLowerCase()} services in ${formData.location}`}">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '${selectedColor?.primary}',
-                        secondary: '${selectedColor?.secondary}'
-                    }
-                }
-            }
-        }
-    </script>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "${formData.businessName}",
-        "description": "${formData.description}",
-        "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "${formData.location}"
-        },
-        "telephone": "${formData.phone}",
-        "email": "${formData.email}"
-    }
-    </script>
-    <style>
-        .ai-chat-widget {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 300px;
-            height: 400px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            border: 2px solid ${selectedColor?.primary};
-            display: none;
-            flex-direction: column;
-            z-index: 1000;
-        }
-        .ai-chat-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: ${selectedColor?.primary};
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-            z-index: 1001;
-        }
-        .chat-header {
-            background: ${selectedColor?.primary};
-            color: white;
-            padding: 12px 16px;
-            border-radius: 12px 12px 0 0;
-            font-weight: 600;
-        }
-        .chat-messages {
-            flex: 1;
-            padding: 16px;
-            overflow-y: auto;
-        }
-        .chat-input {
-            padding: 12px 16px;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            gap: 8px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StartSimpleAI - AI-Powered Business Launchpad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white shadow-sm">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex justify-between items-center">
-                <h1 class="text-2xl font-bold" style="color: ${selectedColor?.primary};">${formData.businessName}</h1>
-                <div class="flex items-center space-x-6">
-                    <a href="#services" class="hover:text-primary transition-colors">Services</a>
-                    <a href="#contact" class="hover:text-primary transition-colors">Contact</a>
-                    <a href="tel:${formData.phone}" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary transition-colors">${formData.phone}</a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-blue-50 to-indigo-100 py-20">
-        <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">
-                Welcome to <span style="color: ${selectedColor?.primary};">${formData.businessName}</span>
-            </h1>
-            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-                ${formData.description || `Professional ${selectedIndustry?.label.toLowerCase()} services in ${formData.location}. Quality work you can trust.`}
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#contact" class="bg-primary text-white px-8 py-3 rounded-lg hover:bg-secondary transition-colors text-lg font-semibold">Get Quote</a>
-                <a href="tel:${formData.phone}" class="border-2 border-primary text-primary px-8 py-3 rounded-lg hover:bg-primary hover:text-white transition-colors text-lg font-semibold">Call Now</a>
-            </div>
-        </div>
-    </section>
-
-    ${industryContent}
-
-    <!-- Contact Section -->
-    <section id="contact" class="bg-white py-16">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">Get In Touch</h2>
-            <div class="grid md:grid-cols-2 gap-12">
-                <div>
-                    <h3 class="text-xl font-semibold mb-6">Contact Information</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center">
-                            <span class="font-semibold mr-2">Phone:</span>
-                            <a href="tel:${formData.phone}" class="text-primary hover:underline">${formData.phone}</a>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="font-semibold mr-2">Email:</span>
-                            <a href="mailto:${formData.email}" class="text-primary hover:underline">${formData.email}</a>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="font-semibold mr-2">Location:</span>
-                            <span>${formData.location}</span>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <form id="contactForm" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-1">Name</label>
-                            <input type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-1">Email</label>
-                            <input type="email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-1">Phone</label>
-                            <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-1">Message</label>
-                            <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-primary text-white py-3 rounded-md hover:bg-secondary transition-colors font-semibold">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-4 text-center">
-            <h3 class="text-xl font-bold mb-2">${formData.businessName}</h3>
-            <p class="text-gray-400 mb-4">${formData.location} | ${formData.phone}</p>
-            <p class="text-sm text-gray-500">© 2025 ${formData.businessName}. All rights reserved. | Powered by StartSimple AI</p>
-        </div>
-    </footer>
-
-    <!-- AI Chat Widget -->
-    <div class="ai-chat-button" onclick="toggleChat()">
-        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3.02.97 4.33L1 23l6.67-1.97C9.98 21.64 11.46 22 13 22h7c1.1 0 2-.9 2-2V12c0-5.52-4.48-10-10-10z"/>
-        </svg>
-    </div>
-    
-    <div class="ai-chat-widget" id="chatWidget">
-        <div class="chat-header">
-            <div class="flex justify-between items-center">
-                <span>AI Assistant</span>
-                <button onclick="toggleChat()" class="text-white hover:text-gray-200">&times;</button>
-            </div>
-        </div>
-        <div class="chat-messages">
-            <div class="bg-gray-100 p-3 rounded-lg mb-3">
-                <p class="text-sm">Hi! I'm your AI assistant. How can I help you today?</p>
-            </div>
-        </div>
-        <div class="chat-input">
-            <input type="text" placeholder="Type your message..." class="flex-1 px-3 py-2 border rounded-lg text-sm">
-            <button class="bg-primary text-white px-4 py-2 rounded-lg text-sm">Send</button>
-        </div>
-    </div>
-
-    <script>
-        function toggleChat() {
-            const widget = document.getElementById('chatWidget');
-            const button = document.querySelector('.ai-chat-button');
-            if (widget.style.display === 'none' || widget.style.display === '') {
-                widget.style.display = 'flex';
-                button.style.display = 'none';
-            } else {
-                widget.style.display = 'none';
-                button.style.display = 'flex';
-            }
-        }
-
-        // Form submission handler
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
-        });
-
-        // AI Chat functionality
-        document.querySelector('.chat-input input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-
-        document.querySelector('.chat-input button').addEventListener('click', sendMessage);
-
-        function sendMessage() {
-            const input = document.querySelector('.chat-input input');
-            const messages = document.querySelector('.chat-messages');
-            
-            if (input.value.trim()) {
-                // Add user message
-                messages.innerHTML += '<div class="text-right mb-3"><div class="bg-primary text-white p-3 rounded-lg inline-block max-w-xs text-sm">' + input.value + '</div></div>';
-                
-                const userMessage = input.value.toLowerCase();
-                input.value = '';
-                
-                // Simulate AI response
-                setTimeout(() => {
-                    let response = "I'd be happy to help you with that! Please call us at ${formData.phone} for more specific information.";
-                    
-                    if (userMessage.includes('hours') || userMessage.includes('open')) {
-                        response = "We're open daily. Please call ${formData.phone} for current hours and availability.";
-                    } else if (userMessage.includes('price') || userMessage.includes('cost')) {
-                        response = "Our pricing varies based on your specific needs. Call ${formData.phone} for a free quote!";
-                    } else if (userMessage.includes('location') || userMessage.includes('address')) {
-                        response = "We're located in ${formData.location}. Call ${formData.phone} for directions!";
-                    }
-                    
-                    messages.innerHTML += '<div class="bg-gray-100 p-3 rounded-lg mb-3 text-sm">' + response + '</div>';
-                    messages.scrollTop = messages.scrollHeight;
-                }, 1000);
-                
-                messages.scrollTop = messages.scrollHeight;
-            }
-        }
-    </script>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
-</html>`;
+</html>
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
 
-    setGeneratedWebsite(html);
-    setIsGenerating(false);
-    
-    toast({
-      title: "Website Generated!",
-      description: "Your professional website is ready for download.",
-    });
-  };
+ReactDOM.createRoot(document.getElementById('root')).render(<App />)
+  import { useState } from 'react'
+import { Bot, Sparkles, Users, Eye, MessageCircle } from 'lucide-react'
 
-  const downloadWebsite = () => {
-    const blob = new Blob([generatedWebsite], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${formData.businessName.toLowerCase().replace(/\s+/g, '-')}-website.html`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
-
-  const previewWebsite = () => {
-    const newWindow = window.open();
-    if (newWindow) {
-      newWindow.document.write(generatedWebsite);
-      newWindow.document.close();
-    }
-  };
-
-  const toggleAIEmployee = (employeeId: string) => {
-    setAiEmployees(prev => prev.map(employee => 
-      employee.id === employeeId 
-        ? { ...employee, status: employee.status === 'active' ? 'stopped' : 'active' }
-        : employee
-    ));
-  };
-
-  const restartAllAI = () => {
-    setAiEmployees(prev => prev.map(employee => ({ 
-      ...employee, 
-      status: 'active',
-      lastActivity: 'Just now'
-    })));
-    toast({
-      title: "AI Employees Restarted",
-      description: "All AI employees are now active and ready to help.",
-    });
-  };
-
-  const totalConversations = aiEmployees.reduce((sum, emp) => sum + emp.conversationsToday, 0);
-  const avgResponseTime = "< 1.5s";
-  const conversionRate = "28.5%";
-  const estimatedRevenue = totalConversations * 45; // $45 avg per conversation
-
+function App() {
+  const [currentTheme, setCurrentTheme] = useState("cyberpunk")
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden">
-      {/* Animated Background Particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(15)].map((_, i) => (
-          <div key={i} className="particle" />
-        ))}
+    <div className="min-h-screen">
+      {/* AI Background Effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="ai-particles"></div>
+        <div className="ai-grid"></div>
       </div>
-
+      
       {/* Header */}
-      <header className="relative z-10 border-b border-blue-800/30 bg-black/20 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4">
+      <header className="header">
+        <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold gradient-text">StartSimple AI</h1>
-              <p className="text-blue-300/70 text-sm">AI-Powered Business Launchpad</p>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-pink-500 to-cyan-500 flex items-center justify-center">
+                <Bot className="text-white" size={20} />
+              </div>
+              <h1 className="text-2xl font-bold brand-text">StartSimpleAI</h1>
+              <span className="text-sm text-gray-400 hidden sm:block">AI-Powered Business Launchpad</span>
             </div>
-            <div className="flex items-center space-x-4">
-              <Badge variant="outline" className="border-blue-400 text-blue-300">
-                <Activity className="w-3 h-3 mr-1" />
-                Live System
-              </Badge>
-              <div className="text-right">
-                <p className="text-xs text-blue-300/70">Partnership with</p>
-                <p className="font-semibold text-blue-300">3LEVELS</p>
+            
+            <div className="flex items-center gap-4">
+              <div className="ai-status">
+                <div className="ai-pulse"></div>
+                <span>AI POWERED</span>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="relative z-10 container mx-auto px-4 py-8">
-        <Tabs defaultValue="builder" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-black/20 backdrop-blur-sm">
-            <TabsTrigger value="builder">Website Builder</TabsTrigger>
-            <TabsTrigger value="employees">AI Employees</TabsTrigger>
-            <TabsTrigger value="leads">Lead Manager</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          </TabsList>
-
-          {/* Website Builder Tab */}
-          <TabsContent value="builder" className="space-y-6">
-            <div className="grid lg:grid-cols-2 gap-6">
-              {/* Form Section */}
-              <Card className="hologram bg-black/20 backdrop-blur-sm border-blue-800/30">
-                <CardHeader>
-                  <CardTitle className="gradient-text">Build Your Professional Website</CardTitle>
-                  <CardDescription className="text-blue-300/70">
-                    Create industry-specific websites with AI employees included
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div>
-                    <Label className="text-blue-300">Industry Type</Label>
-                    <Select value={formData.industry} onValueChange={(value) => handleInputChange('industry', value)}>
-                      <SelectTrigger className="bg-black/20 border-blue-800/30 text-blue-100">
-                        <SelectValue placeholder="Select your industry" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-slate-900 border-blue-800/30">
-                        {industries.map((industry) => {
-                          const IconComponent = industry.icon;
-                          return (
-                            <SelectItem key={industry.id} value={industry.id}>
-                              <div className="flex items-center space-x-2">
-                                <IconComponent className="w-4 h-4" />
-                                <div>
-                                  <p className="font-medium">{industry.label}</p>
-                                  <p className="text-xs text-muted-foreground">{industry.description}</p>
-                                </div>
-                              </div>
-                            </SelectItem>
-                          );
-                        })}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label className="text-blue-300">Business Name</Label>
-                      <Input
-                        value={formData.businessName}
-                        onChange={(e) => handleInputChange('businessName', e.target.value)}
-                        placeholder="Mike's Laundromat"
-                        className="bg-black/20 border-blue-800/30 text-blue-100"
-                      />
-                    </div>
-                    <div>
-                      <Label className="text-blue-300">Location</Label>
-                      <Input
-                        value={formData.location}
-                        onChange={(e) => handleInputChange('location', e.target.value)}
-                        placeholder="Chicago, IL"
-                        className="bg-black/20 border-blue-800/30 text-blue-100"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label className="text-blue-300">Phone</Label>
-                      <Input
-                        value={formData.phone}
-                        onChange={(e) => handleInputChange('phone', e.target.value)}
-                        placeholder="(555) 123-4567"
-                        className="bg-black/20 border-blue-800/30 text-blue-100"
-                      />
-                    </div>
-                    <div>
-                      <Label className="text-blue-300">Email</Label>
-                      <Input
-                        value={formData.email}
-                        onChange={(e) => handleInputChange('email', e.target.value)}
-                        placeholder="info@business.com"
-                        type="email"
-                        className="bg-black/20 border-blue-800/30 text-blue-100"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <Label className="text-blue-300">Business Description</Label>
-                    <Textarea
-                      value={formData.description}
-                      onChange={(e) => handleInputChange('description', e.target.value)}
-                      placeholder="Describe your business and services..."
-                      className="bg-black/20 border-blue-800/30 text-blue-100"
-                    />
-                  </div>
-
-                  <div>
-                    <Label className="text-blue-300">Color Theme</Label>
-                    <div className="grid grid-cols-5 gap-2 mt-2">
-                      {colorPresets.map((preset) => (
-                        <div
-                          key={preset.id}
-                          className={`cursor-pointer p-3 rounded-lg border-2 transition-all ${
-                            formData.colorPreset === preset.id 
-                              ? 'border-blue-400 ai-glow' 
-                              : 'border-gray-700 hover:border-gray-600'
-                          }`}
-                          onClick={() => handleInputChange('colorPreset', preset.id)}
-                        >
-                          <div
-                            className="w-full h-4 rounded mb-2"
-                            style={{ backgroundColor: preset.primary }}
-                          />
-                          <p className="text-xs text-center text-blue-300">{preset.label}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <Button 
-                    onClick={generateWebsite} 
-                    disabled={isGenerating}
-                    className="w-full ai-glow bg-blue-600 hover:bg-blue-700"
-                  >
-                    {isGenerating ? (
-                      <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2" />
-                        Generating Website...
-                      </>
-                    ) : (
-                      "Generate Professional Website"
-                    )}
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Preview Section */}
-              <Card className="hologram bg-black/20 backdrop-blur-sm border-blue-800/30">
-                <CardHeader>
-                  <CardTitle className="gradient-text">Website Preview</CardTitle>
-                  <CardDescription className="text-blue-300/70">
-                    Real-time preview of your generated website
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {generatedWebsite ? (
-                    <div className="space-y-4">
-                      <div className="border-2 border-blue-800/30 rounded-lg overflow-hidden">
-                        <iframe
-                          srcDoc={generatedWebsite}
-                          className="w-full h-96 bg-white"
-                          title="Website Preview"
-                        />
-                      </div>
-                      <div className="flex space-x-2">
-                        <Button onClick={previewWebsite} variant="outline" className="flex-1 border-blue-800/30 text-blue-300 hover:bg-blue-800/20">
-                          <ExternalLink className="w-4 h-4 mr-2" />
-                          Open Preview
-                        </Button>
-                        <Button onClick={downloadWebsite} className="flex-1 ai-glow bg-green-600 hover:bg-green-700">
-                          <Download className="w-4 h-4 mr-2" />
-                          Download HTML
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="h-96 border-2 border-dashed border-blue-800/30 rounded-lg flex items-center justify-center">
-                      <div className="text-center">
-                        <Building2 className="w-16 h-16 text-blue-400/50 mx-auto mb-4" />
-                        <p className="text-blue-300/70">Generate a website to see preview</p>
-                      </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          {/* AI Employees Tab */}
-          <TabsContent value="employees" className="space-y-6">
-            <div className="grid gap-6">
-              {/* Master Controls */}
-              <Card className="hologram bg-black/20 backdrop-blur-sm border-blue-800/30">
-                <CardHeader>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <CardTitle className="gradient-text">AI Employee Management</CardTitle>
-                      <CardDescription className="text-blue-300/70">
-                        Control your AI workforce and monitor performance
-                      </CardDescription>
-                    </div>
-                    <div className="flex space-x-2">
-                      <Button onClick={restartAllAI} className="ai-glow bg-green-600 hover:bg-green-700">
-                        <RotateCcw className="w-4 h-4 mr-2" />
-                        Restart All
-                      </Button>
-                    </div>
-                  </div>
-                </CardHeader>
-              </Card>
-
-              {/* AI Employees Grid */}
-              <div className="grid lg:grid-cols-3 gap-6">
-                {aiEmployees.map((employee) => (
-                  <Card key={employee.id} className="hologram bg-black/20 backdrop-blur-sm border-blue-800/30">
-                    <CardHeader>
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <CardTitle className="text-lg gradient-text">{employee.name}</CardTitle>
-                          <Badge 
-                            variant={employee.status === 'active' ? 'default' : 'secondary'} 
-                            className={`mt-2 ${employee.status === 'active' ? 'bg-green-600' : 'bg-gray-600'}`}
-                          >
-                            {employee.status === 'active' ? 'Active' : employee.status === 'idle' ? 'Idle' : 'Stopped'}
-                          </Badge>
-                        </div>
-                        <Button
-                          onClick={() => toggleAIEmployee(employee.id)}
-                          variant={employee.status === 'active' ? 'destructive' : 'default'}
-                          size="sm"
-                        >
-                          {employee.status === 'active' ? <Square className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                        </Button>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4 text-sm">
-                          <div>
-                            <p className="text-blue-300/70">Last Activity</p>
-                            <p className="font-medium text-blue-100">{employee.lastActivity}</p>
-                          </div>
-                          <div>
-                            <p className="text-blue-300/70">Response Time</p>
-                            <p className="font-medium text-blue-100">{employee.responseTime}</p>
-                          </div>
-                        </div>
-                        <div>
-                          <p className="text-blue-300/70 text-sm">Conversations Today</p>
-                          <p className="text-2xl font-bold gradient-text">{employee.conversationsToday}</p>
-                        </div>
-                        
-                        {employee.type === 'receptionist' && employee.status === 'active' && (
-                          <div className="border-t border-blue-800/30 pt-4">
-                            <p className="text-sm text-blue-300/70 mb-2">Recent Activity</p>
-                            <div className="text-xs text-blue-200/80 ai-typing">
-                              Currently helping customers with inquiries
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-6 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          
+          {/* Website Builder */}
+          <div className="ai-card">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+              <Sparkles className="text-cyan-400" size={24} />
+              Build Your AI-Powered Website
+            </h2>
+            
+            <div className="space-y-6">
+              <div>
+                <label className="block text-gray-300 mb-2">Industry Type</label>
+                <select className="ai-select w-full">
+                  <option>Select your industry</option>
+                  <option>Laundromat</option>
+                  <option>Painter/Contractor</option>
+                  <option>Window Washing</option>
+                  <option>Generic Business</option>
+                </select>
               </div>
-
-              {/* Live Conversation Feed */}
-              <Card className="hologram bg-black/20 backdrop-blur-sm border-blue-800/30">
-                <CardHeader>
-                  <CardTitle className="gradient-text flex items-center">
-                    <MessageSquare className="w-5 h-5 mr-2" />
-                    Live Conversations
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4 max-h-96 overflow-y-auto">
-                    {conversations.map((conv) => (
-                      <div key={conv.id} className="border border-blue-800/30 rounded-lg p-4 bg-black/10">
-                        <div className="flex justify-between items-start mb-2">
-                          <div className="flex items-center space-x-2">
-                            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-sm font-bold">
-                              {conv.customer.split(' ').map(n => n[0]).join('')}
-                            </div>
-                            <span className="font-medium text-blue-100">{conv.customer}</span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Badge 
-                              variant={conv.status === 'resolved' ? 'default' : 'secondary'}
-                              className={`text-xs ${conv.status === 'resolved' ? 'bg-green-600' : 'bg-yellow-600'}`}
-                            >
-                              {conv.status === 'resolved' ? <CheckCircle className="w-3 h-3 mr-1" /> : <Clock className="w-3 h-3 mr-1" />}
-                              {conv.status}
-                            </Badge>
-                            <span className="text-xs text-blue-300/70">{conv.timestamp}</span>
-                          </div>
-                        </div>
-                        <div className="bg-gray-800/50 p-3 rounded mb-2">
-                          <p className="text-sm text-blue-100">{conv.message}</p>
-                        </div>
-                        <div className="bg-blue-900/30 p-3 rounded">
-                          <p className="text-sm text-blue-200">{conv.response}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          {/* Lead Manager Tab */}
-          <TabsContent value="leads" className="space-y-6">
-            <Card className="hologram bg-black/20 backdrop-blur-sm border-blue-800/30">
-              <CardHeader>
-                <CardTitle className="gradient-text">Lead Management Dashboard</CardTitle>
-                <CardDescription className="text-blue-300/70">
-                  Track and manage customer inquiries from your generated websites
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {leads.length > 0 ? (
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4">
-                      {leads.map((lead) => (
-                        <div key={lead.id} className="border border-blue-800/30 rounded-lg p-4 bg-black/10">
-                          <div className="flex justify-between items-start">
-                            <div>
-                              <h3 className="font-semibold text-blue-100">{lead.name}</h3>
-                              <p className="text-sm text-blue-300/70">{lead.businessName} • {lead.industry}</p>
-                              <div className="flex space-x-4 mt-2 text-sm">
-                                <span className="text-blue-300">📧 {lead.email}</span>
-                                <span className="text-blue-300">📱 {lead.phone}</span>
-                              </div>
-                              {lead.notes && (
-                                <p className="text-sm text-blue-200/80 mt-1">{lead.notes}</p>
-                              )}
-                            </div>
-                            <div className="text-right">
-                              <Badge variant="outline" className="border-blue-400 text-blue-300">
-                                New Lead
-                              </Badge>
-                              <p className="text-xs text-blue-300/70 mt-1">
-                                {new Date(lead.timestamp).toLocaleString()}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <div className="text-center py-12">
-                    <Users className="w-16 h-16 text-blue-400/50 mx-auto mb-4" />
-                    <p className="text-blue-300/70">No leads captured yet</p>
-                    <p className="text-blue-300/50 text-sm">Generate and share your website to start collecting leads</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Analytics Tab */}
-          <TabsContent value="analytics" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Card className="hologram bg-black/20 backdrop-blur-sm border-blue-800/30">
-                <CardContent className="p-6">
-                  <div className="flex items-center space-x-2">
-                    <MessageSquare className="w-8 h-8 text-blue-400" />
-                    <div>
-                      <p className="text-2xl font-bold gradient-text">{totalConversations}</p>
-                      <p className="text-sm text-blue-300/70">Conversations Today</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="hologram bg-black/20 backdrop-blur-sm border-blue-800/30">
-                <CardContent className="p-6">
-                  <div className="flex items-center space-x-2">
-                    <Clock className="w-8 h-8 text-green-400" />
-                    <div>
-                      <p className="text-2xl font-bold text-green-400">{avgResponseTime}</p>
-                      <p className="text-sm text-blue-300/70">Avg Response Time</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="hologram bg-black/20 backdrop-blur-sm border-blue-800/30">
-                <CardContent className="p-6">
-                  <div className="flex items-center space-x-2">
-                    <TrendingUp className="w-8 h-8 text-yellow-400" />
-                    <div>
-                      <p className="text-2xl font-bold text-yellow-400">{conversionRate}</p>
-                      <p className="text-sm text-blue-300/70">Conversion Rate</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="hologram bg-black/20 backdrop-blur-sm border-blue-800/30">
-                <CardContent className="p-6">
-                  <div className="flex items-center space-x-2">
-                    <DollarSign className="w-8 h-8 text-green-500" />
-                    <div>
-                      <p className="text-2xl font-bold text-green-400">${estimatedRevenue.toLocaleString()}</p>
-                      <p className="text-sm text-blue-300/70">Est. Revenue Impact</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <Card className="hologram bg-black/20 backdrop-blur-sm border-blue-800/30">
-              <CardHeader>
-                <CardTitle className="gradient-text">Performance Overview</CardTitle>
-                <CardDescription className="text-blue-300/70">
-                  AI employee performance and business impact metrics
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="font-semibold text-blue-100 mb-4">AI Employee Status</h3>
-                    <div className="space-y-3">
-                      {aiEmployees.map((employee) => (
-                        <div key={employee.id} className="flex justify-between items-center p-3 bg-black/10 rounded-lg">
-                          <span className="text-blue-200">{employee.name}</span>
-                          <div className="flex items-center space-x-2">
-                            <Badge 
-                              variant={employee.status === 'active' ? 'default' : 'secondary'}
-                              className={`${employee.status === 'active' ? 'bg-green-600' : 'bg-gray-600'} text-xs`}
-                            >
-                              {employee.status}
-                            </Badge>
-                            <span className="text-sm text-blue-300">{employee.conversationsToday}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h3 className="font-semibold text-blue-100 mb-4">Business Impact</h3>
-                    <div className="space-y-3">
-                      <div className="flex justify-between p-3 bg-black/10 rounded-lg">
-                        <span className="text-blue-200">Total Leads</span>
-                        <span className="font-semibold text-blue-100">{leads.length}</span>
-                      </div>
-                      <div className="flex justify-between p-3 bg-black/10 rounded-lg">
-                        <span className="text-blue-200">Active Conversations</span>
-                        <span className="font-semibold text-blue-100">{conversations.filter(c => c.status === 'in-progress').length}</span>
-                      </div>
-                      <div className="flex justify-between p-3 bg-black/10 rounded-lg">
-                        <span className="text-blue-200">Resolution Rate</span>
-                        <span className="font-semibold text-green-400">94.2%</span>
-                      </div>
-                      <div className="flex justify-between p-3 bg-black/10 rounded-lg">
-                        <span className="text-blue-200">Customer Satisfaction</span>
-                        <span className="font-semibold text-green-400">4.8/5</span>
-                      </div>
-                    </div>
-                  </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-300 mb-2">Business Name</label>
+                  <input type="text" className="ai-input w-full" placeholder="Your Business Name" />
                 </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </div>
+                <div>
+                  <label className="block text-gray-300 mb-2">Location</label>
+                  <input type="text" className="ai-input w-full" placeholder="City, State" />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-300 mb-2">Phone</label>
+                  <input type="tel" className="ai-input w-full" placeholder="(555) 123-4567" />
+                </div>
+                <div>
+                  <label className="block text-gray-300 mb-2">Email</label>
+                  <input type="email" className="ai-input w-full" placeholder="contact@business.com" />
+                </div>
+              </div>
+              
+              <button className="ai-btn-primary w-full">
+                <Sparkles size={16} />
+                Generate AI Website
+              </button>
+            </div>
+          </div>
 
-      {/* Footer Partnership */}
-      <footer className="relative z-10 mt-12 border-t border-blue-800/30 bg-black/20 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center">
-            <p className="text-blue-300/70 mb-2">Proudly partnered with</p>
-            <h3 className="text-2xl font-bold gradient-text">3LEVELS Family Business Incubator</h3>
-            <p className="text-blue-300/50 text-sm mt-2">
-              Empowering blue-collar businesses with AI automation and digital transformation
-            </p>
+          {/* Live Preview */}
+          <div className="ai-card">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                <Eye className="text-cyan-400" size={24} />
+                Live Preview
+              </h2>
+              <button className="ai-btn">Download</button>
+            </div>
+            
+            <div className="preview-container">
+              <div className="flex items-center justify-center h-full text-gray-400 text-center">
+                <div>
+                  <Bot className="mx-auto mb-4 opacity-50" size={64} />
+                  <p className="text-lg font-semibold mb-2">Ready to Generate</p>
+                  <p className="text-sm">Fill out the form to see your AI-powered website</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </footer>
-    </div>
-  );
-}
 
-=== client/src/pages/not-found.tsx ===
-import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
-import { Home, ArrowLeft } from "lucide-react";
+        {/* 3LEVELS Partnership */}
+        <div className="ai-card mt-8">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                <Users className="text-yellow-400" size={24} />
+                3LEVELS Partnership
+              </h2>
+              <p className="text-gray-400 mt-2">Family-led business incubator for minority, veteran, and small business founders</p>
+            </div>
+            <button className="ai-btn">
+              <Users size={16} />
+              Connect with 3LEVELS
+            </button>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <Sparkles className="text-white" size={20} />
+              </div>
+              <h3 className="font-semibold text-white mb-2">Level 1 - Leadership</h3>
+              <p className="text-sm text-gray-400">Business consulting and strategy development</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-cyan-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <Users className="text-white" size={20} />
+              </div>
+              <h3 className="font-semibold text-white mb-2">Level 2 - Resilience</h3>
+              <p className="text-sm text-gray-400">Partnerships and public/private affiliations</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <Bot className="text-white" size={20} />
+              </div>
+              <h3 className="font-semibold text-white mb-2">Level 3 - Empowerment</h3>
+              <p className="text-sm text-gray-400">Digital launch services and automation</p>
+            </div>
+          </div>
+        </div>
+      </main>
 
-export default function NotFound() {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center">
-      <div className="text-center space-y-6">
-        <div className="space-y-2">
-          <h1 className="text-6xl font-bold gradient-text">404</h1>
-          <h2 className="text-2xl font-semibold text-blue-100">Page Not Found</h2>
-          <p className="text-blue-300/70 max-w-md">
-            The page you're looking for doesn't exist or has been moved.
-          </p>
-        </div>
-        
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button asChild className="bg-blue-600 hover:bg-blue-700">
-            <Link href="/">
-              <Home className="w-4 h-4 mr-2" />
-              Go Home
-            </Link>
-          </Button>
-          <Button variant="outline" onClick={() => window.history.back()} className="border-blue-800/30 text-blue-300 hover:bg-blue-800/20">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Go Back
-          </Button>
-        </div>
+      {/* AI Chat Widget */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <button className="ai-chat-button">
+          <MessageCircle size={24} />
+        </button>
       </div>
     </div>
-  );
+  )
 }
 
-=== client/src/lib/utils.ts ===
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+export default App
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+:root {
+  --bg: hsl(220, 27%, 9%);
+  --bg-secondary: hsl(218, 23%, 11%);
+  --fg: hsl(210, 40%, 95%);
+  --brand: hsl(320, 97%, 54%);
+  --brand2: hsl(191, 100%, 50%);
+  --font-sans: 'Inter', system-ui, sans-serif;
 }
 
-=== client/src/lib/queryClient.ts ===
-import { QueryClient } from "@tanstack/react-query";
+body {
+  background: 
+    radial-gradient(1400px 1400px at 90% -10%, rgba(34,211,238,.15), transparent 45%),
+    radial-gradient(1200px 1200px at 10% 100%, rgba(139,92,246,.12), transparent 40%),
+    var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+}
 
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      queryFn: async ({ queryKey }) => {
-        const response = await fetch(queryKey[0] as string);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      },
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 10 * 60 * 1000, // 10 minutes
-    },
+/* AI Components */
+.ai-card {
+  background: linear-gradient(145deg, rgba(22,27,34,0.8), rgba(33,38,45,0.6));
+  border: 1px solid rgba(255,105,180,0.2);
+  border-radius: 1rem;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 25px rgba(255,28,247,0.1);
+}
+
+.ai-btn {
+  background: linear-gradient(135deg, var(--brand), var(--brand2));
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.ai-btn-primary {
+  background: linear-gradient(135deg, var(--brand), var(--brand2));
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(255,28,247,0.3);
+}
+
+.ai-btn:hover, .ai-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(255,28,247,0.4);
+}
+
+.ai-select, .ai-input {
+  background: rgba(22,27,34,0.6);
+  border: 1px solid rgba(255,105,180,0.3);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  color: var(--fg);
+  backdrop-filter: blur(5px);
+}
+
+.ai-select:focus, .ai-input:focus {
+  outline: none;
+  border-color: var(--brand2);
+  box-shadow: 0 0 15px rgba(0,217,255,0.3);
+}
+
+.brand-text {
+  background: linear-gradient(135deg, var(--brand), var(--brand2));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header {
+  background: rgba(22,27,34,0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,105,180,0.2);
+}
+
+.ai-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--brand2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.ai-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand2);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.preview-container {
+  background: rgba(0,0,0,0.4);
+  border-radius: 0.75rem;
+  height: 400px;
+  border: 1px solid rgba(255,105,180,0.2);
+  overflow: hidden;
+}
+
+.ai-chat-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand), var(--brand2));
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 25px rgba(255,28,247,0.4);
+  animation: pulse 3s ease-in-out infinite;
+}
+
+/* Background Effects */
+.ai-particles::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(2px 2px at 20px 30px, var(--brand2), transparent),
+    radial-gradient(2px 2px at 40px 70px, var(--brand), transparent),
+    radial-gradient(1px 1px at 90px 40px, var(--brand2), transparent);
+  background-size: 200px 200px;
+  animation: float 20s linear infinite;
+  opacity: 0.3;
+}
+
+.ai-grid::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(rgba(0,217,255,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,217,255,0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.2;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) translateX(0px); }
+  33% { transform: translateY(-100px) translateX(50px); }
+  66% { transform: translateY(50px) translateX(-50px); }
+  100% { transform: translateY(0px) translateX(0px); }
+}
+  export default {
+  content: ["./index.html", "./src/**/*.{js,jsx}"],
+  theme: {
+    extend: {},
   },
-});
-
-export async function apiRequest(url: string, options: RequestInit = {}) {
-  const response = await fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
-    ...options,
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-
-  return response.json();
+  plugins: [],
 }
-
-=== client/src/hooks/use-mobile.tsx ===
-import { useState, useEffect } from "react";
-
-const MOBILE_BREAKPOINT = 768;
-
-export function useIsMobile() {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-    const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    };
-    mql.addEventListener("change", onChange);
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    return () => mql.removeEventListener("change", onChange);
-  }, []);
-
-  return isMobile;
-}
-
-=== client/src/hooks/use-toast.ts ===
-import { useState, useCallback } from "react";
-
-type ToastProps = {
-  id: string;
-  title?: string;
-  description?: string;
-  action?: React.ReactNode;
-  variant?: "default" | "destructive";
-};
-
-export function useToast() {
-  const [toasts, setToasts] = useState<ToastProps[]>([]);
-
-  const toast = useCallback(({ title, description, action, variant = "default" }: Omit<ToastProps, "id">) => {
-    const id = Math.random().toString(36).substring(2, 9);
-    const newToast: ToastProps = { id, title, description, action, variant };
-    
-    setToasts((prev) => [...prev, newToast]);
-
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 5000);
-
-    return {
-      id,
-      dismiss: () => setToasts((prev) => prev.filter((t) => t.id !== id)),
-      update: (props: Partial<Omit<ToastProps, "id">>) => {
-        setToasts((prev) => prev.map((t) => (t.id === id ? { ...t, ...props } : t)));
-      },
-    };
-  }, []);
-
-  return {
-    toast,
-    toasts,
-    dismiss: (toastId: string) => setToasts((prev) => prev.filter((t) => t.id !== toastId)),
-  };
-}
-
-=== server/index.ts ===
-import express from "express";
-import { createServer } from "http";
-import { setupVite, serveStatic, log } from "./vite";
-import { apiRouter } from "./routes";
-
-const app = express();
-const server = createServer(app);
-
-app.use(express.json());
-
-// API routes
-app.use("/api", apiRouter);
-
-// Setup Vite or static serving
-if (process.env.NODE_ENV === "production") {
-  serveStatic(app);
-} else {
-  await setupVite(app, server);
-}
-
-const port = parseInt(process.env.PORT || "5000", 10);
-
-server.listen(port, "0.0.0.0", () => {
-  log(`serving on port ${port}`);
-});
-
-=== server/routes.ts ===
-import { Router } from "express";
-import { z } from "zod";
-import { storage } from "./storage";
-import type { Lead, Website } from "../shared/schema";
-
-export const apiRouter = Router();
-
-// Validation schemas
-const createLeadSchema = z.object({
-  businessName: z.string().min(1),
-  industry: z.string().min(1),
-  name: z.string().min(1),
-  email: z.string().email(),
-  phone: z.string().min(1),
-  notes: z.string().optional(),
-  formData: z.record(z.any()).optional(),
-});
-
-const createWebsiteSchema = z.object({
-  businessName: z.string().min(1),
-  industry: z.string().min(1),
-  formData: z.record(z.any()),
-  htmlContent: z.string(),
-});
-
-// Lead routes
-apiRouter.get("/leads", async (req, res) => {
-  try {
-    const leads = await storage.getLeads();
-    res.json(leads);
-  } catch (error) {
-    console.error("Error fetching leads:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-apiRouter.post("/leads", async (req, res) => {
-  try {
-    const validatedData = createLeadSchema.parse(req.body);
-    
-    const lead: Lead = {
-      id: crypto.randomUUID(),
-      ...validatedData,
-      timestamp: new Date().toISOString(),
-    };
-
-    await storage.createLead(lead);
-    res.status(201).json(lead);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      res.status(400).json({ message: "Invalid input", errors: error.errors });
-    } else {
-      console.error("Error creating lead:", error);
-      res.status(500).json({ message: "Internal server error" });
-    }
-  }
-});
-
-apiRouter.get("/leads/business/:businessName", async (req, res) => {
-  try {
-    const { businessName } = req.params;
-    const leads = await storage.getLeadsByBusiness(businessName);
-    res.json(leads);
-  } catch (error) {
-    console.error("Error fetching leads by business:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-// Website routes
-apiRouter.get("/websites", async (req, res) => {
-  try {
-    const websites = await storage.getWebsites();
-    res.json(websites);
-  } catch (error) {
-    console.error("Error fetching websites:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-apiRouter.post("/websites", async (req, res) => {
-  try {
-    const validatedData = createWebsiteSchema.parse(req.body);
-    
-    const website: Website = {
-      id: crypto.randomUUID(),
-      ...validatedData,
-      createdAt: new Date().toISOString(),
-    };
-
-    await storage.createWebsite(website);
-    res.status(201).json(website);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      res.status(400).json({ message: "Invalid input", errors: error.errors });
-    } else {
-      console.error("Error creating website:", error);
-      res.status(500).json({ message: "Internal server error" });
-    }
-  }
-});
-
-apiRouter.get("/websites/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const website = await storage.getWebsiteById(id);
-    
-    if (!website) {
-      res.status(404).json({ message: "Website not found" });
-      return;
-    }
-
-    res.json(website);
-  } catch (error) {
-    console.error("Error fetching website:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-// Health check
-apiRouter.get("/health", (req, res) => {
-  res.json({ status: "ok", timestamp: new Date().toISOString() });
-});
-
-=== server/storage.ts ===
-import type { Lead, Website } from "../shared/schema";
-
-export interface IStorage {
-  // Lead operations
-  createLead(lead: Lead): Promise<void>;
-  getLeads(): Promise<Lead[]>;
-  getLeadsByBusiness(businessName: string): Promise<Lead[]>;
-  
-  // Website operations
-  createWebsite(website: Website): Promise<void>;
-  getWebsites(): Promise<Website[]>;
-  getWebsiteById(id: string): Promise<Website | null>;
-}
-
-// In-memory storage implementation for development
-class MemoryStorage implements IStorage {
-  private leads: Map<string, Lead> = new Map();
-  private websites: Map<string, Website> = new Map();
-
-  async createLead(lead: Lead): Promise<void> {
-    this.leads.set(lead.id, lead);
-  }
-
-  async getLeads(): Promise<Lead[]> {
-    return Array.from(this.leads.values()).sort(
-      (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-    );
-  }
-
-  async getLeadsByBusiness(businessName: string): Promise<Lead[]> {
-    return Array.from(this.leads.values())
-      .filter(lead => lead.businessName.toLowerCase().includes(businessName.toLowerCase()))
-      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-  }
-
-  async createWebsite(website: Website): Promise<void> {
-    this.websites.set(website.id, website);
-  }
-
-  async getWebsites(): Promise<Website[]> {
-    return Array.from(this.websites.values()).sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
-  }
-
-  async getWebsiteById(id: string): Promise<Website | null> {
-    return this.websites.get(id) || null;
-  }
-}
-
-// Export storage instance
-export const storage: IStorage = new MemoryStorage();
-
-=== server/vite.ts ===
-import express, { type Express } from "express";
-import fs from "fs";
-import path from "path";
-import { createServer as createViteServer, createLogger } from "vite";
-import { type Server } from "http";
-import viteConfig from "../vite.config";
-import { nanoid } from "nanoid";
-
-const viteLogger = createLogger();
-
-export function log(message: string, source = "express") {
-  const formattedTime = new Date().toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: true,
-  });
-
-  console.log(`${formattedTime} [${source}] ${message}`);
-}
-
-export async function setupVite(app: Express, server: Server) {
-  const serverOptions = {
-    middlewareMode: true,
-    hmr: { server },
-    allowedHosts: true as const,
-  };
-
-  const vite = await createViteServer({
-    ...viteConfig,
-    configFile: false,
-    customLogger: {
-      ...viteLogger,
-      error: (msg, options) => {
-        viteLogger.error(msg, options);
-        process.exit(1);
-      },
-    },
-    server: serverOptions,
-    appType: "custom",
-  });
-
-  app.use(vite.middlewares);
-  app.use("*", async (req, res, next) => {
-    const url = req.originalUrl;
-
-    try {
-      const clientTemplate = path.resolve(
-        import.meta.dirname,
-        "..",
-        "client",
-        "index.html",
-      );
-
-      // always reload the index.html file from disk incase it changes
-      let template = await fs.promises.readFile(clientTemplate, "utf-8");
-      template = template.replace(
-        `src="/src/main.tsx"`,
-        `src="/src/main.tsx?v=${nanoid()}"`,
-      );
-      const page = await vite.transformIndexHtml(url, template);
-      res.status(200).set({ "Content-Type": "text/html" }).end(page);
-    } catch (e) {
-      vite.ssrFixStacktrace(e as Error);
-      next(e);
-    }
-  });
-}
-
-export function serveStatic(app: Express) {
-  const distPath = path.resolve(import.meta.dirname, "public");
-
-  if (!fs.existsSync(distPath)) {
-    throw new Error(
-      `Could not find the build directory: ${distPath}, make sure to build the client first`,
-    );
-  }
-
-  app.use(express.static(distPath));
-
-  // fall through to index.html if the file doesn't exist
-  app.use("*", (_req, res) => {
-    res.sendFile(path.resolve(distPath, "index.html"));
-  });
-}
-
-=== shared/schema.ts ===
-import { pgTable, text, timestamp, jsonb } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
-import { z } from "zod";
-
-// Leads table
-export const leads = pgTable("leads", {
-  id: text("id").primaryKey().default("gen_random_uuid()"),
-  businessName: text("business_name").notNull(),
-  industry: text("industry").notNull(),
-  name: text("name").notNull(),
-  email: text("email").notNull(),
-  phone: text("phone").notNull(),
-  notes: text("notes"),
-  timestamp: timestamp("timestamp").defaultNow(),
-  formData: jsonb("form_data"),
-});
-
-// Websites table
-export const websites = pgTable("websites", {
-  id: text("id").primaryKey().default("gen_random_uuid()"),
-  businessName: text("business_name").notNull(),
-  industry: text("industry").notNull(),
-  formData: jsonb("form_data").notNull(),
-  htmlContent: text("html_content").notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-// Zod schemas for validation
-export const insertLeadSchema = createInsertSchema(leads).omit({
-  id: true,
-  timestamp: true,
-});
-
-export const insertWebsiteSchema = createInsertSchema(websites).omit({
-  id: true,
-  createdAt: true,
-});
-
-// TypeScript types
-export type Lead = typeof leads.$inferSelect;
-export type InsertLead = z.infer<typeof insertLeadSchema>;
-
-export type Website = typeof websites.$inferSelect;
-export type InsertWebsite = z.infer<typeof insertWebsiteSchema>;
-
-=== ALL UI COMPONENTS (place in client/src/components/ui/) ===
-
-=== button.tsx ===
-import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
-
-const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  },
-);
-
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-}
-
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
-    );
-  },
-);
-Button.displayName = "Button";
-
-export { Button, buttonVariants };
-
-=== card.tsx ===
-import * as React from "react";
-import { cn } from "@/lib/utils";
-
-const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm",
-      className,
-    )}
-    {...props}
-  />
-));
-Card.displayName = "Card";
-
-const CardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex flex-col space-y-1.5 p-6", className)} {...props} />
-));
-CardHeader.displayName = "CardHeader";
-
-const CardTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cn(
-      "text-2xl font-semibold leading-none tracking-tight",
-      className,
-    )}
-    {...props}
-  />
-));
-CardTitle.displayName = "CardTitle";
-
-const CardDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
-    {...props}
-  />
-));
-CardDescription.displayName = "CardDescription";
-
-const CardContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
-));
-CardContent.displayName = "CardContent";
-
-const CardFooter = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex items-center p-6 pt-0", className)}
-    {...props}
-  />
-));
-CardFooter.displayName = "CardFooter";
-
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent };
-
-=== input.tsx ===
-import * as React from "react";
-import { cn } from "@/lib/utils";
-
-const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
-  ({ className, type, ...props }, ref) => {
-    return (
-      <input
-        type={type}
-        className={cn(
-          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-          className,
-        )}
-        ref={ref}
-        {...props}
-      />
-    );
-  },
-);
-Input.displayName = "Input";
-
-export { Input };
-
-=== label.tsx ===
-import * as React from "react";
-import * as LabelPrimitive from "@radix-ui/react-label";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
-
-const labelVariants = cva(
-  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
-);
-
-const Label = React.forwardRef<
-  React.ElementRef<typeof LabelPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> &
-    VariantProps<typeof labelVariants>
->(({ className, ...props }, ref) => (
-  <LabelPrimitive.Root
-    ref={ref}
-    className={cn(labelVariants(), className)}
-    {...props}
-  />
-));
-Label.displayName = LabelPrimitive.Root.displayName;
-
-export { Label };
-
-=== textarea.tsx ===
-import * as React from "react";
-import { cn } from "@/lib/utils";
-
-const Textarea = React.forwardRef<
-  HTMLTextAreaElement,
-  React.ComponentProps<"textarea">
->(({ className, ...props }, ref) => {
-  return (
-    <textarea
-      className={cn(
-        "flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-        className,
-      )}
-      ref={ref}
-      {...props}
-    />
-  );
-});
-Textarea.displayName = "Textarea";
-
-export { Textarea };
-
-=== select.tsx ===
-import * as React from "react";
-import * as SelectPrimitive from "@radix-ui/react-select";
-import { Check, ChevronDown, ChevronUp } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-const Select = SelectPrimitive.Root;
-const SelectGroup = SelectPrimitive.Group;
-const SelectValue = SelectPrimitive.Value;
-
-const SelectTrigger = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-      className,
-    )}
-    {...props}
-  >
-    {children}
-    <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50" />
-    </SelectPrimitive.Icon>
-  </SelectPrimitive.Trigger>
-));
-SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
-
-const SelectScrollUpButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.ScrollUpButton
-    ref={ref}
-    className={cn(
-      "flex cursor-default items-center justify-center py-1",
-      className,
-    )}
-    {...props}
-  >
-    <ChevronUp className="h-4 w-4" />
-  </SelectPrimitive.ScrollUpButton>
-));
-SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
-
-const SelectScrollDownButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.ScrollDownButton
-    ref={ref}
-    className={cn(
-      "flex cursor-default items-center justify-center py-1",
-      className,
-    )}
-    {...props}
-  >
-    <ChevronDown className="h-4 w-4" />
-  </SelectPrimitive.ScrollDownButton>
-));
-SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName;
-
-const SelectContent = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = "popper", ...props }, ref) => (
-  <SelectPrimitive.Portal>
-    <SelectPrimitive.Content
-      ref={ref}
-      className={cn(
-        "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-        position === "popper" &&
-          "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-        className,
-      )}
-      position={position}
-      {...props}
-    >
-      <SelectScrollUpButton />
-      <SelectPrimitive.Viewport
-        className={cn(
-          "p-1",
-          position === "popper" &&
-            "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]",
-        )}
-      >
-        {children}
-      </SelectPrimitive.Viewport>
-      <SelectScrollDownButton />
-    </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
-));
-SelectContent.displayName = SelectPrimitive.Content.displayName;
-
-const SelectLabel = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.Label
-    ref={ref}
-    className={cn("px-2 py-1.5 text-sm font-semibold", className)}
-    {...props}
-  />
-));
-SelectLabel.displayName = SelectPrimitive.Label.displayName;
-
-const SelectItem = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Item
-    ref={ref}
-    className={cn(
-      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className,
-    )}
-    {...props}
-  >
-    <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
-      <SelectPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
-      </SelectPrimitive.ItemIndicator>
-    </span>
-    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-  </SelectPrimitive.Item>
-));
-SelectItem.displayName = SelectPrimitive.Item.displayName;
-
-const SelectSeparator = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.Separator
-    ref={ref}
-    className={cn("-mx-1 my-1 h-px bg-muted", className)}
-    {...props}
-  />
-));
-SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
-
-export {
-  Select,
-  SelectGroup,
-  SelectValue,
-  SelectTrigger,
-  SelectContent,
-  SelectLabel,
-  SelectItem,
-  SelectSeparator,
-  SelectScrollUpButton,
-  SelectScrollDownButton,
-};
-
-=== tabs.tsx ===
-import * as React from "react";
-import * as TabsPrimitive from "@radix-ui/react-tabs";
-import { cn } from "@/lib/utils";
-
-const Tabs = TabsPrimitive.Root;
-
-const TabsList = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.List
-    ref={ref}
-    className={cn(
-      "inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground",
-      className,
-    )}
-    {...props}
-  />
-));
-TabsList.displayName = TabsPrimitive.List.displayName;
-
-const TabsTrigger = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow",
-      className,
-    )}
-    {...props}
-  />
-));
-TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
-
-const TabsContent = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Content
-    ref={ref}
-    className={cn(
-      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-      className,
-    )}
-    {...props}
-  />
-));
-TabsContent.displayName = TabsPrimitive.Content.displayName;
-
-export { Tabs, TabsList, TabsTrigger, TabsContent };
-
-=== badge.tsx ===
-import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
-
-const badgeVariants = cva(
-  "inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
-  {
-    variants: {
-      variant: {
-        default:
-          "border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80",
-        secondary:
-          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        destructive:
-          "border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80",
-        outline: "text-foreground",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  },
-);
-
-export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
-
-function Badge({ className, variant, ...props }: BadgeProps) {
-  return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
-  );
-}
-
-export { Badge, badgeVariants };
-
-=== separator.tsx ===
-import * as React from "react";
-import * as SeparatorPrimitive from "@radix-ui/react-separator";
-import { cn } from "@/lib/utils";
-
-const Separator = React.forwardRef<
-  React.ElementRef<typeof SeparatorPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>
->(
-  (
-    { className, orientation = "horizontal", decorative = true, ...props },
-    ref,
-  ) => (
-    <SeparatorPrimitive.Root
-      ref={ref}
-      decorative={decorative}
-      orientation={orientation}
-      className={cn(
-        "shrink-0 bg-border",
-        orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
-        className,
-      )}
-      {...props}
-    />
-  ),
-);
-Separator.displayName = SeparatorPrimitive.Root.displayName;
-
-export { Separator };
-
-=== toast.tsx ===
-import * as React from "react";
-import * as ToastPrimitives from "@radix-ui/react-toast";
-import { cva, type VariantProps } from "class-variance-authority";
-import { X } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-const ToastProvider = ToastPrimitives.Provider;
-
-const ToastViewport = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Viewport>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Viewport>
->(({ className, ...props }, ref) => (
-  <ToastPrimitives.Viewport
-    ref={ref}
-    className={cn(
-      "fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]",
-      className,
-    )}
-    {...props}
-  />
-));
-ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
-
-const toastVariants = cva(
-  "group pointer-events-auto relative flex w-full items-center justify-between space-x-2 overflow-hidden rounded-md border p-4 pr-6 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full",
-  {
-    variants: {
-      variant: {
-        default: "border bg-background text-foreground",
-        destructive:
-          "destructive group border-destructive bg-destructive text-destructive-foreground",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  },
-);
-
-const Toast = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Root>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
-    VariantProps<typeof toastVariants>
->(({ className, variant, ...props }, ref) => {
-  return (
-    <ToastPrimitives.Root
-      ref={ref}
-      className={cn(toastVariants({ variant }), className)}
-      {...props}
-    />
-  );
-});
-Toast.displayName = ToastPrimitives.Root.displayName;
-
-const ToastAction = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Action>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Action>
->(({ className, ...props }, ref) => (
-  <ToastPrimitives.Action
-    ref={ref}
-    className={cn(
-      "inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium transition-colors hover:bg-secondary focus:outline-none focus:ring-1 focus:ring-ring disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:border-muted/40 group-[.destructive]:hover:border-destructive/30 group-[.destructive]:hover:bg-destructive group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive",
-      className,
-    )}
-    {...props}
-  />
-));
-ToastAction.displayName = ToastPrimitives.Action.displayName;
-
-const ToastClose = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Close>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Close>
->(({ className, ...props }, ref) => (
-  <ToastPrimitives.Close
-    ref={ref}
-    className={cn(
-      "absolute right-1 top-1 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-1 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600",
-      className,
-    )}
-    toast-close=""
-    {...props}
-  >
-    <X className="h-4 w-4" />
-  </ToastPrimitives.Close>
-));
-ToastClose.displayName = ToastPrimitives.Close.displayName;
-
-const ToastTitle = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Title>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Title>
->(({ className, ...props }, ref) => (
-  <ToastPrimitives.Title
-    ref={ref}
-    className={cn("text-sm font-semibold [&+div]:text-xs", className)}
-    {...props}
-  />
-));
-ToastTitle.displayName = ToastPrimitives.Title.displayName;
-
-const ToastDescription = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Description>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Description>
->(({ className, ...props }, ref) => (
-  <ToastPrimitives.Description
-    ref={ref}
-    className={cn("text-sm opacity-90", className)}
-    {...props}
-  />
-));
-ToastDescription.displayName = ToastPrimitives.Description.displayName;
-
-type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>;
-type ToastActionElement = React.ReactElement<typeof ToastAction>;
-
-export {
-  type ToastProps,
-  type ToastActionElement,
-  ToastProvider,
-  ToastViewport,
-  Toast,
-  ToastTitle,
-  ToastDescription,
-  ToastClose,
-  ToastAction,
-};
-
-=== toaster.tsx ===
-import {
-  Toast,
-  ToastClose,
-  ToastDescription,
-  ToastProvider,
-  ToastTitle,
-  ToastViewport,
-} from "@/components/ui/toast";
-import { useToast } from "@/hooks/use-toast";
-
-export function Toaster() {
-  const { toasts } = useToast();
-
-  return (
-    <ToastProvider>
-      {toasts.map(function ({ id, title, description, action, ...props }) {
-        return (
-          <Toast key={id} {...props}>
-            <div className="grid gap-1">
-              {title && <ToastTitle>{title}</ToastTitle>}
-              {description && (
-                <ToastDescription>{description}</ToastDescription>
-              )}
-            </div>
-            {action}
-            <ToastClose />
-          </Toast>
-        );
-      })}
-      <ToastViewport />
-    </ToastProvider>
-  );
-}
-
-=== .gitignore ===
-# Dependencies
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Database
-*.db
-*.sqlite
-
-# Coverage directory used by tools like istanbul
-coverage
-*.lcov
-
-# Dependency directories
-node_modules/
-
-# Optional npm cache directory
-.npm
-
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# parcel-bundler cache (https://parceljs.org/)
-.cache
-.parcel-cache
-
-# Next.js build output
-.next
-
-# Nuxt.js build / generate output
-.nuxt
-dist
-
-# Storybook build outputs
-.out
-.storybook-out
-
-# Temporary folders
-tmp/
-temp/
-
-# Logs
-logs
-*.log
-
-# Runtime data
-pids
-*.pid
-*.seed
-
-# Coverage directory used by tools like istanbul
-coverage
-
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
-
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
-
-# Users Environment Variables
-.lock-wscript
-
-# IDEs and editors (shamelessly copied from @angular/cli's .gitignore)
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Drizzle
-drizzle
+  import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+})
