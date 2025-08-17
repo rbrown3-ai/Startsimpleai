@@ -1144,10 +1144,17 @@
                 ])
             ]);
         }
-        function App() {
-            useEffect(() => {
-  document.body.className = "theme-cyberpunk";
-}, [])
+      function App() {
+    useEffect(() => {
+        document.body.className = "theme-cyberpunk";
+    }, []);
+
+    return React.createElement('div', { className: "min-h-screen" }, [
+        React.createElement(AIEffects, { key: 'effects' }),
+        // ... all your other UI elements (header, hero, sections, pricing, etc.)
+        React.createElement(AIChat, { key: 'chat' })
+    ]);
+}
         };
             return React.createElement('div', { className: "min-h-screen" }, [
                 React.createElement(AIEffects, { key: 'effects' }),
