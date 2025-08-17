@@ -3,93 +3,110 @@
   "version": "1.0.0",
   "description": "AI-powered business launchpad platform for blue-collar industries",
   "type": "module",
+  "license": "MIT",
   "scripts": {
-    "dev": "tsx server/index.ts",
-    "build": "vite build",
-    "start": "NODE_ENV=production tsx server/index.ts",
-    "check": "tsc --noEmit",
+    "dev": "NODE_ENV=development tsx server/index.ts",
+    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+    "start": "NODE_ENV=production node dist/index.js",
+    "check": "tsc",
     "db:push": "drizzle-kit push"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.3.4",
-    "@neondatabase/serverless": "^0.9.0",
-    "@radix-ui/react-accordion": "^1.1.2",
-    "@radix-ui/react-alert-dialog": "^1.0.5",
-    "@radix-ui/react-aspect-ratio": "^1.0.3",
-    "@radix-ui/react-avatar": "^1.0.4",
-    "@radix-ui/react-checkbox": "^1.0.4",
-    "@radix-ui/react-collapsible": "^1.0.3",
-    "@radix-ui/react-context-menu": "^2.1.5",
-    "@radix-ui/react-dialog": "^1.0.5",
-    "@radix-ui/react-dropdown-menu": "^2.0.6",
-    "@radix-ui/react-hover-card": "^1.0.7",
-    "@radix-ui/react-label": "^2.0.2",
-    "@radix-ui/react-menubar": "^1.0.4",
-    "@radix-ui/react-navigation-menu": "^1.1.4",
-    "@radix-ui/react-popover": "^1.0.7",
-    "@radix-ui/react-progress": "^1.0.3",
-    "@radix-ui/react-radio-group": "^1.1.3",
-    "@radix-ui/react-scroll-area": "^1.0.5",
-    "@radix-ui/react-select": "^2.0.0",
-    "@radix-ui/react-separator": "^1.0.3",
-    "@radix-ui/react-slider": "^1.1.2",
-    "@radix-ui/react-slot": "^1.0.2",
-    "@radix-ui/react-switch": "^1.0.3",
-    "@radix-ui/react-tabs": "^1.0.4",
-    "@radix-ui/react-toast": "^1.1.5",
-    "@radix-ui/react-toggle": "^1.0.3",
-    "@radix-ui/react-toggle-group": "^1.0.4",
-    "@radix-ui/react-tooltip": "^1.0.7",
-    "@tanstack/react-query": "^5.28.6",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
-    "cmdk": "^1.0.0",
+    "@hookform/resolvers": "^3.10.0",
+    "@jridgewell/trace-mapping": "^0.3.25",
+    "@neondatabase/serverless": "^0.10.4",
+    "@radix-ui/react-accordion": "^1.2.4",
+    "@radix-ui/react-alert-dialog": "^1.1.7",
+    "@radix-ui/react-aspect-ratio": "^1.1.3",
+    "@radix-ui/react-avatar": "^1.1.4",
+    "@radix-ui/react-checkbox": "^1.1.5",
+    "@radix-ui/react-collapsible": "^1.1.4",
+    "@radix-ui/react-context-menu": "^2.2.7",
+    "@radix-ui/react-dialog": "^1.1.7",
+    "@radix-ui/react-dropdown-menu": "^2.1.7",
+    "@radix-ui/react-hover-card": "^1.1.7",
+    "@radix-ui/react-label": "^2.1.3",
+    "@radix-ui/react-menubar": "^1.1.7",
+    "@radix-ui/react-navigation-menu": "^1.2.6",
+    "@radix-ui/react-popover": "^1.1.7",
+    "@radix-ui/react-progress": "^1.1.3",
+    "@radix-ui/react-radio-group": "^1.2.4",
+    "@radix-ui/react-scroll-area": "^1.2.4",
+    "@radix-ui/react-select": "^2.1.7",
+    "@radix-ui/react-separator": "^1.1.3",
+    "@radix-ui/react-slider": "^1.2.4",
+    "@radix-ui/react-slot": "^1.2.0",
+    "@radix-ui/react-switch": "^1.1.4",
+    "@radix-ui/react-tabs": "^1.1.4",
+    "@radix-ui/react-toast": "^1.2.7",
+    "@radix-ui/react-toggle": "^1.1.3",
+    "@radix-ui/react-toggle-group": "^1.1.3",
+    "@radix-ui/react-tooltip": "^1.2.0",
+    "@tanstack/react-query": "^5.60.5",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "connect-pg-simple": "^10.0.0",
     "date-fns": "^3.6.0",
-    "drizzle-orm": "^0.30.7",
-    "drizzle-zod": "^0.5.1",
-    "embla-carousel-react": "^8.0.2",
-    "express": "^4.19.2",
-    "express-session": "^1.18.0",
-    "framer-motion": "^11.0.28",
-    "input-otp": "^1.2.4",
-    "lucide-react": "^0.368.0",
-    "next-themes": "^0.3.0",
-    "react": "^18.2.0",
-    "react-day-picker": "^8.10.0",
-    "react-dom": "^18.2.0",
-    "react-hook-form": "^7.51.1",
-    "react-icons": "^5.0.1",
-    "react-resizable-panels": "^2.0.16",
-    "recharts": "^2.12.5",
-    "tailwind-merge": "^2.2.2",
+    "drizzle-orm": "^0.39.1",
+    "drizzle-zod": "^0.7.0",
+    "embla-carousel-react": "^8.6.0",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "framer-motion": "^11.13.1",
+    "input-otp": "^1.4.2",
+    "lucide-react": "^0.453.0",
+    "memorystore": "^1.6.7",
+    "nanoid": "^5.0.9",
+    "next-themes": "^0.4.6",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "react": "^18.3.1",
+    "react-day-picker": "^8.10.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.55.0",
+    "react-icons": "^5.4.0",
+    "react-resizable-panels": "^2.1.7",
+    "recharts": "^2.15.2",
+    "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
-    "vaul": "^0.9.0",
-    "wouter": "^3.1.0",
-    "zod": "^3.22.4",
-    "zod-validation-error": "^3.0.3"
+    "tw-animate-css": "^1.2.5",
+    "vaul": "^1.1.2",
+    "wouter": "^3.3.5",
+    "ws": "^8.18.0",
+    "zod": "^3.24.2",
+    "zod-validation-error": "^3.4.0"
   },
   "devDependencies": {
-    "@types/express": "^4.17.21",
+    "@replit/vite-plugin-cartographer": "^0.2.8",
+    "@replit/vite-plugin-runtime-error-modal": "^0.0.3",
+    "@tailwindcss/typography": "^0.5.15",
+    "@tailwindcss/vite": "^4.1.3",
+    "@types/connect-pg-simple": "^7.0.3",
+    "@types/express": "4.17.21",
     "@types/express-session": "^1.18.0",
-    "@types/node": "^20.12.7",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@tailwindcss/typography": "^0.5.12",
-    "@tailwindcss/vite": "^4.0.0-alpha.15",
-    "@vitejs/plugin-react": "^4.2.1",
-    "autoprefixer": "^10.4.19",
-    "drizzle-kit": "^0.20.14",
-    "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.3",
-    "tsx": "^4.7.2",
-    "typescript": "^5.4.3",
-    "vite": "^5.2.8"
+    "@types/node": "20.16.11",
+    "@types/passport": "^1.0.16",
+    "@types/passport-local": "^1.0.38",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@types/ws": "^8.5.13",
+    "@vitejs/plugin-react": "^4.3.2",
+    "autoprefixer": "^10.4.20",
+    "drizzle-kit": "^0.30.4",
+    "esbuild": "^0.25.0",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.1",
+    "typescript": "5.6.3",
+    "vite": "^5.4.19"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.8"
   }
 }
-```
 
-## FILE: tsconfig.json
-```json
+=== tsconfig.json ===
 {
   "compilerOptions": {
     "target": "ES2020",
@@ -117,10 +134,8 @@
   "include": ["client", "server", "shared"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
-```
 
-## FILE: vite.config.ts
-```typescript
+=== vite.config.ts ===
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
@@ -144,10 +159,8 @@ export default defineConfig({
     port: 3000,
   },
 });
-```
 
-## FILE: tailwind.config.ts
-```typescript
+=== tailwind.config.ts ===
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 
@@ -210,20 +223,16 @@ export default {
   },
   plugins: [tailwindcssAnimate],
 } satisfies Config;
-```
 
-## FILE: postcss.config.js
-```javascript
+=== postcss.config.js ===
 export default {
   plugins: {
     tailwindcss: {},
     autoprefixer: {},
   },
 }
-```
 
-## FILE: components.json
-```json
+=== components.json ===
 {
   "$schema": "https://ui.shadcn.com/schema.json",
   "style": "default",
@@ -241,10 +250,8 @@ export default {
     "utils": "@/lib/utils"
   }
 }
-```
 
-## FILE: drizzle.config.ts
-```typescript
+=== drizzle.config.ts ===
 import type { Config } from "drizzle-kit";
 
 export default {
@@ -255,10 +262,8 @@ export default {
     url: process.env.DATABASE_URL!,
   },
 } satisfies Config;
-```
 
-## FILE: client/index.html
-```html
+=== client/index.html ===
 <!doctype html>
 <html lang="en">
   <head>
@@ -276,10 +281,8 @@ export default {
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-```
 
-## FILE: client/src/main.tsx
-```typescript
+=== client/src/main.tsx ===
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
@@ -290,10 +293,8 @@ createRoot(document.getElementById("root")!).render(
     <App />
   </StrictMode>,
 );
-```
 
-## FILE: client/src/index.css
-```css
+=== client/src/index.css ===
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -470,10 +471,8 @@ createRoot(document.getElementById("root")!).render(
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(59, 130, 246, 0.8);
 }
-```
 
-## FILE: client/src/App.tsx
-```typescript
+=== client/src/App.tsx ===
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Switch, Route } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
@@ -497,10 +496,8 @@ function App() {
 }
 
 export default App;
-```
 
-## FILE: client/src/pages/dashboard.tsx
-```typescript
+=== client/src/pages/dashboard.tsx ===
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -1599,10 +1596,8 @@ export default function Dashboard() {
     </div>
   );
 }
-```
 
-## FILE: client/src/pages/not-found.tsx
-```typescript
+=== client/src/pages/not-found.tsx ===
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Home, ArrowLeft } from "lucide-react";
@@ -1635,20 +1630,16 @@ export default function NotFound() {
     </div>
   );
 }
-```
 
-## FILE: client/src/lib/utils.ts
-```typescript
+=== client/src/lib/utils.ts ===
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-```
 
-## FILE: client/src/lib/queryClient.ts
-```typescript
+=== client/src/lib/queryClient.ts ===
 import { QueryClient } from "@tanstack/react-query";
 
 export const queryClient = new QueryClient({
@@ -1682,10 +1673,8 @@ export async function apiRequest(url: string, options: RequestInit = {}) {
 
   return response.json();
 }
-```
 
-## FILE: client/src/hooks/use-mobile.tsx
-```typescript
+=== client/src/hooks/use-mobile.tsx ===
 import { useState, useEffect } from "react";
 
 const MOBILE_BREAKPOINT = 768;
@@ -1705,10 +1694,8 @@ export function useIsMobile() {
 
   return isMobile;
 }
-```
 
-## FILE: client/src/hooks/use-toast.ts
-```typescript
+=== client/src/hooks/use-toast.ts ===
 import { useState, useCallback } from "react";
 
 type ToastProps = {
@@ -1747,109 +1734,11 @@ export function useToast() {
     dismiss: (toastId: string) => setToasts((prev) => prev.filter((t) => t.id !== toastId)),
   };
 }
-```
 
-## FILE: client/src/hooks/use-website-generator.ts
-```typescript
-import { useState } from "react";
-import { useToast } from "./use-toast";
-
-interface WebsiteFormData {
-  industry: string;
-  businessName: string;
-  location: string;
-  phone: string;
-  email: string;
-  description: string;
-  colorPreset: string;
-}
-
-export function useWebsiteGenerator() {
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedWebsite, setGeneratedWebsite] = useState<string>("");
-  const { toast } = useToast();
-
-  const generateWebsite = async (formData: WebsiteFormData) => {
-    setIsGenerating(true);
-
-    try {
-      const response = await fetch("/api/websites", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          businessName: formData.businessName,
-          industry: formData.industry,
-          formData: formData,
-          htmlContent: "", // Will be generated on server
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to generate website");
-      }
-
-      const result = await response.json();
-      setGeneratedWebsite(result.htmlContent);
-
-      toast({
-        title: "Website Generated Successfully!",
-        description: "Your professional website is ready for download.",
-      });
-
-      return result;
-    } catch (error) {
-      toast({
-        title: "Generation Failed",
-        description: "There was an error generating your website. Please try again.",
-        variant: "destructive",
-      });
-      throw error;
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
-  const downloadWebsite = (businessName: string) => {
-    if (!generatedWebsite) return;
-
-    const blob = new Blob([generatedWebsite], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${businessName.toLowerCase().replace(/\s+/g, "-")}-website.html`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
-
-  const previewWebsite = () => {
-    if (!generatedWebsite) return;
-
-    const newWindow = window.open();
-    if (newWindow) {
-      newWindow.document.write(generatedWebsite);
-      newWindow.document.close();
-    }
-  };
-
-  return {
-    isGenerating,
-    generatedWebsite,
-    generateWebsite,
-    downloadWebsite,
-    previewWebsite,
-  };
-}
-```
-
-## FILE: server/index.ts
-```typescript
+=== server/index.ts ===
 import express from "express";
 import { createServer } from "http";
-import { setupVite } from "./vite";
+import { setupVite, serveStatic, log } from "./vite";
 import { apiRouter } from "./routes";
 
 const app = express();
@@ -1860,18 +1749,20 @@ app.use(express.json());
 // API routes
 app.use("/api", apiRouter);
 
-// Setup Vite middleware in development
-setupVite(app, server);
+// Setup Vite or static serving
+if (process.env.NODE_ENV === "production") {
+  serveStatic(app);
+} else {
+  await setupVite(app, server);
+}
 
 const port = parseInt(process.env.PORT || "5000", 10);
 
 server.listen(port, "0.0.0.0", () => {
-  console.log(`Server running at http://0.0.0.0:${port}`);
+  log(`serving on port ${port}`);
 });
-```
 
-## FILE: server/routes.ts
-```typescript
+=== server/routes.ts ===
 import { Router } from "express";
 import { z } from "zod";
 import { storage } from "./storage";
@@ -1995,10 +1886,8 @@ apiRouter.get("/websites/:id", async (req, res) => {
 apiRouter.get("/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
-```
 
-## FILE: server/storage.ts
-```typescript
+=== server/storage.ts ===
 import type { Lead, Website } from "../shared/schema";
 
 export interface IStorage {
@@ -2051,34 +1940,95 @@ class MemoryStorage implements IStorage {
 
 // Export storage instance
 export const storage: IStorage = new MemoryStorage();
-```
 
-## FILE: server/vite.ts
-```typescript
-import { type Express } from "express";
-import { createServer as createViteServer, type ViteDevServer } from "vite";
+=== server/vite.ts ===
+import express, { type Express } from "express";
+import fs from "fs";
+import path from "path";
+import { createServer as createViteServer, createLogger } from "vite";
 import { type Server } from "http";
+import viteConfig from "../vite.config";
+import { nanoid } from "nanoid";
 
-export async function setupVite(app: Express, server: Server) {
-  if (process.env.NODE_ENV === "production") {
-    app.use(express.static("dist/public"));
-    return;
-  }
+const viteLogger = createLogger();
 
-  // Create Vite server in middleware mode
-  const vite: ViteDevServer = await createViteServer({
-    server: { middlewareMode: true },
-    appType: "spa",
+export function log(message: string, source = "express") {
+  const formattedTime = new Date().toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
   });
 
-  // Use Vite's middleware
-  app.use(vite.ssrFixStacktrace);
-  app.use(vite.middlewares);
+  console.log(`${formattedTime} [${source}] ${message}`);
 }
-```
 
-## FILE: shared/schema.ts
-```typescript
+export async function setupVite(app: Express, server: Server) {
+  const serverOptions = {
+    middlewareMode: true,
+    hmr: { server },
+    allowedHosts: true as const,
+  };
+
+  const vite = await createViteServer({
+    ...viteConfig,
+    configFile: false,
+    customLogger: {
+      ...viteLogger,
+      error: (msg, options) => {
+        viteLogger.error(msg, options);
+        process.exit(1);
+      },
+    },
+    server: serverOptions,
+    appType: "custom",
+  });
+
+  app.use(vite.middlewares);
+  app.use("*", async (req, res, next) => {
+    const url = req.originalUrl;
+
+    try {
+      const clientTemplate = path.resolve(
+        import.meta.dirname,
+        "..",
+        "client",
+        "index.html",
+      );
+
+      // always reload the index.html file from disk incase it changes
+      let template = await fs.promises.readFile(clientTemplate, "utf-8");
+      template = template.replace(
+        `src="/src/main.tsx"`,
+        `src="/src/main.tsx?v=${nanoid()}"`,
+      );
+      const page = await vite.transformIndexHtml(url, template);
+      res.status(200).set({ "Content-Type": "text/html" }).end(page);
+    } catch (e) {
+      vite.ssrFixStacktrace(e as Error);
+      next(e);
+    }
+  });
+}
+
+export function serveStatic(app: Express) {
+  const distPath = path.resolve(import.meta.dirname, "public");
+
+  if (!fs.existsSync(distPath)) {
+    throw new Error(
+      `Could not find the build directory: ${distPath}, make sure to build the client first`,
+    );
+  }
+
+  app.use(express.static(distPath));
+
+  // fall through to index.html if the file doesn't exist
+  app.use("*", (_req, res) => {
+    res.sendFile(path.resolve(distPath, "index.html"));
+  });
+}
+
+=== shared/schema.ts ===
 import { pgTable, text, timestamp, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -2123,10 +2073,10 @@ export type InsertLead = z.infer<typeof insertLeadSchema>;
 
 export type Website = typeof websites.$inferSelect;
 export type InsertWebsite = z.infer<typeof insertWebsiteSchema>;
-```
 
-## FILE: client/src/components/ui/button.tsx
-```typescript
+=== ALL UI COMPONENTS (place in client/src/components/ui/) ===
+
+=== button.tsx ===
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -2182,10 +2132,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button";
 
 export { Button, buttonVariants };
-```
 
-## FILE: client/src/components/ui/card.tsx
-```typescript
+=== card.tsx ===
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
@@ -2260,10 +2208,8 @@ const CardFooter = React.forwardRef<
 CardFooter.displayName = "CardFooter";
 
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent };
-```
 
-## FILE: client/src/components/ui/input.tsx
-```typescript
+=== input.tsx ===
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
@@ -2285,10 +2231,8 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
 Input.displayName = "Input";
 
 export { Input };
-```
 
-## FILE: client/src/components/ui/label.tsx
-```typescript
+=== label.tsx ===
 import * as React from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -2312,10 +2256,8 @@ const Label = React.forwardRef<
 Label.displayName = LabelPrimitive.Root.displayName;
 
 export { Label };
-```
 
-## FILE: client/src/components/ui/textarea.tsx
-```typescript
+=== textarea.tsx ===
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
@@ -2337,10 +2279,8 @@ const Textarea = React.forwardRef<
 Textarea.displayName = "Textarea";
 
 export { Textarea };
-```
 
-## FILE: client/src/components/ui/select.tsx
-```typescript
+=== select.tsx ===
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
@@ -2494,10 +2434,8 @@ export {
   SelectScrollUpButton,
   SelectScrollDownButton,
 };
-```
 
-## FILE: client/src/components/ui/tabs.tsx
-```typescript
+=== tabs.tsx ===
 import * as React from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { cn } from "@/lib/utils";
@@ -2550,10 +2488,8 @@ const TabsContent = React.forwardRef<
 TabsContent.displayName = TabsPrimitive.Content.displayName;
 
 export { Tabs, TabsList, TabsTrigger, TabsContent };
-```
 
-## FILE: client/src/components/ui/badge.tsx
-```typescript
+=== badge.tsx ===
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
@@ -2589,10 +2525,8 @@ function Badge({ className, variant, ...props }: BadgeProps) {
 }
 
 export { Badge, badgeVariants };
-```
 
-## FILE: client/src/components/ui/separator.tsx
-```typescript
+=== separator.tsx ===
 import * as React from "react";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { cn } from "@/lib/utils";
@@ -2621,10 +2555,8 @@ const Separator = React.forwardRef<
 Separator.displayName = SeparatorPrimitive.Root.displayName;
 
 export { Separator };
-```
 
-## FILE: client/src/components/ui/toast.tsx
-```typescript
+=== toast.tsx ===
 import * as React from "react";
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -2750,10 +2682,8 @@ export {
   ToastClose,
   ToastAction,
 };
-```
 
-## FILE: client/src/components/ui/toaster.tsx
-```typescript
+=== toaster.tsx ===
 import {
   Toast,
   ToastClose,
@@ -2787,10 +2717,8 @@ export function Toaster() {
     </ToastProvider>
   );
 }
-```
 
-## FILE: .gitignore
-```
+=== .gitignore ===
 # Dependencies
 node_modules
 dist
@@ -2922,6 +2850,3 @@ yarn-error.log*
 
 # Drizzle
 drizzle
-```
-
-
