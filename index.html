@@ -1,59 +1,89 @@
-{
-  "name": "startsimple-ai",
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build"
-  },
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "lucide-react": "^0.453.0",
-    "framer-motion": "^11.13.1"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.2",
-    "tailwindcss": "^3.4.17",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.47",
-    "vite": "^5.4.19"
-  }
-}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>StartSimpleAI - AI-Powered Business Launchpad</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-</head>
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StartSimpleAI - AI-Powered Business Launchpad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />)
-  import { useState } from 'react'
-import { Bot, Sparkles, Users, Eye, MessageCircle } from 'lucide-react'
+==========================================
+FILE: vite.config.js
+==========================================
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
-function App() {
-  const [currentTheme, setCurrentTheme] = useState("cyberpunk")
-  
+export default defineConfig({
+  plugins: [react()],
+})
+
+==========================================
+FILE: tailwind.config.js
+==========================================
+export default {
+  content: ["./index.html", "./src/**/*.{js,jsx}"],
+  theme: {
+    extend: {
+      animation: {
+        'gradient-shift': 'gradientShift 6s ease-in-out infinite',
+        'particle-float': 'particleFloat 10s linear infinite',
+        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+        'terminal-blink': 'terminalBlink 1s infinite',
+        'shimmer': 'shimmer 4s ease-in-out infinite',
+        'chat-slide-in': 'chatSlideIn 1s ease-out 2s forwards',
+        'fade-in': 'fadeIn 0.5s ease-in',
+      },
+    },
+  },
+  plugins: [],
+}
+
+==========================================
+FILE: postcss.config.js
+==========================================
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+
+==========================================
+FILE: src/main.jsx
+==========================================
+import { createRoot } from "react-dom/client";
+import App from "./App";
+import "./index.css";
+
+createRoot(document.getElementById("root")).render(<App />);
+
+==========================================
+FILE: src/App.jsx
+==========================================
+import { useState } from "react";
+import { Bot, Sparkles, Users } from "lucide-react";
+import WebsiteBuilder from "./components/WebsiteBuilder";
+import LivePreview from "./components/LivePreview";
+import AIChat from "./components/AIChat";
+import AIEffects from "./components/AIEffects";
+
+export default function App() {
+  const [currentTheme, setCurrentTheme] = useState("cyberpunk");
+
+  const handleThemeChange = (theme) => {
+    setCurrentTheme(theme);
+    document.body.className = `theme-${theme}`;
+  };
+
   return (
     <div className="min-h-screen">
-      {/* AI Background Effects */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="ai-particles"></div>
-        <div className="ai-grid"></div>
-      </div>
+      <AIEffects />
       
-      {/* Header */}
       <header className="header">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
@@ -70,86 +100,30 @@ function App() {
                 <div className="ai-pulse"></div>
                 <span>AI POWERED</span>
               </div>
+              
+              <div className="relative">
+                <select 
+                  value={currentTheme}
+                  onChange={(e) => handleThemeChange(e.target.value)}
+                  className="ai-select text-xs bg-transparent border-0 pr-8"
+                >
+                  <option value="cyberpunk">Cyberpunk</option>
+                  <option value="matrix">Matrix</option>
+                  <option value="neon">Neon</option>
+                  <option value="ocean">Ocean</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
-          {/* Website Builder */}
-          <div className="ai-card">
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-              <Sparkles className="text-cyan-400" size={24} />
-              Build Your AI-Powered Website
-            </h2>
-            
-            <div className="space-y-6">
-              <div>
-                <label className="block text-gray-300 mb-2">Industry Type</label>
-                <select className="ai-select w-full">
-                  <option>Select your industry</option>
-                  <option>Laundromat</option>
-                  <option>Painter/Contractor</option>
-                  <option>Window Washing</option>
-                  <option>Generic Business</option>
-                </select>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-gray-300 mb-2">Business Name</label>
-                  <input type="text" className="ai-input w-full" placeholder="Your Business Name" />
-                </div>
-                <div>
-                  <label className="block text-gray-300 mb-2">Location</label>
-                  <input type="text" className="ai-input w-full" placeholder="City, State" />
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-gray-300 mb-2">Phone</label>
-                  <input type="tel" className="ai-input w-full" placeholder="(555) 123-4567" />
-                </div>
-                <div>
-                  <label className="block text-gray-300 mb-2">Email</label>
-                  <input type="email" className="ai-input w-full" placeholder="contact@business.com" />
-                </div>
-              </div>
-              
-              <button className="ai-btn-primary w-full">
-                <Sparkles size={16} />
-                Generate AI Website
-              </button>
-            </div>
-          </div>
-
-          {/* Live Preview */}
-          <div className="ai-card">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                <Eye className="text-cyan-400" size={24} />
-                Live Preview
-              </h2>
-              <button className="ai-btn">Download</button>
-            </div>
-            
-            <div className="preview-container">
-              <div className="flex items-center justify-center h-full text-gray-400 text-center">
-                <div>
-                  <Bot className="mx-auto mb-4 opacity-50" size={64} />
-                  <p className="text-lg font-semibold mb-2">Ready to Generate</p>
-                  <p className="text-sm">Fill out the form to see your AI-powered website</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <WebsiteBuilder />
+          <LivePreview />
         </div>
 
-        {/* 3LEVELS Partnership */}
         <div className="ai-card mt-8">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -159,10 +133,13 @@ function App() {
               </h2>
               <p className="text-gray-400 mt-2">Family-led business incubator for minority, veteran, and small business founders</p>
             </div>
-            <button className="ai-btn">
-              <Users size={16} />
-              Connect with 3LEVELS
-            </button>
+            <div className="text-right">
+              <div className="text-sm text-gray-300">Need personal consulting?</div>
+              <button className="ai-btn mt-2">
+                <Users size={16} />
+                Connect with 3LEVELS
+              </button>
+            </div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -191,112 +168,782 @@ function App() {
         </div>
       </main>
 
-      {/* AI Chat Widget */}
+      <AIChat />
+    </div>
+  );
+}
+
+==========================================
+FILE: src/components/WebsiteBuilder.jsx
+==========================================
+import { useState } from "react";
+import { Sparkles, Rocket } from "lucide-react";
+
+export default function WebsiteBuilder() {
+  const [formData, setFormData] = useState({
+    industry: '',
+    businessName: '',
+    location: '',
+    phone: '',
+    email: '',
+    description: '',
+    colorPreset: 'blue'
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Generating website with:', formData);
+    alert('AI Website Generated! (This is a demo)');
+  };
+
+  return (
+    <div className="ai-card">
+      <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+        <Sparkles className="text-cyan-400" size={24} />
+        Build Your AI-Powered Website
+      </h2>
+      
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label className="block text-gray-300 mb-2">Industry Type</label>
+          <select 
+            name="industry"
+            value={formData.industry}
+            onChange={handleInputChange}
+            className="ai-select w-full"
+            required
+          >
+            <option value="">Select your industry</option>
+            <option value="laundromat">Laundromat</option>
+            <option value="painter">Painter/Contractor</option>
+            <option value="window_washing">Window Washing</option>
+            <option value="generic">Generic Business</option>
+          </select>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-gray-300 mb-2">Business Name</label>
+            <input 
+              type="text" 
+              name="businessName"
+              value={formData.businessName}
+              onChange={handleInputChange}
+              className="ai-input w-full" 
+              placeholder="Your Business Name"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-gray-300 mb-2">Location</label>
+            <input 
+              type="text" 
+              name="location"
+              value={formData.location}
+              onChange={handleInputChange}
+              className="ai-input w-full" 
+              placeholder="City, State"
+              required
+            />
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-gray-300 mb-2">Phone</label>
+            <input 
+              type="tel" 
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              className="ai-input w-full" 
+              placeholder="(555) 123-4567"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-gray-300 mb-2">Email</label>
+            <input 
+              type="email" 
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className="ai-input w-full" 
+              placeholder="contact@business.com"
+              required
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-gray-300 mb-2">Business Description</label>
+          <textarea 
+            name="description"
+            value={formData.description}
+            onChange={handleInputChange}
+            className="ai-textarea w-full h-20" 
+            placeholder="Brief description of your business..."
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-300 mb-2">Color Theme</label>
+          <select 
+            name="colorPreset"
+            value={formData.colorPreset}
+            onChange={handleInputChange}
+            className="ai-select w-full"
+          >
+            <option value="blue">Professional Blue</option>
+            <option value="green">Modern Green</option>
+            <option value="purple">Creative Purple</option>
+            <option value="orange">Energetic Orange</option>
+            <option value="red">Bold Red</option>
+          </select>
+        </div>
+        
+        <button type="submit" className="ai-btn w-full py-4 text-lg">
+          <Sparkles size={20} />
+          Generate AI Website
+        </button>
+      </form>
+
+      <div className="mt-8 pt-6 border-t border-gray-700">
+        <h3 className="text-lg font-semibold text-white mb-4">Choose Your Plan</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="tier-card text-center">
+            <h4 className="font-semibold text-cyan-400">Starter</h4>
+            <p className="text-gray-400">$29/mo</p>
+            <ul className="text-gray-300 text-xs mt-2 space-y-1">
+              <li>• AI-generated website</li>
+              <li>• Lead capture forms</li>
+              <li>• AI receptionist</li>
+              <li>• Basic analytics</li>
+            </ul>
+          </div>
+          <div className="tier-card text-center border-cyan-400">
+            <h4 className="font-semibold text-cyan-400">Professional</h4>
+            <p className="text-gray-400">$79/mo</p>
+            <ul className="text-gray-300 text-xs mt-2 space-y-1">
+              <li>• Everything in Starter</li>
+              <li>• AI scheduler</li>
+              <li>• Follow-up automation</li>
+              <li>• Advanced analytics</li>
+            </ul>
+          </div>
+          <div className="tier-card text-center">
+            <h4 className="font-semibold text-purple-400">Enterprise</h4>
+            <p className="text-gray-400">$149/mo</p>
+            <ul className="text-gray-300 text-xs mt-2 space-y-1">
+              <li>• Everything included</li>
+              <li>• AI marketing assistant</li>
+              <li>• Invoicing bot</li>
+              <li>• 3LEVELS partnership</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+==========================================
+FILE: src/components/LivePreview.jsx
+==========================================
+import { useState } from "react";
+import { Eye, Download, Bot } from "lucide-react";
+
+export default function LivePreview() {
+  const [hasWebsite, setHasWebsite] = useState(false);
+
+  const downloadDemo = () => {
+    alert('Demo download - In production, this would download the generated website HTML file');
+  };
+
+  return (
+    <div className="ai-card">
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+          <Eye className="text-cyan-400" size={24} />
+          Live Preview
+        </h2>
+        <button 
+          onClick={downloadDemo}
+          className="ai-btn text-sm px-4 py-2"
+          disabled={!hasWebsite}
+        >
+          <Download size={16} />
+          Download
+        </button>
+      </div>
+      
+      <div className="preview-container">
+        <div className="flex items-center justify-center h-full text-gray-400 text-center">
+          <div>
+            <Bot className="mx-auto mb-4 opacity-50" size={64} />
+            <p className="text-lg font-semibold mb-2">Ready to Generate</p>
+            <p className="text-sm">Fill out the form to see your AI-powered website</p>
+            <div className="mt-4 text-xs text-gray-500">
+              Preview will show your generated website with:
+              <br />• Professional design
+              <br />• Lead capture forms  
+              <br />• AI chat integration
+              <br />• Mobile-responsive layout
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-6 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
+        <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
+          <Bot size={16} className="text-cyan-400" />
+          Your AI Employees Will Handle:
+        </h3>
+        <div className="grid grid-cols-2 gap-3 text-sm text-gray-300">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            24/7 Customer Service
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+            Appointment Scheduling
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+            Lead Follow-up
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+            Quote Generation
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+==========================================
+FILE: src/components/AIChat.jsx
+==========================================
+import { useState, useRef, useEffect } from "react";
+import { Send, Bot, User, MessageCircle } from "lucide-react";
+
+export default function AIChat() {
+  const [messages, setMessages] = useState([
+    {
+      id: '1',
+      message: "Hi! Welcome to StartSimpleAI. I'm here to help you build your business website. What industry are you in?",
+      sender: 'ai',
+      timestamp: new Date()
+    }
+  ]);
+  const [inputMessage, setInputMessage] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const messagesEndRef = useRef(null);
+
+  const chatResponses = {
+    'hello': 'Hi! Thanks for visiting. What type of business are you looking to launch?',
+    'help': 'I can help you build a professional website with AI employees. Just select your industry from the form!',
+    'pricing': 'We have three tiers: Starter ($29/mo), Professional ($79/mo), and Enterprise ($149/mo). Each includes AI employees!',
+    'laundromat': 'Great choice! Laundromats are recession-proof businesses. Our AI can handle scheduling, customer service, and lead follow-up automatically.',
+    'painter': 'Painting services are in high demand! Our system will capture leads and our AI scheduler can book estimates for you.',
+    'window washing': 'Window washing is a great recurring revenue business! Our AI can manage your scheduling and follow up with customers.',
+    'ai employees': 'Our AI employees include a 24/7 receptionist, automated scheduler, and follow-up bot. They work around the clock to grow your business!',
+    'default': 'I\'m here to help you launch your business with AI-powered tools. What would you like to know?'
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const sendMessage = () => {
+    if (!inputMessage.trim()) return;
+
+    const userMessage = {
+      id: Date.now().toString(),
+      message: inputMessage,
+      sender: 'user',
+      timestamp: new Date()
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    
+    setTimeout(() => {
+      const messageLower = inputMessage.toLowerCase();
+      let response = chatResponses.default;
+      
+      for (const [key, value] of Object.entries(chatResponses)) {
+        if (messageLower.includes(key)) {
+          response = value;
+          break;
+        }
+      }
+
+      const aiMessage = {
+        id: (Date.now() + 1).toString(),
+        message: response,
+        sender: 'ai',
+        timestamp: new Date()
+      };
+
+      setMessages(prev => [...prev, aiMessage]);
+    }, 1000);
+
+    setInputMessage("");
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <>
       <div className="fixed bottom-6 right-6 z-50">
-        <button className="ai-chat-button">
+        <button 
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+        >
           <MessageCircle size={24} />
         </button>
       </div>
-    </div>
-  )
+
+      {isOpen && (
+        <div className="chat-widget">
+          <div className="p-4 border-b border-gray-700">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-purple-400 rounded-full flex items-center justify-center">
+                <Bot className="text-white" size={16} />
+              </div>
+              <div>
+                <h4 className="font-semibold text-white">AI Receptionist</h4>
+                <p className="text-xs text-green-400">Online</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="p-4 space-y-3 h-48 overflow-y-auto">
+            {messages.map((message) => (
+              <div key={message.id} className={`flex items-start gap-2 ${message.sender === 'user' ? 'justify-end' : ''}`}>
+                {message.sender === 'ai' && (
+                  <div className="w-6 h-6 bg-cyan-400 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Bot className="text-white" size={12} />
+                  </div>
+                )}
+                <div className={`p-2 rounded-lg max-w-xs ${
+                  message.sender === 'user' 
+                    ? 'bg-cyan-500 text-white' 
+                    : 'bg-gray-700 text-white'
+                }`}>
+                  <p className="text-sm">{message.message}</p>
+                </div>
+                {message.sender === 'user' && (
+                  <div className="w-6 h-6 bg-gray-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <User className="text-white" size={12} />
+                  </div>
+                )}
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+          
+          <div className="p-4 border-t border-gray-700">
+            <div className="flex gap-2">
+              <input
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                className="ai-input text-sm py-2 px-3 flex-1"
+                placeholder="Type a message..."
+              />
+              <button 
+                onClick={sendMessage} 
+                className="ai-btn px-3 py-2"
+              >
+                <Send size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
 
-export default App
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+==========================================
+FILE: src/components/AIEffects.jsx
+==========================================
+import { useEffect, useState } from "react";
+
+export default function AIEffects() {
+  const [terminalMessage, setTerminalMessage] = useState("System online. Ready for business launch...");
+
+  useEffect(() => {
+    createParticles();
+    startTerminalUpdates();
+  }, []);
+
+  const createParticles = () => {
+    const createParticle = () => {
+      const particle = document.createElement('div');
+      particle.className = 'ai-particle';
+      particle.style.left = Math.random() * window.innerWidth + 'px';
+      particle.style.animationDuration = (8000 + Math.random() * 4000) + 'ms';
+      
+      document.body.appendChild(particle);
+      
+      setTimeout(() => {
+        if (particle.parentNode) {
+          particle.parentNode.removeChild(particle);
+        }
+      }, 12000);
+    };
+
+    for (let i = 0; i < 3; i++) {
+      setTimeout(createParticle, i * 1000);
+    }
+
+    setInterval(createParticle, 3000);
+  };
+
+  const startTerminalUpdates = () => {
+    const messages = [
+      'Neural networks online...',
+      'AI employees initializing...',
+      'Website generation ready...',
+      'Lead capture system active...',
+      'Automation protocols loaded...',
+      'System ready for business launch...'
+    ];
+    
+    let currentIndex = 0;
+    
+    const updateTerminal = () => {
+      setTerminalMessage(messages[currentIndex]);
+      currentIndex = (currentIndex + 1) % messages.length;
+    };
+    
+    setInterval(updateTerminal, 4000);
+  };
+
+  return (
+    <div className="ai-terminal hidden lg:block">
+      <div className="flex items-center gap-2 mb-2">
+        <span style={{ color: 'var(--brand)' }}>AI_AGENT &gt;</span>
+        <span style={{ color: 'var(--brand2)' }} className="terminal-text">
+          {terminalMessage}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+==========================================
+FILE: src/index.css
+==========================================
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
+  /* Cyberpunk AI color palette */
   --bg: hsl(220, 27%, 9%);
   --bg-secondary: hsl(218, 23%, 11%);
   --fg: hsl(210, 40%, 95%);
+  --fg-secondary: hsl(215, 20%, 80%);
+  --muted: hsl(217, 10%, 55%);
+  
   --brand: hsl(320, 97%, 54%);
   --brand2: hsl(191, 100%, 50%);
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --brand3: hsl(258, 89%, 63%);
+  --brand4: hsl(158, 87%, 48%);
+  
+  --card-bg: linear-gradient(145deg, rgba(22,27,34,0.8), rgba(33,38,45,0.6));
+  --card-border: rgba(255,105,180,0.2);
+  --border: rgba(255,255,255,0.06);
+  
+  --glow-primary: 0 0 25px rgba(255,28,247,0.4);
+  --glow-secondary: 0 0 25px rgba(0,217,255,0.4);
+  --glow-accent: 0 0 20px rgba(153,69,255,0.3);
+  
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 }
 
-body {
-  background: 
-    radial-gradient(1400px 1400px at 90% -10%, rgba(34,211,238,.15), transparent 45%),
-    radial-gradient(1200px 1200px at 10% 100%, rgba(139,92,246,.12), transparent 40%),
-    var(--bg);
-  color: var(--fg);
-  font-family: var(--font-sans);
-  min-height: 100vh;
+/* Theme variants */
+.theme-cyberpunk {
+  --bg: hsl(220, 27%, 9%);
+  --bg-secondary: hsl(218, 23%, 11%);
+  --brand: hsl(320, 97%, 54%);
+  --brand2: hsl(191, 100%, 50%);
 }
 
-/* AI Components */
+.theme-matrix {
+  --bg: hsl(120, 25%, 4%);
+  --bg-secondary: hsl(120, 20%, 7%);
+  --brand: hsl(120, 100%, 50%);
+  --brand2: hsl(120, 100%, 60%);
+}
+
+.theme-neon {
+  --bg: hsl(300, 33%, 8%);
+  --bg-secondary: hsl(300, 25%, 13%);
+  --brand: hsl(320, 100%, 50%);
+  --brand2: hsl(180, 100%, 50%);
+}
+
+.theme-ocean {
+  --bg: hsl(210, 50%, 8%);
+  --bg-secondary: hsl(210, 35%, 12%);
+  --brand: hsl(200, 85%, 50%);
+  --brand2: hsl(185, 85%, 55%);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: 
+      radial-gradient(1400px 1400px at 90% -10%, rgba(34,211,238,.15), transparent 45%),
+      radial-gradient(1200px 1200px at 10% 100%, rgba(139,92,246,.12), transparent 40%),
+      var(--bg);
+    color: var(--fg);
+    overflow-x: hidden;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Animations */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes particleFloat {
+  0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100px) translateX(200px) rotate(360deg); opacity: 0; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes terminalBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes chatSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* AI Particles */
+.ai-particle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: var(--brand2);
+  border-radius: 50%;
+  z-index: 1;
+  opacity: 0.6;
+  box-shadow: 0 0 8px var(--brand2);
+  animation: particleFloat 10s linear infinite;
+  pointer-events: none;
+}
+
+/* Custom UI Components */
 .ai-card {
-  background: linear-gradient(145deg, rgba(22,27,34,0.8), rgba(33,38,45,0.6));
-  border: 1px solid rgba(255,105,180,0.2);
-  border-radius: 1rem;
-  padding: 2rem;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 25px rgba(255,28,247,0.1);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 28px;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 20px 40px rgba(0,0,0,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    0 0 0 1px rgba(99,102,241,0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-.ai-btn {
-  background: linear-gradient(135deg, var(--brand), var(--brand2));
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
+.ai-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(34,211,238,0.8), rgba(99,102,241,0.8), rgba(139,92,246,0.8), transparent);
+  animation: shimmer 4s ease-in-out infinite;
 }
 
-.ai-btn-primary {
-  background: linear-gradient(135deg, var(--brand), var(--brand2));
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 0.75rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(255,28,247,0.3);
-}
-
-.ai-btn:hover, .ai-btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(255,28,247,0.4);
-}
-
-.ai-select, .ai-input {
-  background: rgba(22,27,34,0.6);
-  border: 1px solid rgba(255,105,180,0.3);
-  border-radius: 0.5rem;
-  padding: 0.75rem;
-  color: var(--fg);
-  backdrop-filter: blur(5px);
-}
-
-.ai-select:focus, .ai-input:focus {
-  outline: none;
-  border-color: var(--brand2);
-  box-shadow: 0 0 15px rgba(0,217,255,0.3);
+.ai-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(34,211,238,0.6);
+  box-shadow: 
+    0 40px 80px rgba(0,0,0,0.2),
+    0 0 0 2px rgba(34,211,238,0.3),
+    0 0 40px rgba(34,211,238,0.2),
+    var(--glow-primary);
 }
 
 .brand-text {
-  background: linear-gradient(135deg, var(--brand), var(--brand2));
+  background: linear-gradient(135deg, var(--brand), var(--brand2), var(--brand3));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(99,102,241,0.3));
 }
 
+.ai-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--card-border);
+  background: linear-gradient(135deg, var(--brand), var(--brand2), var(--brand3));
+  background-size: 200% 200%;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  animation: gradientShift 8s ease-in-out infinite;
+}
+
+.ai-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    0 20px 40px rgba(34,211,238,0.4),
+    0 0 40px rgba(99,102,241,0.3);
+}
+
+.ai-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ai-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  outline: none;
+  transition: all 0.3s ease;
+  background: rgba(15,23,42,0.8);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  backdrop-filter: blur(10px);
+}
+
+.ai-input:focus {
+  border-color: var(--brand2);
+  background: rgba(15,23,42,0.95);
+  box-shadow: 
+    0 0 0 3px rgba(34,211,238,0.15),
+    0 8px 25px rgba(34,211,238,0.15);
+  transform: translateY(-2px);
+}
+
+.ai-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  outline: none;
+  transition: all 0.3s ease;
+  background: rgba(15,23,42,0.8);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  backdrop-filter: blur(10px);
+}
+
+.ai-select:focus {
+  border-color: var(--brand2);
+  background: rgba(15,23,42,0.95);
+  box-shadow: 
+    0 0 0 3px rgba(34,211,238,0.15),
+    0 8px 25px rgba(34,211,238,0.15);
+  transform: translateY(-2px);
+}
+
+.ai-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  outline: none;
+  transition: all 0.3s ease;
+  resize: none;
+  background: rgba(15,23,42,0.8);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  backdrop-filter: blur(10px);
+}
+
+.ai-textarea:focus {
+  border-color: var(--brand2);
+  background: rgba(15,23,42,0.95);
+  box-shadow: 
+    0 0 0 3px rgba(34,211,238,0.15),
+    0 8px 25px rgba(34,211,238,0.15);
+  transform: translateY(-2px);
+}
+
+/* Header */
 .header {
-  background: rgba(22,27,34,0.9);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,105,180,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(20px) saturate(180%);
+  background: linear-gradient(135deg, rgba(15,23,42,.95) 0%, rgba(30,41,59,.9) 50%, rgba(15,23,42,.95) 100%);
+  border-bottom: 1px solid var(--card-border);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
 }
 
 .ai-status {
@@ -314,84 +961,95 @@ body {
   height: 8px;
   border-radius: 50%;
   background: var(--brand2);
-  animation: pulse 2s ease-in-out infinite;
+  animation: glowPulse 2s ease-in-out infinite;
 }
 
+/* Chat Widget */
+.chat-widget {
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  z-index: 100;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  width: 320px;
+  max-height: 400px;
+  backdrop-filter: blur(20px);
+  box-shadow: var(--glow-secondary);
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Terminal */
+.ai-terminal {
+  position: fixed;
+  top: 100px;
+  right: 30px;
+  z-index: 40;
+  background: rgba(22,27,34,0.95);
+  border: 1px solid var(--brand2);
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 320px;
+  backdrop-filter: blur(20px);
+  box-shadow: var(--glow-secondary);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.terminal-text::after {
+  content: '█';
+  animation: terminalBlink 1s infinite;
+}
+
+/* Preview Container */
 .preview-container {
   background: rgba(0,0,0,0.4);
   border-radius: 0.75rem;
   height: 400px;
-  border: 1px solid rgba(255,105,180,0.2);
+  border: 1px solid var(--card-border);
   overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
-.ai-chat-button {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--brand), var(--brand2));
-  color: white;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 25px rgba(255,28,247,0.4);
-  animation: pulse 3s ease-in-out infinite;
+/* Subscription Tiers */
+.tier-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
 }
 
-/* Background Effects */
-.ai-particles::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(2px 2px at 20px 30px, var(--brand2), transparent),
-    radial-gradient(2px 2px at 40px 70px, var(--brand), transparent),
-    radial-gradient(1px 1px at 90px 40px, var(--brand2), transparent);
-  background-size: 200px 200px;
-  animation: float 20s linear infinite;
-  opacity: 0.3;
+.tier-card:hover {
+  border-color: var(--brand2);
+  transform: translateY(-2px);
+  box-shadow: var(--glow-secondary);
 }
 
-.ai-grid::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    linear-gradient(rgba(0,217,255,0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,217,255,0.1) 1px, transparent 1px);
-  background-size: 50px 50px;
-  opacity: 0.2;
+/* Utility classes for animations */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.1); }
+.animate-pulse {
+  animation: glowPulse 2s ease-in-out infinite;
 }
 
-@keyframes float {
-  0% { transform: translateY(0px) translateX(0px); }
-  33% { transform: translateY(-100px) translateX(50px); }
-  66% { transform: translateY(50px) translateX(-50px); }
-  100% { transform: translateY(0px) translateX(0px); }
+/* Responsive breakpoints */
+@media (max-width: 768px) {
+  .ai-card {
+    padding: 20px;
+  }
+  
+  .chat-widget {
+    width: 280px;
+    right: 16px;
+    bottom: 80px;
+  }
+  
+  .ai-terminal {
+    display: none;
+  }
 }
-  export default {
-  content: ["./index.html", "./src/**/*.{js,jsx}"],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
-  import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-export default defineConfig({
-  plugins: [react()],
-})
