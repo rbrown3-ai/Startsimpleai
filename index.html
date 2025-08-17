@@ -1,1028 +1,1340 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StartSimpleAI - AI-Powered Business Launchpad</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  </head>
-  <body>
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide-react@0.453.0/dist/umd/lucide-react.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+          /* Cyberpunk AI color palette */
+          --bg: hsl(220, 27%, 9%);
+          --bg-secondary: hsl(218, 23%, 11%);
+          --fg: hsl(210, 40%, 95%);
+          --fg-secondary: hsl(215, 20%, 80%);
+          --muted: hsl(217, 10%, 55%);
+          
+          --brand: hsl(320, 97%, 54%);
+          --brand2: hsl(191, 100%, 50%);
+          --brand3: hsl(258, 89%, 63%);
+          --brand4: hsl(158, 87%, 48%);
+          
+          --card-bg: linear-gradient(145deg, rgba(22,27,34,0.8), rgba(33,38,45,0.6));
+          --card-border: rgba(255,105,180,0.2);
+          --border: rgba(255,255,255,0.06);
+          
+          --glow-primary: 0 0 25px rgba(255,28,247,0.4);
+          --glow-secondary: 0 0 25px rgba(0,217,255,0.4);
+          --glow-accent: 0 0 20px rgba(153,69,255,0.3);
+          
+          --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+          --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        }
+
+        /* Theme variants */
+        .theme-cyberpunk {
+          --bg: hsl(220, 27%, 9%);
+          --bg-secondary: hsl(218, 23%, 11%);
+          --brand: hsl(320, 97%, 54%);
+          --brand2: hsl(191, 100%, 50%);
+        }
+
+        .theme-matrix {
+          --bg: hsl(120, 25%, 4%);
+          --bg-secondary: hsl(120, 20%, 7%);
+          --brand: hsl(120, 100%, 50%);
+          --brand2: hsl(120, 100%, 60%);
+        }
+
+        .theme-neon {
+          --bg: hsl(300, 33%, 8%);
+          --bg-secondary: hsl(300, 25%, 13%);
+          --brand: hsl(320, 100%, 50%);
+          --brand2: hsl(180, 100%, 50%);
+        }
+
+        .theme-ocean {
+          --bg: hsl(210, 50%, 8%);
+          --bg-secondary: hsl(210, 35%, 12%);
+          --brand: hsl(200, 85%, 50%);
+          --brand2: hsl(185, 85%, 55%);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: 
+              radial-gradient(1400px 1400px at 90% -10%, rgba(34,211,238,.15), transparent 45%),
+              radial-gradient(1200px 1200px at 10% 100%, rgba(139,92,246,.12), transparent 40%),
+              var(--bg);
+            color: var(--fg);
+            overflow-x: hidden;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Animations */
+        @keyframes gradientShift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+
+        @keyframes particleFloat {
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-100px) translateX(200px) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes glowPulse {
+          0%, 100% { opacity: 0.6; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes terminalBlink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
+        }
+
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+
+        @keyframes chatSlideIn {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* AI Particles */
+        .ai-particle {
+          position: fixed;
+          width: 4px;
+          height: 4px;
+          background: var(--brand2);
+          border-radius: 50%;
+          z-index: 1;
+          opacity: 0.6;
+          box-shadow: 0 0 8px var(--brand2);
+          animation: particleFloat 10s linear infinite;
+          pointer-events: none;
+        }
+
+        /* Custom UI Components */
+        .ai-card {
+          background: var(--card-bg);
+          border: 1px solid var(--card-border);
+          border-radius: 20px;
+          padding: 28px;
+          backdrop-filter: blur(20px);
+          box-shadow: 
+            0 20px 40px rgba(0,0,0,0.15),
+            inset 0 1px 0 rgba(255,255,255,0.1),
+            0 0 0 1px rgba(99,102,241,0.1);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .ai-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, rgba(34,211,238,0.8), rgba(99,102,241,0.8), rgba(139,92,246,0.8), transparent);
+          animation: shimmer 4s ease-in-out infinite;
+        }
+
+        .ai-card:hover {
+          transform: translateY(-4px) scale(1.01);
+          border-color: rgba(34,211,238,0.6);
+          box-shadow: 
+            0 40px 80px rgba(0,0,0,0.2),
+            0 0 0 2px rgba(34,211,238,0.3),
+            0 0 40px rgba(34,211,238,0.2),
+            var(--glow-primary);
+        }
+
+        .brand-text {
+          background: linear-gradient(135deg, var(--brand), var(--brand2), var(--brand3));
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-size: 200% 200%;
+          animation: gradientShift 6s ease-in-out infinite;
+          filter: drop-shadow(0 0 8px rgba(99,102,241,0.3));
+        }
+
+        .ai-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          padding: 0.75rem 1.5rem;
+          border-radius: 0.75rem;
+          border: 1px solid var(--card-border);
+          background: linear-gradient(135deg, var(--brand), var(--brand2), var(--brand3));
+          background-size: 200% 200%;
+          color: #ffffff;
+          font-weight: 600;
+          font-size: 0.875rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+          animation: gradientShift 8s ease-in-out infinite;
+        }
+
+        .ai-btn:hover {
+          transform: translateY(-3px) scale(1.02);
+          box-shadow: 
+            0 20px 40px rgba(34,211,238,0.4),
+            0 0 40px rgba(99,102,241,0.3);
+        }
+
+        .ai-btn:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+          transform: none;
+        }
+
+        .ai-input {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          border-radius: 0.75rem;
+          border: 1px solid var(--border);
+          outline: none;
+          transition: all 0.3s ease;
+          background: rgba(15,23,42,0.8);
+          color: var(--fg);
+          font-family: var(--font-sans);
+          backdrop-filter: blur(10px);
+        }
+
+        .ai-input:focus {
+          border-color: var(--brand2);
+          background: rgba(15,23,42,0.95);
+          box-shadow: 
+            0 0 0 3px rgba(34,211,238,0.15),
+            0 8px 25px rgba(34,211,238,0.15);
+          transform: translateY(-2px);
+        }
+
+        .ai-select {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          border-radius: 0.75rem;
+          border: 1px solid var(--border);
+          outline: none;
+          transition: all 0.3s ease;
+          background: rgba(15,23,42,0.8);
+          color: var(--fg);
+          font-family: var(--font-sans);
+          backdrop-filter: blur(10px);
+        }
+
+        .ai-select:focus {
+          border-color: var(--brand2);
+          background: rgba(15,23,42,0.95);
+          box-shadow: 
+            0 0 0 3px rgba(34,211,238,0.15),
+            0 8px 25px rgba(34,211,238,0.15);
+          transform: translateY(-2px);
+        }
+
+        .ai-textarea {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          border-radius: 0.75rem;
+          border: 1px solid var(--border);
+          outline: none;
+          transition: all 0.3s ease;
+          resize: none;
+          background: rgba(15,23,42,0.8);
+          color: var(--fg);
+          font-family: var(--font-sans);
+          backdrop-filter: blur(10px);
+        }
+
+        .ai-textarea:focus {
+          border-color: var(--brand2);
+          background: rgba(15,23,42,0.95);
+          box-shadow: 
+            0 0 0 3px rgba(34,211,238,0.15),
+            0 8px 25px rgba(34,211,238,0.15);
+          transform: translateY(-2px);
+        }
+
+        /* Header */
+        .header {
+          position: sticky;
+          top: 0;
+          z-index: 50;
+          backdrop-filter: blur(20px) saturate(180%);
+          background: linear-gradient(135deg, rgba(15,23,42,.95) 0%, rgba(30,41,59,.9) 50%, rgba(15,23,42,.95) 100%);
+          border-bottom: 1px solid var(--card-border);
+          box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .ai-status {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: var(--brand2);
+          font-size: 0.75rem;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+        }
+
+        .ai-pulse {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: var(--brand2);
+          animation: glowPulse 2s ease-in-out infinite;
+        }
+
+        /* Chat Widget */
+        .chat-widget {
+          position: fixed;
+          bottom: 90px;
+          right: 24px;
+          z-index: 100;
+          background: var(--card-bg);
+          border: 1px solid var(--card-border);
+          border-radius: 16px;
+          width: 320px;
+          max-height: 400px;
+          backdrop-filter: blur(20px);
+          box-shadow: var(--glow-secondary);
+          animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Terminal */
+        .ai-terminal {
+          position: fixed;
+          top: 100px;
+          right: 30px;
+          z-index: 40;
+          background: rgba(22,27,34,0.95);
+          border: 1px solid var(--brand2);
+          border-radius: 8px;
+          padding: 16px;
+          min-width: 320px;
+          backdrop-filter: blur(20px);
+          box-shadow: var(--glow-secondary);
+          font-family: var(--font-mono);
+          font-size: 13px;
+        }
+
+        .terminal-text::after {
+          content: '█';
+          animation: terminalBlink 1s infinite;
+        }
+
+        /* Preview Container */
+        .preview-container {
+          background: rgba(0,0,0,0.4);
+          border-radius: 0.75rem;
+          height: 400px;
+          border: 1px solid var(--card-border);
+          overflow: hidden;
+          backdrop-filter: blur(10px);
+        }
+
+        /* Subscription Tiers */
+        .tier-card {
+          background: var(--card-bg);
+          border: 1px solid var(--card-border);
+          border-radius: 12px;
+          padding: 20px;
+          backdrop-filter: blur(10px);
+          transition: all 0.3s ease;
+        }
+
+        .tier-card:hover {
+          border-color: var(--brand2);
+          transform: translateY(-2px);
+          box-shadow: var(--glow-secondary);
+        }
+
+        /* Utility classes */
+        .min-h-screen { min-height: 100vh; }
+        .max-w-7xl { max-width: 80rem; margin: 0 auto; }
+        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+        .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .justify-end { justify-end: end; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-3 { gap: 0.75rem; }
+        .gap-4 { gap: 1rem; }
+        .gap-6 { gap: 1.5rem; }
+        .gap-8 { gap: 2rem; }
+        .w-2 { width: 0.5rem; }
+        .h-2 { height: 0.5rem; }
+        .w-6 { width: 1.5rem; }
+        .h-6 { height: 1.5rem; }
+        .w-8 { width: 2rem; }
+        .h-8 { height: 2rem; }
+        .w-10 { width: 2.5rem; }
+        .h-10 { height: 2.5rem; }
+        .w-16 { width: 4rem; }
+        .h-16 { height: 4rem; }
+        .w-20 { width: 5rem; }
+        .h-20 { height: 5rem; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .rounded-full { border-radius: 9999px; }
+        .bg-gradient-to-br { background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)); }
+        .from-pink-500 { --tw-gradient-from: #ec4899; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(236 72 153 / 0)); }
+        .from-cyan-500 { --tw-gradient-from: #06b6d4; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(6 182 212 / 0)); }
+        .from-blue-500 { --tw-gradient-from: #3b82f6; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(59 130 246 / 0)); }
+        .from-green-500 { --tw-gradient-from: #22c55e; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(34 197 94 / 0)); }
+        .to-cyan-500 { --tw-gradient-to: #06b6d4; }
+        .to-purple-500 { --tw-gradient-to: #a855f7; }
+        .to-orange-500 { --tw-gradient-to: #f97316; }
+        .text-white { color: rgb(255 255 255); }
+        .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+        .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .text-xs { font-size: 0.75rem; line-height: 1rem; }
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        .text-gray-300 { color: rgb(209 213 219); }
+        .text-gray-400 { color: rgb(156 163 175); }
+        .text-gray-500 { color: rgb(107 114 128); }
+        .text-gray-700 { color: rgb(55 65 81); }
+        .text-cyan-400 { color: rgb(34 211 238); }
+        .text-blue-400 { color: rgb(96 165 250); }
+        .text-green-400 { color: rgb(74 222 128); }
+        .text-purple-400 { color: rgb(196 181 253); }
+        .text-orange-400 { color: rgb(251 146 60); }
+        .text-yellow-400 { color: rgb(250 204 21); }
+        .bg-gray-500 { background-color: rgb(107 114 128); }
+        .bg-gray-700 { background-color: rgb(55 65 81); }
+        .bg-gray-800 { background-color: rgb(31 41 55); }
+        .bg-cyan-400 { background-color: rgb(34 211 238); }
+        .bg-cyan-500 { background-color: rgb(6 182 212); }
+        .hidden { display: none; }
+        .block { display: block; }
+        .sm\\:block { display: block; }
+        .lg\\:block { display: block; }
+        .relative { position: relative; }
+        .fixed { position: fixed; }
+        .absolute { position: absolute; }
+        .bg-transparent { background-color: transparent; }
+        .border-0 { border-width: 0px; }
+        .pr-8 { padding-right: 2rem; }
+        .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .p-2 { padding: 0.5rem; }
+        .p-4 { padding: 1rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+        .grid { display: grid; }
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .lg\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .md\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-8 { margin-top: 2rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .border-t { border-top-width: 1px; }
+        .border-b { border-bottom-width: 1px; }
+        .border-cyan-400 { border-color: rgb(34 211 238); }
+        .border-gray-700 { border-color: rgb(55 65 81); }
+        .pt-6 { padding-top: 1.5rem; }
+        .space-y-1 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.25rem; }
+        .space-y-3 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.75rem; }
+        .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.5rem; }
+        .overflow-y-auto { overflow-y: auto; }
+        .opacity-50 { opacity: 0.5; }
+        .flex-1 { flex: 1 1 0%; }
+        .flex-shrink-0 { flex-shrink: 0; }
+        .items-start { align-items: flex-start; }
+        .max-w-xs { max-width: 20rem; }
+        .bottom-6 { bottom: 1.5rem; }
+        .right-6 { right: 1.5rem; }
+        .bottom-90 { bottom: 22.5rem; }
+        .right-24 { right: 6rem; }
+        .z-50 { z-index: 50; }
+        .z-100 { z-index: 100; }
+        .shadow-lg { --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); box-shadow: var(--tw-shadow); }
+        .hover\\:shadow-xl:hover { --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); box-shadow: var(--tw-shadow); }
+        .transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+        .duration-300 { transition-duration: 300ms; }
+        .cursor-pointer { cursor: pointer; }
+        .animate-pulse { animation: glowPulse 2s ease-in-out infinite; }
+
+        @media (min-width: 640px) {
+            .sm\\:block { display: block; }
+        }
+
+        @media (min-width: 768px) {
+            .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .md\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+
+        @media (min-width: 1024px) {
+            .lg\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .lg\\:block { display: block; }
+        }
+
+        @media (max-width: 768px) {
+            .ai-card { padding: 20px; }
+            .chat-widget { width: 280px; right: 16px; bottom: 80px; }
+            .ai-terminal { display: none; }
+        }
+    </style>
+</head>
+<body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        const { Bot, Sparkles, Users, Eye, Download, Send, User, MessageCircle } = lucide;
+
+        function AIEffects() {
+            const [terminalMessage, setTerminalMessage] = useState("System online. Ready for business launch...");
+
+            useEffect(() => {
+                createParticles();
+                startTerminalUpdates();
+            }, []);
+
+            const createParticles = () => {
+                const createParticle = () => {
+                    const particle = document.createElement('div');
+                    particle.className = 'ai-particle';
+                    particle.style.left = Math.random() * window.innerWidth + 'px';
+                    particle.style.animationDuration = (8000 + Math.random() * 4000) + 'ms';
+                    
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 12000);
+                };
+
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(createParticle, i * 1000);
+                }
+
+                setInterval(createParticle, 3000);
+            };
+
+            const startTerminalUpdates = () => {
+                const messages = [
+                    'Neural networks online...',
+                    'AI employees initializing...',
+                    'Website generation ready...',
+                    'Lead capture system active...',
+                    'Automation protocols loaded...',
+                    'System ready for business launch...'
+                ];
+                
+                let currentIndex = 0;
+                
+                const updateTerminal = () => {
+                    setTerminalMessage(messages[currentIndex]);
+                    currentIndex = (currentIndex + 1) % messages.length;
+                };
+                
+                setInterval(updateTerminal, 4000);
+            };
+
+            return React.createElement('div', {
+                className: "ai-terminal hidden lg:block"
+            }, React.createElement('div', {
+                className: "flex items-center gap-2 mb-2"
+            }, [
+                React.createElement('span', {
+                    key: 'prompt',
+                    style: { color: 'var(--brand)' }
+                }, 'AI_AGENT >'),
+                React.createElement('span', {
+                    key: 'message',
+                    style: { color: 'var(--brand2)' },
+                    className: 'terminal-text'
+                }, terminalMessage)
+            ]));
+        }
+
+        function WebsiteBuilder() {
+            const [formData, setFormData] = useState({
+                industry: '',
+                businessName: '',
+                location: '',
+                phone: '',
+                email: '',
+                description: '',
+                colorPreset: 'blue'
+            });
+
+            const handleInputChange = (e) => {
+                const { name, value } = e.target;
+                setFormData(prev => ({ ...prev, [name]: value }));
+            };
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                console.log('Generating website with:', formData);
+                alert('AI Website Generated! (This is a demo)');
+            };
+
+            return React.createElement('div', { className: "ai-card" }, [
+                React.createElement('h2', {
+                    key: 'title',
+                    className: "text-2xl font-bold text-white mb-6 flex items-center gap-3"
+                }, [
+                    React.createElement(Sparkles, { key: 'icon', className: "text-cyan-400", size: 24 }),
+                    "Build Your AI-Powered Website"
+                ]),
+                
+                React.createElement('form', {
+                    key: 'form',
+                    onSubmit: handleSubmit,
+                    className: "space-y-6"
+                }, [
+                    React.createElement('div', { key: 'industry' }, [
+                        React.createElement('label', {
+                            key: 'label',
+                            className: "block text-gray-300 mb-2"
+                        }, 'Industry Type'),
+                        React.createElement('select', {
+                            key: 'select',
+                            name: "industry",
+                            value: formData.industry,
+                            onChange: handleInputChange,
+                            className: "ai-select w-full",
+                            required: true
+                        }, [
+                            React.createElement('option', { key: 'default', value: "" }, 'Select your industry'),
+                            React.createElement('option', { key: 'laundromat', value: "laundromat" }, 'Laundromat'),
+                            React.createElement('option', { key: 'painter', value: "painter" }, 'Painter/Contractor'),
+                            React.createElement('option', { key: 'window', value: "window_washing" }, 'Window Washing'),
+                            React.createElement('option', { key: 'generic', value: "generic" }, 'Generic Business')
+                        ])
+                    ]),
+                    
+                    React.createElement('div', {
+                        key: 'name-location',
+                        className: "grid grid-cols-1 md:grid-cols-2 gap-4"
+                    }, [
+                        React.createElement('div', { key: 'name' }, [
+                            React.createElement('label', {
+                                key: 'label',
+                                className: "block text-gray-300 mb-2"
+                            }, 'Business Name'),
+                            React.createElement('input', {
+                                key: 'input',
+                                type: "text",
+                                name: "businessName",
+                                value: formData.businessName,
+                                onChange: handleInputChange,
+                                className: "ai-input w-full",
+                                placeholder: "Your Business Name",
+                                required: true
+                            })
+                        ]),
+                        React.createElement('div', { key: 'location' }, [
+                            React.createElement('label', {
+                                key: 'label',
+                                className: "block text-gray-300 mb-2"
+                            }, 'Location'),
+                            React.createElement('input', {
+                                key: 'input',
+                                type: "text",
+                                name: "location",
+                                value: formData.location,
+                                onChange: handleInputChange,
+                                className: "ai-input w-full",
+                                placeholder: "City, State",
+                                required: true
+                            })
+                        ])
+                    ]),
+                    
+                    React.createElement('div', {
+                        key: 'contact',
+                        className: "grid grid-cols-1 md:grid-cols-2 gap-4"
+                    }, [
+                        React.createElement('div', { key: 'phone' }, [
+                            React.createElement('label', {
+                                key: 'label',
+                                className: "block text-gray-300 mb-2"
+                            }, 'Phone'),
+                            React.createElement('input', {
+                                key: 'input',
+                                type: "tel",
+                                name: "phone",
+                                value: formData.phone,
+                                onChange: handleInputChange,
+                                className: "ai-input w-full",
+                                placeholder: "(555) 123-4567",
+                                required: true
+                            })
+                        ]),
+                        React.createElement('div', { key: 'email' }, [
+                            React.createElement('label', {
+                                key: 'label',
+                                className: "block text-gray-300 mb-2"
+                            }, 'Email'),
+                            React.createElement('input', {
+                                key: 'input',
+                                type: "email",
+                                name: "email",
+                                value: formData.email,
+                                onChange: handleInputChange,
+                                className: "ai-input w-full",
+                                placeholder: "contact@business.com",
+                                required: true
+                            })
+                        ])
+                    ]),
+
+                    React.createElement('div', { key: 'description' }, [
+                        React.createElement('label', {
+                            key: 'label',
+                            className: "block text-gray-300 mb-2"
+                        }, 'Business Description'),
+                        React.createElement('textarea', {
+                            key: 'textarea',
+                            name: "description",
+                            value: formData.description,
+                            onChange: handleInputChange,
+                            className: "ai-textarea w-full h-20",
+                            placeholder: "Brief description of your business..."
+                        })
+                    ]),
+
+                    React.createElement('div', { key: 'color' }, [
+                        React.createElement('label', {
+                            key: 'label',
+                            className: "block text-gray-300 mb-2"
+                        }, 'Color Theme'),
+                        React.createElement('select', {
+                            key: 'select',
+                            name: "colorPreset",
+                            value: formData.colorPreset,
+                            onChange: handleInputChange,
+                            className: "ai-select w-full"
+                        }, [
+                            React.createElement('option', { key: 'blue', value: "blue" }, 'Professional Blue'),
+                            React.createElement('option', { key: 'green', value: "green" }, 'Modern Green'),
+                            React.createElement('option', { key: 'purple', value: "purple" }, 'Creative Purple'),
+                            React.createElement('option', { key: 'orange', value: "orange" }, 'Energetic Orange'),
+                            React.createElement('option', { key: 'red', value: "red" }, 'Bold Red')
+                        ])
+                    ]),
+                    
+                    React.createElement('button', {
+                        key: 'submit',
+                        type: "submit",
+                        className: "ai-btn w-full py-4 text-lg"
+                    }, [
+                        React.createElement(Sparkles, { key: 'icon', size: 20 }),
+                        "Generate AI Website"
+                    ])
+                ]),
+
+                React.createElement('div', {
+                    key: 'plans',
+                    className: "mt-8 pt-6 border-t border-gray-700"
+                }, [
+                    React.createElement('h3', {
+                        key: 'title',
+                        className: "text-lg font-semibold text-white mb-4"
+                    }, 'Choose Your Plan'),
+                    React.createElement('div', {
+                        key: 'grid',
+                        className: "grid grid-cols-1 md:grid-cols-3 gap-4"
+                    }, [
+                        React.createElement('div', {
+                            key: 'starter',
+                            className: "tier-card text-center"
+                        }, [
+                            React.createElement('h4', {
+                                key: 'title',
+                                className: "font-semibold text-cyan-400"
+                            }, 'Starter'),
+                            React.createElement('p', {
+                                key: 'price',
+                                className: "text-gray-400"
+                            }, '$29/mo'),
+                            React.createElement('ul', {
+                                key: 'features',
+                                className: "text-gray-300 text-xs mt-2 space-y-1"
+                            }, [
+                                React.createElement('li', { key: '1' }, '• AI-generated website'),
+                                React.createElement('li', { key: '2' }, '• Lead capture forms'),
+                                React.createElement('li', { key: '3' }, '• AI receptionist'),
+                                React.createElement('li', { key: '4' }, '• Basic analytics')
+                            ])
+                        ]),
+                        React.createElement('div', {
+                            key: 'professional',
+                            className: "tier-card text-center border-cyan-400"
+                        }, [
+                            React.createElement('h4', {
+                                key: 'title',
+                                className: "font-semibold text-cyan-400"
+                            }, 'Professional'),
+                            React.createElement('p', {
+                                key: 'price',
+                                className: "text-gray-400"
+                            }, '$79/mo'),
+                            React.createElement('ul', {
+                                key: 'features',
+                                className: "text-gray-300 text-xs mt-2 space-y-1"
+                            }, [
+                                React.createElement('li', { key: '1' }, '• Everything in Starter'),
+                                React.createElement('li', { key: '2' }, '• AI scheduler'),
+                                React.createElement('li', { key: '3' }, '• Follow-up automation'),
+                                React.createElement('li', { key: '4' }, '• Advanced analytics')
+                            ])
+                        ]),
+                        React.createElement('div', {
+                            key: 'enterprise',
+                            className: "tier-card text-center"
+                        }, [
+                            React.createElement('h4', {
+                                key: 'title',
+                                className: "font-semibold text-purple-400"
+                            }, 'Enterprise'),
+                            React.createElement('p', {
+                                key: 'price',
+                                className: "text-gray-400"
+                            }, '$149/mo'),
+                            React.createElement('ul', {
+                                key: 'features',
+                                className: "text-gray-300 text-xs mt-2 space-y-1"
+                            }, [
+                                React.createElement('li', { key: '1' }, '• Everything included'),
+                                React.createElement('li', { key: '2' }, '• AI marketing assistant'),
+                                React.createElement('li', { key: '3' }, '• Invoicing bot'),
+                                React.createElement('li', { key: '4' }, '• 3LEVELS partnership')
+                            ])
+                        ])
+                    ])
+                ])
+            ]);
+        }
+
+        function LivePreview() {
+            const [hasWebsite, setHasWebsite] = useState(false);
+
+            const downloadDemo = () => {
+                alert('Demo download - In production, this would download the generated website HTML file');
+            };
+
+            return React.createElement('div', { className: "ai-card" }, [
+                React.createElement('div', {
+                    key: 'header',
+                    className: "flex items-center justify-between mb-6"
+                }, [
+                    React.createElement('h2', {
+                        key: 'title',
+                        className: "text-2xl font-bold text-white flex items-center gap-3"
+                    }, [
+                        React.createElement(Eye, { key: 'icon', className: "text-cyan-400", size: 24 }),
+                        "Live Preview"
+                    ]),
+                    React.createElement('button', {
+                        key: 'download',
+                        onClick: downloadDemo,
+                        className: "ai-btn text-sm px-4 py-2",
+                        disabled: !hasWebsite
+                    }, [
+                        React.createElement(Download, { key: 'icon', size: 16 }),
+                        "Download"
+                    ])
+                ]),
+                
+                React.createElement('div', {
+                    key: 'preview',
+                    className: "preview-container"
+                }, React.createElement('div', {
+                    className: "flex items-center justify-center h-full text-gray-400 text-center"
+                }, React.createElement('div', {}, [
+                    React.createElement(Bot, {
+                        key: 'bot',
+                        className: "mx-auto mb-4 opacity-50",
+                        size: 64
+                    }),
+                    React.createElement('p', {
+                        key: 'title',
+                        className: "text-lg font-semibold mb-2"
+                    }, "Ready to Generate"),
+                    React.createElement('p', {
+                        key: 'subtitle',
+                        className: "text-sm"
+                    }, "Fill out the form to see your AI-powered website"),
+                    React.createElement('div', {
+                        key: 'features',
+                        className: "mt-4 text-xs text-gray-500"
+                    }, [
+                        "Preview will show your generated website with:",
+                        React.createElement('br', { key: 'br1' }),
+                        "• Professional design",
+                        React.createElement('br', { key: 'br2' }),
+                        "• Lead capture forms",
+                        React.createElement('br', { key: 'br3' }),
+                        "• AI chat integration",
+                        React.createElement('br', { key: 'br4' }),
+                        "• Mobile-responsive layout"
+                    ])
+                ]))),
+
+                React.createElement('div', {
+                    key: 'employees',
+                    className: "mt-6 p-4 bg-gray-800/50 rounded-lg border border-gray-700"
+                }, [
+                    React.createElement('h3', {
+                        key: 'title',
+                        className: "text-white font-semibold mb-3 flex items-center gap-2"
+                    }, [
+                        React.createElement(Bot, {
+                            key: 'icon',
+                            size: 16,
+                            className: "text-cyan-400"
+                        }),
+                        "Your AI Employees Will Handle:"
+                    ]),
+                    React.createElement('div', {
+                        key: 'grid',
+                        className: "grid grid-cols-2 gap-3 text-sm text-gray-300"
+                    }, [
+                        React.createElement('div', {
+                            key: 'service',
+                            className: "flex items-center gap-2"
+                        }, [
+                            React.createElement('div', {
+                                key: 'dot',
+                                className: "w-2 h-2 bg-green-400 rounded-full animate-pulse"
+                            }),
+                            "24/7 Customer Service"
+                        ]),
+                        React.createElement('div', {
+                            key: 'scheduling',
+                            className: "flex items-center gap-2"
+                        }, [
+                            React.createElement('div', {
+                                key: 'dot',
+                                className: "w-2 h-2 bg-blue-400 rounded-full animate-pulse"
+                            }),
+                            "Appointment Scheduling"
+                        ]),
+                        React.createElement('div', {
+                            key: 'followup',
+                            className: "flex items-center gap-2"
+                        }, [
+                            React.createElement('div', {
+                                key: 'dot',
+                                className: "w-2 h-2 bg-purple-400 rounded-full animate-pulse"
+                            }),
+                            "Lead Follow-up"
+                        ]),
+                        React.createElement('div', {
+                            key: 'quotes',
+                            className: "flex items-center gap-2"
+                        }, [
+                            React.createElement('div', {
+                                key: 'dot',
+                                className: "w-2 h-2 bg-orange-400 rounded-full animate-pulse"
+                            }),
+                            "Quote Generation"
+                        ])
+                    ])
+                ])
+            ]);
+        }
+
+        function AIChat() {
+            const [messages, setMessages] = useState([{
+                id: '1',
+                message: "Hi! Welcome to StartSimpleAI. I'm here to help you build your business website. What industry are you in?",
+                sender: 'ai',
+                timestamp: new Date()
+            }]);
+            const [inputMessage, setInputMessage] = useState("");
+            const [isVisible, setIsVisible] = useState(false);
+            const [isOpen, setIsOpen] = useState(false);
+            const messagesEndRef = useRef(null);
+
+            const chatResponses = {
+                'hello': 'Hi! Thanks for visiting. What type of business are you looking to launch?',
+                'help': 'I can help you build a professional website with AI employees. Just select your industry from the form!',
+                'pricing': 'We have three tiers: Starter ($29/mo), Professional ($79/mo), and Enterprise ($149/mo). Each includes AI employees!',
+                'laundromat': 'Great choice! Laundromats are recession-proof businesses. Our AI can handle scheduling, customer service, and lead follow-up automatically.',
+                'painter': 'Painting services are in high demand! Our system will capture leads and our AI scheduler can book estimates for you.',
+                'window washing': 'Window washing is a great recurring revenue business! Our AI can manage your scheduling and follow up with customers.',
+                'ai employees': 'Our AI employees include a 24/7 receptionist, automated scheduler, and follow-up bot. They work around the clock to grow your business!',
+                'default': 'I\'m here to help you launch your business with AI-powered tools. What would you like to know?'
+            };
+
+            useEffect(() => {
+                const timer = setTimeout(() => setIsVisible(true), 2000);
+                return () => clearTimeout(timer);
+            }, []);
+
+            useEffect(() => {
+                messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+            }, [messages]);
+
+            const sendMessage = () => {
+                if (!inputMessage.trim()) return;
+
+                const userMessage = {
+                    id: Date.now().toString(),
+                    message: inputMessage,
+                    sender: 'user',
+                    timestamp: new Date()
+                };
+
+                setMessages(prev => [...prev, userMessage]);
+                
+                setTimeout(() => {
+                    const messageLower = inputMessage.toLowerCase();
+                    let response = chatResponses.default;
+                    
+                    for (const [key, value] of Object.entries(chatResponses)) {
+                        if (messageLower.includes(key)) {
+                            response = value;
+                            break;
+                        }
+                    }
+
+                    const aiMessage = {
+                        id: (Date.now() + 1).toString(),
+                        message: response,
+                        sender: 'ai',
+                        timestamp: new Date()
+                    };
+
+                    setMessages(prev => [...prev, aiMessage]);
+                }, 1000);
+
+                setInputMessage("");
+            };
+
+            const handleKeyPress = (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            };
+
+            if (!isVisible) return null;
+
+            return React.createElement(React.Fragment, {}, [
+                React.createElement('div', {
+                    key: 'button',
+                    className: "fixed bottom-6 right-6 z-50"
+                }, React.createElement('button', {
+                    onClick: () => setIsOpen(!isOpen),
+                    className: "w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+                }, React.createElement(MessageCircle, { size: 24 }))),
+
+                isOpen && React.createElement('div', {
+                    key: 'widget',
+                    className: "chat-widget"
+                }, [
+                    React.createElement('div', {
+                        key: 'header',
+                        className: "p-4 border-b border-gray-700"
+                    }, React.createElement('div', {
+                        className: "flex items-center gap-2"
+                    }, [
+                        React.createElement('div', {
+                            key: 'avatar',
+                            className: "w-8 h-8 bg-gradient-to-br from-cyan-400 to-purple-400 rounded-full flex items-center justify-center"
+                        }, React.createElement(Bot, { className: "text-white", size: 16 })),
+                        React.createElement('div', { key: 'info' }, [
+                            React.createElement('h4', {
+                                key: 'name',
+                                className: "font-semibold text-white"
+                            }, "AI Receptionist"),
+                            React.createElement('p', {
+                                key: 'status',
+                                className: "text-xs text-green-400"
+                            }, "Online")
+                        ])
+                    ])),
+                    
+                    React.createElement('div', {
+                        key: 'messages',
+                        className: "p-4 space-y-3 h-48 overflow-y-auto"
+                    }, [
+                        ...messages.map((message) =>
+                            React.createElement('div', {
+                                key: message.id,
+                                className: `flex items-start gap-2 ${message.sender === 'user' ? 'justify-end' : ''}`
+                            }, [
+                                message.sender === 'ai' && React.createElement('div', {
+                                    key: 'avatar',
+                                    className: "w-6 h-6 bg-cyan-400 rounded-full flex items-center justify-center flex-shrink-0"
+                                }, React.createElement(Bot, { className: "text-white", size: 12 })),
+                                React.createElement('div', {
+                                    key: 'bubble',
+                                    className: `p-2 rounded-lg max-w-xs ${
+                                        message.sender === 'user' 
+                                            ? 'bg-cyan-500 text-white' 
+                                            : 'bg-gray-700 text-white'
+                                    }`
+                                }, React.createElement('p', { className: "text-sm" }, message.message)),
+                                message.sender === 'user' && React.createElement('div', {
+                                    key: 'avatar',
+                                    className: "w-6 h-6 bg-gray-500 rounded-full flex items-center justify-center flex-shrink-0"
+                                }, React.createElement(User, { className: "text-white", size: 12 }))
+                            ])
+                        ),
+                        React.createElement('div', { key: 'end', ref: messagesEndRef })
+                    ]),
+                    
+                    React.createElement('div', {
+                        key: 'input',
+                        className: "p-4 border-t border-gray-700"
+                    }, React.createElement('div', {
+                        className: "flex gap-2"
+                    }, [
+                        React.createElement('input', {
+                            key: 'input',
+                            value: inputMessage,
+                            onChange: (e) => setInputMessage(e.target.value),
+                            onKeyPress: handleKeyPress,
+                            className: "ai-input text-sm py-2 px-3 flex-1",
+                            placeholder: "Type a message..."
+                        }),
+                        React.createElement('button', {
+                            key: 'send',
+                            onClick: sendMessage,
+                            className: "ai-btn px-3 py-2"
+                        }, React.createElement(Send, { size: 16 }))
+                    ]))
+                ])
+            ]);
+        }
+
+        function App() {
+            const [currentTheme, setCurrentTheme] = useState("cyberpunk");
+
+            const handleThemeChange = (theme) => {
+                setCurrentTheme(theme);
+                document.body.className = `theme-${theme}`;
+            };
+
+            return React.createElement('div', { className: "min-h-screen" }, [
+                React.createElement(AIEffects, { key: 'effects' }),
+                
+                React.createElement('header', {
+                    key: 'header',
+                    className: "header"
+                }, React.createElement('div', {
+                    className: "max-w-7xl mx-auto px-6 py-4"
+                }, React.createElement('div', {
+                    className: "flex items-center justify-between"
+                }, [
+                    React.createElement('div', {
+                        key: 'brand',
+                        className: "flex items-center gap-3"
+                    }, [
+                        React.createElement('div', {
+                            key: 'logo',
+                            className: "w-10 h-10 rounded-lg bg-gradient-to-br from-pink-500 to-cyan-500 flex items-center justify-center"
+                        }, React.createElement(Bot, { className: "text-white", size: 20 })),
+                        React.createElement('h1', {
+                            key: 'title',
+                            className: "text-2xl font-bold brand-text"
+                        }, "StartSimpleAI"),
+                        React.createElement('span', {
+                            key: 'subtitle',
+                            className: "text-sm text-gray-400 hidden sm:block"
+                        }, "AI-Powered Business Launchpad")
+                    ]),
+                    
+                    React.createElement('div', {
+                        key: 'controls',
+                        className: "flex items-center gap-4"
+                    }, [
+                        React.createElement('div', {
+                            key: 'status',
+                            className: "ai-status"
+                        }, [
+                            React.createElement('div', {
+                                key: 'pulse',
+                                className: "ai-pulse"
+                            }),
+                            React.createElement('span', { key: 'text' }, "AI POWERED")
+                        ]),
+                        
+                        React.createElement('div', {
+                            key: 'theme',
+                            className: "relative"
+                        }, React.createElement('select', {
+                            value: currentTheme,
+                            onChange: (e) => handleThemeChange(e.target.value),
+                            className: "ai-select text-xs bg-transparent border-0 pr-8"
+                        }, [
+                            React.createElement('option', { key: 'cyberpunk', value: "cyberpunk" }, "Cyberpunk"),
+                            React.createElement('option', { key: 'matrix', value: "matrix" }, "Matrix"),
+                            React.createElement('option', { key: 'neon', value: "neon" }, "Neon"),
+                            React.createElement('option', { key: 'ocean', value: "ocean" }, "Ocean")
+                        ]))
+                    ])
+                ]))),
+
+                React.createElement('main', {
+                    key: 'main',
+                    className: "max-w-7xl mx-auto px-6 py-8"
+                }, [
+                    React.createElement('div', {
+                        key: 'grid',
+                        className: "grid grid-cols-1 lg:grid-cols-2 gap-8"
+                    }, [
+                        React.createElement(WebsiteBuilder, { key: 'builder' }),
+                        React.createElement(LivePreview, { key: 'preview' })
+                    ]),
+
+                    React.createElement('div', {
+                        key: 'partnership',
+                        className: "ai-card mt-8"
+                    }, [
+                        React.createElement('div', {
+                            key: 'header',
+                            className: "flex items-center justify-between mb-6"
+                        }, [
+                            React.createElement('div', { key: 'info' }, [
+                                React.createElement('h2', {
+                                    key: 'title',
+                                    className: "text-2xl font-bold text-white flex items-center gap-3"
+                                }, [
+                                    React.createElement(Users, {
+                                        key: 'icon',
+                                        className: "text-yellow-400",
+                                        size: 24
+                                    }),
+                                    "3LEVELS Partnership"
+                                ]),
+                                React.createElement('p', {
+                                    key: 'subtitle',
+                                    className: "text-gray-400 mt-2"
+                                }, "Family-led business incubator for minority, veteran, and small business founders")
+                            ]),
+                            React.createElement('div', {
+                                key: 'cta',
+                                className: "text-right"
+                            }, [
+                                React.createElement('div', {
+                                    key: 'text',
+                                    className: "text-sm text-gray-300"
+                                }, "Need personal consulting?"),
+                                React.createElement('button', {
+                                    key: 'button',
+                                    className: "ai-btn mt-2"
+                                }, [
+                                    React.createElement(Users, { key: 'icon', size: 16 }),
+                                    "Connect with 3LEVELS"
+                                ])
+                            ])
+                        ]),
+                        
+                        React.createElement('div', {
+                            key: 'levels',
+                            className: "grid grid-cols-1 md:grid-cols-3 gap-6"
+                        }, [
+                            React.createElement('div', {
+                                key: 'level1',
+                                className: "text-center"
+                            }, [
+                                React.createElement('div', {
+                                    key: 'icon',
+                                    className: "w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center"
+                                }, React.createElement(Sparkles, { className: "text-white", size: 20 })),
+                                React.createElement('h3', {
+                                    key: 'title',
+                                    className: "font-semibold text-white mb-2"
+                                }, "Level 1 - Leadership"),
+                                React.createElement('p', {
+                                    key: 'desc',
+                                    className: "text-sm text-gray-400"
+                                }, "Business consulting and strategy development")
+                            ]),
+                            React.createElement('div', {
+                                key: 'level2',
+                                className: "text-center"
+                            }, [
+                                React.createElement('div', {
+                                    key: 'icon',
+                                    className: "w-16 h-16 bg-gradient-to-br from-green-500 to-cyan-500 rounded-full mx-auto mb-4 flex items-center justify-center"
+                                }, React.createElement(Users, { className: "text-white", size: 20 })),
+                                React.createElement('h3', {
+                                    key: 'title',
+                                    className: "font-semibold text-white mb-2"
+                                }, "Level 2 - Resilience"),
+                                React.createElement('p', {
+                                    key: 'desc',
+                                    className: "text-sm text-gray-400"
+                                }, "Partnerships and public/private affiliations")
+                            ]),
+                            React.createElement('div', {
+                                key: 'level3',
+                                className: "text-center"
+                            }, [
+                                React.createElement('div', {
+                                    key: 'icon',
+                                    className: "w-16 h-16 bg-gradient-to-br from-pink-500 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center"
+                                }, React.createElement(Bot, { className: "text-white", size: 20 })),
+                                React.createElement('h3', {
+                                    key: 'title',
+                                    className: "font-semibold text-white mb-2"
+                                }, "Level 3 - Empowerment"),
+                                React.createElement('p', {
+                                    key: 'desc',
+                                    className: "text-sm text-gray-400"
+                                }, "Digital launch services and automation")
+                            ])
+                        ])
+                    ])
+                ]),
+
+                React.createElement(AIChat, { key: 'chat' })
+            ]);
+        }
+
+        ReactDOM.render(React.createElement(App), document.getElementById('root'));
+    </script>
+</body>
 </html>
-```
-
-### client/src/main.tsx
-```tsx
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App";
-import "./index.css";
-
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
-```
-
-### client/src/App.tsx
-```tsx
-import { useState } from "react";
-import { Bot, Sparkles, Users } from "lucide-react";
-import WebsiteBuilder from "./components/WebsiteBuilder";
-import LivePreview from "./components/LivePreview";
-import AIChat from "./components/AIChat";
-import AIEffects from "./components/AIEffects";
-
-function App() {
-  const [currentTheme, setCurrentTheme] = useState("cyberpunk");
-
-  const handleThemeChange = (theme: string) => {
-    setCurrentTheme(theme);
-    document.body.className = `theme-${theme}`;
-  };
-
-  return (
-    <div className="min-h-screen">
-      <AIEffects />
-      
-      <header className="header">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-pink-500 to-cyan-500 flex items-center justify-center">
-                <Bot className="text-white" size={20} />
-              </div>
-              <h1 className="text-2xl font-bold brand-text">StartSimpleAI</h1>
-              <span className="text-sm text-gray-400 hidden sm:block">AI-Powered Business Launchpad</span>
-            </div>
-            
-            <div className="flex items-center gap-4">
-              <div className="ai-status">
-                <div className="ai-pulse"></div>
-                <span>AI POWERED</span>
-              </div>
-              
-              <div className="relative">
-                <select 
-                  value={currentTheme}
-                  onChange={(e) => handleThemeChange(e.target.value)}
-                  className="ai-select text-xs bg-transparent border-0 pr-8"
-                >
-                  <option value="cyberpunk">Cyberpunk</option>
-                  <option value="matrix">Matrix</option>
-                  <option value="neon">Neon</option>
-                  <option value="ocean">Ocean</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <WebsiteBuilder />
-          <LivePreview />
-        </div>
-
-        <div className="ai-card mt-8">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                <Users className="text-yellow-400" size={24} />
-                3LEVELS Partnership
-              </h2>
-              <p className="text-gray-400 mt-2">Family-led business incubator for minority, veteran, and small business founders</p>
-            </div>
-            <div className="text-right">
-              <div className="text-sm text-gray-300">Need personal consulting?</div>
-              <button className="ai-btn mt-2">
-                <Users size={16} />
-                Connect with 3LEVELS
-              </button>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <Sparkles className="text-white" size={20} />
-              </div>
-              <h3 className="font-semibold text-white mb-2">Level 1 - Leadership</h3>
-              <p className="text-sm text-gray-400">Business consulting and strategy development</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-cyan-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <Users className="text-white" size={20} />
-              </div>
-              <h3 className="font-semibold text-white mb-2">Level 2 - Resilience</h3>
-              <p className="text-sm text-gray-400">Partnerships and public/private affiliations</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <Bot className="text-white" size={20} />
-              </div>
-              <h3 className="font-semibold text-white mb-2">Level 3 - Empowerment</h3>
-              <p className="text-sm text-gray-400">Digital launch services and automation</p>
-            </div>
-          </div>
-        </div>
-      </main>
-
-      <AIChat />
-    </div>
-  );
-}
-
-export default App;
-```
-
-### client/src/components/AIEffects.tsx
-```tsx
-import { useEffect, useState } from "react";
-
-export default function AIEffects() {
-  const [terminalMessage, setTerminalMessage] = useState("System online. Ready for business launch...");
-
-  useEffect(() => {
-    createParticles();
-    startTerminalUpdates();
-  }, []);
-
-  const createParticles = () => {
-    const createParticle = () => {
-      const particle = document.createElement('div');
-      particle.className = 'ai-particle';
-      particle.style.left = Math.random() * window.innerWidth + 'px';
-      particle.style.animationDuration = (8000 + Math.random() * 4000) + 'ms';
-      
-      document.body.appendChild(particle);
-      
-      setTimeout(() => {
-        if (particle.parentNode) {
-          particle.parentNode.removeChild(particle);
-        }
-      }, 12000);
-    };
-
-    for (let i = 0; i < 3; i++) {
-      setTimeout(createParticle, i * 1000);
-    }
-
-    setInterval(createParticle, 3000);
-  };
-
-  const startTerminalUpdates = () => {
-    const messages = [
-      'Neural networks online...',
-      'AI employees initializing...',
-      'Website generation ready...',
-      'Lead capture system active...',
-      'Automation protocols loaded...',
-      'System ready for business launch...'
-    ];
-    
-    let currentIndex = 0;
-    
-    const updateTerminal = () => {
-      setTerminalMessage(messages[currentIndex]);
-      currentIndex = (currentIndex + 1) % messages.length;
-    };
-    
-    setInterval(updateTerminal, 4000);
-  };
-
-  return (
-    <div className="ai-terminal hidden lg:block">
-      <div className="flex items-center gap-2 mb-2">
-        <span style={{ color: 'var(--brand)' }}>AI_AGENT &gt;</span>
-        <span style={{ color: 'var(--brand2)' }} className="terminal-text">
-          {terminalMessage}
-        </span>
-      </div>
-    </div>
-  );
-}
-```
-
-### client/src/components/WebsiteBuilder.tsx
-```tsx
-import { useState } from "react";
-import { Sparkles } from "lucide-react";
-
-export default function WebsiteBuilder() {
-  const [formData, setFormData] = useState({
-    industry: '',
-    businessName: '',
-    location: '',
-    phone: '',
-    email: '',
-    description: '',
-    colorPreset: 'blue'
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Generating website with:', formData);
-    alert('AI Website Generated! (This is a demo)');
-  };
-
-  return (
-    <div className="ai-card">
-      <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-        <Sparkles className="text-cyan-400" size={24} />
-        Build Your AI-Powered Website
-      </h2>
-      
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label className="block text-gray-300 mb-2">Industry Type</label>
-          <select 
-            name="industry"
-            value={formData.industry}
-            onChange={handleInputChange}
-            className="ai-select w-full"
-            required
-          >
-            <option value="">Select your industry</option>
-            <option value="laundromat">Laundromat</option>
-            <option value="painter">Painter/Contractor</option>
-            <option value="window_washing">Window Washing</option>
-            <option value="generic">Generic Business</option>
-          </select>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-gray-300 mb-2">Business Name</label>
-            <input 
-              type="text" 
-              name="businessName"
-              value={formData.businessName}
-              onChange={handleInputChange}
-              className="ai-input w-full" 
-              placeholder="Your Business Name"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-300 mb-2">Location</label>
-            <input 
-              type="text" 
-              name="location"
-              value={formData.location}
-              onChange={handleInputChange}
-              className="ai-input w-full" 
-              placeholder="City, State"
-              required
-            />
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-gray-300 mb-2">Phone</label>
-            <input 
-              type="tel" 
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              className="ai-input w-full" 
-              placeholder="(555) 123-4567"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-300 mb-2">Email</label>
-            <input 
-              type="email" 
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className="ai-input w-full" 
-              placeholder="contact@business.com"
-              required
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-gray-300 mb-2">Business Description</label>
-          <textarea 
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            className="ai-textarea w-full h-20" 
-            placeholder="Brief description of your business..."
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-300 mb-2">Color Theme</label>
-          <select 
-            name="colorPreset"
-            value={formData.colorPreset}
-            onChange={handleInputChange}
-            className="ai-select w-full"
-          >
-            <option value="blue">Professional Blue</option>
-            <option value="green">Modern Green</option>
-            <option value="purple">Creative Purple</option>
-            <option value="orange">Energetic Orange</option>
-            <option value="red">Bold Red</option>
-          </select>
-        </div>
-        
-        <button type="submit" className="ai-btn w-full py-4 text-lg">
-          <Sparkles size={20} />
-          Generate AI Website
-        </button>
-      </form>
-
-      <div className="mt-8 pt-6 border-t border-gray-700">
-        <h3 className="text-lg font-semibold text-white mb-4">Choose Your Plan</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="tier-card text-center">
-            <h4 className="font-semibold text-cyan-400">Starter</h4>
-            <p className="text-gray-400">$29/mo</p>
-            <ul className="text-gray-300 text-xs mt-2 space-y-1">
-              <li>• AI-generated website</li>
-              <li>• Lead capture forms</li>
-              <li>• AI receptionist</li>
-              <li>• Basic analytics</li>
-            </ul>
-          </div>
-          <div className="tier-card text-center border-cyan-400">
-            <h4 className="font-semibold text-cyan-400">Professional</h4>
-            <p className="text-gray-400">$79/mo</p>
-            <ul className="text-gray-300 text-xs mt-2 space-y-1">
-              <li>• Everything in Starter</li>
-              <li>• AI scheduler</li>
-              <li>• Follow-up automation</li>
-              <li>• Advanced analytics</li>
-            </ul>
-          </div>
-          <div className="tier-card text-center">
-            <h4 className="font-semibold text-purple-400">Enterprise</h4>
-            <p className="text-gray-400">$149/mo</p>
-            <ul className="text-gray-300 text-xs mt-2 space-y-1">
-              <li>• Everything included</li>
-              <li>• AI marketing assistant</li>
-              <li>• Invoicing bot</li>
-              <li>• 3LEVELS partnership</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-```
-
-### client/src/components/LivePreview.tsx
-```tsx
-import { useState } from "react";
-import { Eye, Download, Bot } from "lucide-react";
-
-export default function LivePreview() {
-  const [hasWebsite] = useState(false);
-
-  const downloadDemo = () => {
-    alert('Demo download - In production, this would download the generated website HTML file');
-  };
-
-  return (
-    <div className="ai-card">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-          <Eye className="text-cyan-400" size={24} />
-          Live Preview
-        </h2>
-        <button 
-          onClick={downloadDemo}
-          className="ai-btn text-sm px-4 py-2"
-          disabled={!hasWebsite}
-        >
-          <Download size={16} />
-          Download
-        </button>
-      </div>
-      
-      <div className="preview-container">
-        <div className="flex items-center justify-center h-full text-gray-400 text-center">
-          <div>
-            <Bot className="mx-auto mb-4 opacity-50" size={64} />
-            <p className="text-lg font-semibold mb-2">Ready to Generate</p>
-            <p className="text-sm">Fill out the form to see your AI-powered website</p>
-            <div className="mt-4 text-xs text-gray-500">
-              Preview will show your generated website with:
-              <br />• Professional design
-              <br />• Lead capture forms  
-              <br />• AI chat integration
-              <br />• Mobile-responsive layout
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-6 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
-        <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
-          <Bot size={16} className="text-cyan-400" />
-          Your AI Employees Will Handle:
-        </h3>
-        <div className="grid grid-cols-2 gap-3 text-sm text-gray-300">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            24/7 Customer Service
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-            Appointment Scheduling
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-            Lead Follow-up
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-            Quote Generation
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-```
-
-### client/src/components/AIChat.tsx
-```tsx
-import { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, MessageCircle } from "lucide-react";
-
-interface Message {
-  id: string;
-  message: string;
-  sender: 'ai' | 'user';
-  timestamp: Date;
-}
-
-export default function AIChat() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      message: "Hi! Welcome to StartSimpleAI. I'm here to help you build your business website. What industry are you in?",
-      sender: 'ai',
-      timestamp: new Date()
-    }
-  ]);
-  const [inputMessage, setInputMessage] = useState("");
-  const [isVisible, setIsVisible] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const chatResponses: Record<string, string> = {
-    'hello': 'Hi! Thanks for visiting. What type of business are you looking to launch?',
-    'help': 'I can help you build a professional website with AI employees. Just select your industry from the form!',
-    'pricing': 'We have three tiers: Starter ($29/mo), Professional ($79/mo), and Enterprise ($149/mo). Each includes AI employees!',
-    'laundromat': 'Great choice! Laundromats are recession-proof businesses. Our AI can handle scheduling, customer service, and lead follow-up automatically.',
-    'painter': 'Painting services are in high demand! Our system will capture leads and our AI scheduler can book estimates for you.',
-    'window washing': 'Window washing is a great recurring revenue business! Our AI can manage your scheduling and follow up with customers.',
-    'ai employees': 'Our AI employees include a 24/7 receptionist, automated scheduler, and follow-up bot. They work around the clock to grow your business!',
-    'default': 'I\'m here to help you launch your business with AI-powered tools. What would you like to know?'
-  };
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  const sendMessage = () => {
-    if (!inputMessage.trim()) return;
-
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      message: inputMessage,
-      sender: 'user',
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-    
-    setTimeout(() => {
-      const messageLower = inputMessage.toLowerCase();
-      let response = chatResponses.default;
-      
-      for (const [key, value] of Object.entries(chatResponses)) {
-        if (messageLower.includes(key)) {
-          response = value;
-          break;
-        }
-      }
-
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        message: response,
-        sender: 'ai',
-        timestamp: new Date()
-      };
-
-      setMessages(prev => [...prev, aiMessage]);
-    }, 1000);
-
-    setInputMessage("");
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      sendMessage();
-    }
-  };
-
-  if (!isVisible) return null;
-
-  return (
-    <>
-      <div className="fixed bottom-6 right-6 z-50">
-        <button 
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
-        >
-          <MessageCircle size={24} />
-        </button>
-      </div>
-
-      {isOpen && (
-        <div className="chat-widget">
-          <div className="p-4 border-b border-gray-700">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-purple-400 rounded-full flex items-center justify-center">
-                <Bot className="text-white" size={16} />
-              </div>
-              <div>
-                <h4 className="font-semibold text-white">AI Receptionist</h4>
-                <p className="text-xs text-green-400">Online</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="p-4 space-y-3 h-48 overflow-y-auto">
-            {messages.map((message) => (
-              <div key={message.id} className={`flex items-start gap-2 ${message.sender === 'user' ? 'justify-end' : ''}`}>
-                {message.sender === 'ai' && (
-                  <div className="w-6 h-6 bg-cyan-400 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Bot className="text-white" size={12} />
-                  </div>
-                )}
-                <div className={`p-2 rounded-lg max-w-xs ${
-                  message.sender === 'user' 
-                    ? 'bg-cyan-500 text-white' 
-                    : 'bg-gray-700 text-white'
-                }`}>
-                  <p className="text-sm">{message.message}</p>
-                </div>
-                {message.sender === 'user' && (
-                  <div className="w-6 h-6 bg-gray-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <User className="text-white" size={12} />
-                  </div>
-                )}
-              </div>
-            ))}
-            <div ref={messagesEndRef} />
-          </div>
-          
-          <div className="p-4 border-t border-gray-700">
-            <div className="flex gap-2">
-              <input
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                className="ai-input text-sm py-2 px-3 flex-1"
-                placeholder="Type a message..."
-              />
-              <button 
-                onClick={sendMessage} 
-                className="ai-btn px-3 py-2"
-              >
-                <Send size={16} />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
-```
-
-### client/src/index.css
-```css
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  /* Cyberpunk AI color palette */
-  --bg: hsl(220, 27%, 9%);
-  --bg-secondary: hsl(218, 23%, 11%);
-  --fg: hsl(210, 40%, 95%);
-  --fg-secondary: hsl(215, 20%, 80%);
-  --muted: hsl(217, 10%, 55%);
-  
-  --brand: hsl(320, 97%, 54%);
-  --brand2: hsl(191, 100%, 50%);
-  --brand3: hsl(258, 89%, 63%);
-  --brand4: hsl(158, 87%, 48%);
-  
-  --card-bg: linear-gradient(145deg, rgba(22,27,34,0.8), rgba(33,38,45,0.6));
-  --card-border: rgba(255,105,180,0.2);
-  --border: rgba(255,255,255,0.06);
-  
-  --glow-primary: 0 0 25px rgba(255,28,247,0.4);
-  --glow-secondary: 0 0 25px rgba(0,217,255,0.4);
-  --glow-accent: 0 0 20px rgba(153,69,255,0.3);
-  
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-}
-
-/* Theme variants */
-.theme-cyberpunk {
-  --bg: hsl(220, 27%, 9%);
-  --bg-secondary: hsl(218, 23%, 11%);
-  --brand: hsl(320, 97%, 54%);
-  --brand2: hsl(191, 100%, 50%);
-}
-
-.theme-matrix {
-  --bg: hsl(120, 25%, 4%);
-  --bg-secondary: hsl(120, 20%, 7%);
-  --brand: hsl(120, 100%, 50%);
-  --brand2: hsl(120, 100%, 60%);
-}
-
-.theme-neon {
-  --bg: hsl(300, 33%, 8%);
-  --bg-secondary: hsl(300, 25%, 13%);
-  --brand: hsl(320, 100%, 50%);
-  --brand2: hsl(180, 100%, 50%);
-}
-
-.theme-ocean {
-  --bg: hsl(210, 50%, 8%);
-  --bg-secondary: hsl(210, 35%, 12%);
-  --brand: hsl(200, 85%, 50%);
-  --brand2: hsl(185, 85%, 55%);
-}
-
-@layer base {
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    font-family: var(--font-sans);
-    background: 
-      radial-gradient(1400px 1400px at 90% -10%, rgba(34,211,238,.15), transparent 45%),
-      radial-gradient(1200px 1200px at 10% 100%, rgba(139,92,246,.12), transparent 40%),
-      var(--bg);
-    color: var(--fg);
-    overflow-x: hidden;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-  }
-}
-
-/* Animations */
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-@keyframes particleFloat {
-  0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(-100px) translateX(200px) rotate(360deg); opacity: 0; }
-}
-
-@keyframes glowPulse {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); }
-}
-
-@keyframes terminalBlink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-@keyframes chatSlideIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* AI Particles */
-.ai-particle {
-  position: fixed;
-  width: 4px;
-  height: 4px;
-  background: var(--brand2);
-  border-radius: 50%;
-  z-index: 1;
-  opacity: 0.6;
-  box-shadow: 0 0 8px var(--brand2);
-  animation: particleFloat 10s linear infinite;
-  pointer-events: none;
-}
-
-/* Custom UI Components */
-.ai-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 20px;
-  padding: 28px;
-  backdrop-filter: blur(20px);
-  box-shadow: 
-    0 20px 40px rgba(0,0,0,0.15),
-    inset 0 1px 0 rgba(255,255,255,0.1),
-    0 0 0 1px rgba(99,102,241,0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.ai-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(34,211,238,0.8), rgba(99,102,241,0.8), rgba(139,92,246,0.8), transparent);
-  animation: shimmer 4s ease-in-out infinite;
-}
-
-.ai-card:hover {
-  transform: translateY(-4px) scale(1.01);
-  border-color: rgba(34,211,238,0.6);
-  box-shadow: 
-    0 40px 80px rgba(0,0,0,0.2),
-    0 0 0 2px rgba(34,211,238,0.3),
-    0 0 40px rgba(34,211,238,0.2),
-    var(--glow-primary);
-}
-
-.brand-text {
-  background: linear-gradient(135deg, var(--brand), var(--brand2), var(--brand3));
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: 200% 200%;
-  animation: gradientShift 6s ease-in-out infinite;
-  filter: drop-shadow(0 0 8px rgba(99,102,241,0.3));
-}
-
-.ai-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.75rem;
-  border: 1px solid var(--card-border);
-  background: linear-gradient(135deg, var(--brand), var(--brand2), var(--brand3));
-  background-size: 200% 200%;
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  animation: gradientShift 8s ease-in-out infinite;
-}
-
-.ai-btn:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 
-    0 20px 40px rgba(34,211,238,0.4),
-    0 0 40px rgba(99,102,241,0.3);
-}
-
-.ai-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.ai-input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  border: 1px solid var(--border);
-  outline: none;
-  transition: all 0.3s ease;
-  background: rgba(15,23,42,0.8);
-  color: var(--fg);
-  font-family: var(--font-sans);
-  backdrop-filter: blur(10px);
-}
-
-.ai-input:focus {
-  border-color: var(--brand2);
-  background: rgba(15,23,42,0.95);
-  box-shadow: 
-    0 0 0 3px rgba(34,211,238,0.15),
-    0 8px 25px rgba(34,211,238,0.15);
-  transform: translateY(-2px);
-}
-
-.ai-select {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  border: 1px solid var(--border);
-  outline: none;
-  transition: all 0.3s ease;
-  background: rgba(15,23,42,0.8);
-  color: var(--fg);
-  font-family: var(--font-sans);
-  backdrop-filter: blur(10px);
-}
-
-.ai-select:focus {
-  border-color: var(--brand2);
-  background: rgba(15,23,42,0.95);
-  box-shadow: 
-    0 0 0 3px rgba(34,211,238,0.15),
-    0 8px 25px rgba(34,211,238,0.15);
-  transform: translateY(-2px);
-}
-
-.ai-textarea {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  border: 1px solid var(--border);
-  outline: none;
-  transition: all 0.3s ease;
-  resize: none;
-  background: rgba(15,23,42,0.8);
-  color: var(--fg);
-  font-family: var(--font-sans);
-  backdrop-filter: blur(10px);
-}
-
-.ai-textarea:focus {
-  border-color: var(--brand2);
-  background: rgba(15,23,42,0.95);
-  box-shadow: 
-    0 0 0 3px rgba(34,211,238,0.15),
-    0 8px 25px rgba(34,211,238,0.15);
-  transform: translateY(-2px);
-}
-
-/* Header */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  backdrop-filter: blur(20px) saturate(180%);
-  background: linear-gradient(135deg, rgba(15,23,42,.95) 0%, rgba(30,41,59,.9) 50%, rgba(15,23,42,.95) 100%);
-  border-bottom: 1px solid var(--card-border);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-}
-
-.ai-status {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--brand2);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-}
-
-.ai-pulse {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--brand2);
-  animation: glowPulse 2s ease-in-out infinite;
-}
-
-/* Chat Widget */
-.chat-widget {
-  position: fixed;
-  bottom: 90px;
-  right: 24px;
-  z-index: 100;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 16px;
-  width: 320px;
-  max-height: 400px;
-  backdrop-filter: blur(20px);
-  box-shadow: var(--glow-secondary);
-  animation: fadeIn 0.3s ease-out;
-}
-
-/* Terminal */
-.ai-terminal {
-  position: fixed;
-  top: 100px;
-  right: 30px;
-  z-index: 40;
-  background: rgba(22,27,34,0.95);
-  border: 1px solid var(--brand2);
-  border-radius: 8px;
-  padding: 16px;
-  min-width: 320px;
-  backdrop-filter: blur(20px);
-  box-shadow: var(--glow-secondary);
-  font-family: var(--font-mono);
-  font-size: 13px;
-}
-
-.terminal-text::after {
-  content: '█';
-  animation: terminalBlink 1s infinite;
-}
-
-/* Preview Container */
-.preview-container {
-  background: rgba(0,0,0,0.4);
-  border-radius: 0.75rem;
-  height: 400px;
-  border: 1px solid var(--card-border);
-  overflow: hidden;
-  backdrop-filter: blur(10px);
-}
-
-/* Subscription Tiers */
-.tier-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 12px;
-  padding: 20px;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-}
-
-.tier-card:hover {
-  border-color: var(--brand2);
-  transform: translateY(-2px);
-  box-shadow: var(--glow-secondary);
-}
-
-/* Utility classes for animations */
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-in;
-}
-
-.animate-pulse {
-  animation: glowPulse 2s ease-in-out infinite;
-}
-
-/* Responsive breakpoints */
-@media (max-width: 768px) {
-  .ai-card {
-    padding: 20px;
-  }
-  
-  .chat-widget {
-    width: 280px;
-    right: 16px;
-    bottom: 80px;
-  }
-  
-  .ai-terminal {
-    display: none;
-  }
-}
