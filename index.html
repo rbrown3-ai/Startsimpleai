@@ -1145,11 +1145,9 @@
             ]);
         }
         function App() {
-            const [currentTheme, setCurrentTheme] = useState("cyberpunk");
-            const handleThemeChange = (theme) => {
-                setCurrentTheme(theme);
-                document.body.className = `theme-${theme}`;
-            };
+            useEffect(() => {
+  document.body.className = "theme-cyberpunk";
+}, [])};
             return React.createElement('div', { className: "min-h-screen" }, [
                 React.createElement(AIEffects, { key: 'effects' }),
                 
