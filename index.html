@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StartSimpleAI - AI-Powered Business Launchpad</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/lucide-react@0.453.0/dist/umd/lucide-react.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
-
         :root {
           /* Cyberpunk AI color palette */
           --bg: hsl(220, 27%, 9%);
@@ -36,7 +34,6 @@
           --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
           --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
         }
-
         /* Theme variants */
         .theme-cyberpunk {
           --bg: hsl(220, 27%, 9%);
@@ -44,32 +41,27 @@
           --brand: hsl(320, 97%, 54%);
           --brand2: hsl(191, 100%, 50%);
         }
-
         .theme-matrix {
           --bg: hsl(120, 25%, 4%);
           --bg-secondary: hsl(120, 20%, 7%);
           --brand: hsl(120, 100%, 50%);
           --brand2: hsl(120, 100%, 60%);
         }
-
         .theme-neon {
           --bg: hsl(300, 33%, 8%);
           --bg-secondary: hsl(300, 25%, 13%);
           --brand: hsl(320, 100%, 50%);
           --brand2: hsl(180, 100%, 50%);
         }
-
         .theme-ocean {
           --bg: hsl(210, 50%, 8%);
           --bg-secondary: hsl(210, 35%, 12%);
           --brand: hsl(200, 85%, 50%);
           --brand2: hsl(185, 85%, 55%);
         }
-
         * {
             box-sizing: border-box;
         }
-
         body {
             font-family: var(--font-sans);
             background: 
@@ -82,47 +74,39 @@
             margin: 0;
             padding: 0;
         }
-
         /* Animations */
         @keyframes gradientShift {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
-
         @keyframes particleFloat {
           0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
           10% { opacity: 1; }
           90% { opacity: 1; }
           100% { transform: translateY(-100px) translateX(200px) rotate(360deg); opacity: 0; }
         }
-
         @keyframes glowPulse {
           0%, 100% { opacity: 0.6; transform: scale(1); }
           50% { opacity: 1; transform: scale(1.2); }
         }
-
         @keyframes terminalBlink {
           0%, 50% { opacity: 1; }
           51%, 100% { opacity: 0; }
         }
-
         @keyframes shimmer {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(100%); }
         }
-
         @keyframes chatSlideIn {
           to {
             opacity: 1;
             transform: translateY(0);
           }
         }
-
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
         }
-
         /* AI Particles */
         .ai-particle {
           position: fixed;
@@ -136,7 +120,6 @@
           animation: particleFloat 10s linear infinite;
           pointer-events: none;
         }
-
         /* Custom UI Components */
         .ai-card {
           background: var(--card-bg);
@@ -152,7 +135,6 @@
           position: relative;
           overflow: hidden;
         }
-
         .ai-card::before {
           content: '';
           position: absolute;
@@ -163,7 +145,6 @@
           background: linear-gradient(90deg, transparent, rgba(34,211,238,0.8), rgba(99,102,241,0.8), rgba(139,92,246,0.8), transparent);
           animation: shimmer 4s ease-in-out infinite;
         }
-
         .ai-card:hover {
           transform: translateY(-4px) scale(1.01);
           border-color: rgba(34,211,238,0.6);
@@ -173,7 +154,6 @@
             0 0 40px rgba(34,211,238,0.2),
             var(--glow-primary);
         }
-
         .brand-text {
           background: linear-gradient(135deg, var(--brand), var(--brand2), var(--brand3));
           background-clip: text;
@@ -183,7 +163,6 @@
           animation: gradientShift 6s ease-in-out infinite;
           filter: drop-shadow(0 0 8px rgba(99,102,241,0.3));
         }
-
         .ai-btn {
           display: inline-flex;
           align-items: center;
@@ -203,20 +182,17 @@
           overflow: hidden;
           animation: gradientShift 8s ease-in-out infinite;
         }
-
         .ai-btn:hover {
           transform: translateY(-3px) scale(1.02);
           box-shadow: 
             0 20px 40px rgba(34,211,238,0.4),
             0 0 40px rgba(99,102,241,0.3);
         }
-
         .ai-btn:disabled {
           opacity: 0.5;
           cursor: not-allowed;
           transform: none;
         }
-
         .ai-input {
           width: 100%;
           padding: 0.75rem 1rem;
@@ -229,7 +205,6 @@
           font-family: var(--font-sans);
           backdrop-filter: blur(10px);
         }
-
         .ai-input:focus {
           border-color: var(--brand2);
           background: rgba(15,23,42,0.95);
@@ -238,7 +213,6 @@
             0 8px 25px rgba(34,211,238,0.15);
           transform: translateY(-2px);
         }
-
         .ai-select {
           width: 100%;
           padding: 0.75rem 1rem;
@@ -251,7 +225,6 @@
           font-family: var(--font-sans);
           backdrop-filter: blur(10px);
         }
-
         .ai-select:focus {
           border-color: var(--brand2);
           background: rgba(15,23,42,0.95);
@@ -260,7 +233,6 @@
             0 8px 25px rgba(34,211,238,0.15);
           transform: translateY(-2px);
         }
-
         .ai-textarea {
           width: 100%;
           padding: 0.75rem 1rem;
@@ -274,7 +246,6 @@
           font-family: var(--font-sans);
           backdrop-filter: blur(10px);
         }
-
         .ai-textarea:focus {
           border-color: var(--brand2);
           background: rgba(15,23,42,0.95);
@@ -283,7 +254,6 @@
             0 8px 25px rgba(34,211,238,0.15);
           transform: translateY(-2px);
         }
-
         /* Header */
         .header {
           position: sticky;
@@ -294,7 +264,6 @@
           border-bottom: 1px solid var(--card-border);
           box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
-
         .ai-status {
           display: flex;
           align-items: center;
@@ -304,7 +273,6 @@
           font-weight: 600;
           letter-spacing: 0.1em;
         }
-
         .ai-pulse {
           width: 8px;
           height: 8px;
@@ -312,7 +280,6 @@
           background: var(--brand2);
           animation: glowPulse 2s ease-in-out infinite;
         }
-
         /* Chat Widget */
         .chat-widget {
           position: fixed;
@@ -328,7 +295,6 @@
           box-shadow: var(--glow-secondary);
           animation: fadeIn 0.3s ease-out;
         }
-
         /* Terminal */
         .ai-terminal {
           position: fixed;
@@ -345,12 +311,10 @@
           font-family: var(--font-mono);
           font-size: 13px;
         }
-
         .terminal-text::after {
           content: '█';
           animation: terminalBlink 1s infinite;
         }
-
         /* Preview Container */
         .preview-container {
           background: rgba(0,0,0,0.4);
@@ -360,7 +324,6 @@
           overflow: hidden;
           backdrop-filter: blur(10px);
         }
-
         /* Subscription Tiers */
         .tier-card {
           background: var(--card-bg);
@@ -370,13 +333,11 @@
           backdrop-filter: blur(10px);
           transition: all 0.3s ease;
         }
-
         .tier-card:hover {
           border-color: var(--brand2);
           transform: translateY(-2px);
           box-shadow: var(--glow-secondary);
         }
-
         /* Utility classes */
         .min-h-screen { min-height: 100vh; }
         .max-w-7xl { max-width: 80rem; margin: 0 auto; }
@@ -496,21 +457,17 @@
         .duration-300 { transition-duration: 300ms; }
         .cursor-pointer { cursor: pointer; }
         .animate-pulse { animation: glowPulse 2s ease-in-out infinite; }
-
         @media (min-width: 640px) {
             .sm\\:block { display: block; }
         }
-
         @media (min-width: 768px) {
             .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .md\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         }
-
         @media (min-width: 1024px) {
             .lg\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .lg\\:block { display: block; }
         }
-
         @media (max-width: 768px) {
             .ai-card { padding: 20px; }
             .chat-widget { width: 280px; right: 16px; bottom: 80px; }
@@ -520,19 +477,87 @@
 </head>
 <body>
     <div id="root"></div>
-
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
-        const { Bot, Sparkles, Users, Eye, Download, Send, User, MessageCircle } = lucide;
-
+        
+        // Simple SVG icon components to replace lucide-react
+        const Bot = ({ size = 24, className = "" }) => React.createElement('svg', {
+            width: size, height: size, className,
+            viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2"
+        }, [
+            React.createElement('path', { key: '1', d: "M12 8V4H8" }),
+            React.createElement('rect', { key: '2', width: "16", height: "12", x: "4", y: "8", rx: "2" }),
+            React.createElement('path', { key: '3', d: "M2 14h2" }),
+            React.createElement('path', { key: '4', d: "M20 14h2" }),
+            React.createElement('path', { key: '5', d: "M15 13v2" }),
+            React.createElement('path', { key: '6', d: "M9 13v2" })
+        ]);
+        
+        const Sparkles = ({ size = 24, className = "" }) => React.createElement('svg', {
+            width: size, height: size, className,
+            viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2"
+        }, [
+            React.createElement('path', { key: '1', d: "m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" }),
+            React.createElement('path', { key: '2', d: "M5 3v4" }),
+            React.createElement('path', { key: '3', d: "M19 17v4" }),
+            React.createElement('path', { key: '4', d: "M3 5h4" }),
+            React.createElement('path', { key: '5', d: "M17 19h4" })
+        ]);
+        
+        const Users = ({ size = 24, className = "" }) => React.createElement('svg', {
+            width: size, height: size, className,
+            viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2"
+        }, [
+            React.createElement('path', { key: '1', d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" }),
+            React.createElement('circle', { key: '2', cx: "9", cy: "7", r: "4" }),
+            React.createElement('path', { key: '3', d: "m22 21-3.3-3.3a4.5 4.5 0 0 0-1.4-6.7 4.5 4.5 0 0 0-6.7 1.4A4.5 4.5 0 0 0 12 21a4.5 4.5 0 0 0 7.5-3.3L22 21z" })
+        ]);
+        
+        const Eye = ({ size = 24, className = "" }) => React.createElement('svg', {
+            width: size, height: size, className,
+            viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2"
+        }, [
+            React.createElement('path', { key: '1', d: "M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" }),
+            React.createElement('circle', { key: '2', cx: "12", cy: "12", r: "3" })
+        ]);
+        
+        const Download = ({ size = 24, className = "" }) => React.createElement('svg', {
+            width: size, height: size, className,
+            viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2"
+        }, [
+            React.createElement('path', { key: '1', d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" }),
+            React.createElement('polyline', { key: '2', points: "7,10 12,15 17,10" }),
+            React.createElement('line', { key: '3', x1: "12", x2: "12", y1: "15", y2: "3" })
+        ]);
+        
+        const Send = ({ size = 24, className = "" }) => React.createElement('svg', {
+            width: size, height: size, className,
+            viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2"
+        }, [
+            React.createElement('path', { key: '1', d: "m22 2-7 20-4-9-9-4Z" }),
+            React.createElement('path', { key: '2', d: "M22 2 11 13" })
+        ]);
+        
+        const User = ({ size = 24, className = "" }) => React.createElement('svg', {
+            width: size, height: size, className,
+            viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2"
+        }, [
+            React.createElement('path', { key: '1', d: "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" }),
+            React.createElement('circle', { key: '2', cx: "12", cy: "7", r: "4" })
+        ]);
+        
+        const MessageCircle = ({ size = 24, className = "" }) => React.createElement('svg', {
+            width: size, height: size, className,
+            viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2"
+        }, [
+            React.createElement('path', { key: '1', d: "m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" })
+        ]);
         function AIEffects() {
             const [terminalMessage, setTerminalMessage] = useState("System online. Ready for business launch...");
-
             useEffect(() => {
                 createParticles();
                 startTerminalUpdates();
             }, []);
-
             const createParticles = () => {
                 const createParticle = () => {
                     const particle = document.createElement('div');
@@ -548,14 +573,11 @@
                         }
                     }, 12000);
                 };
-
                 for (let i = 0; i < 3; i++) {
                     setTimeout(createParticle, i * 1000);
                 }
-
                 setInterval(createParticle, 3000);
             };
-
             const startTerminalUpdates = () => {
                 const messages = [
                     'Neural networks online...',
@@ -575,7 +597,6 @@
                 
                 setInterval(updateTerminal, 4000);
             };
-
             return React.createElement('div', {
                 className: "ai-terminal hidden lg:block"
             }, React.createElement('div', {
@@ -592,7 +613,6 @@
                 }, terminalMessage)
             ]));
         }
-
         function WebsiteBuilder() {
             const [formData, setFormData] = useState({
                 industry: '',
@@ -603,18 +623,15 @@
                 description: '',
                 colorPreset: 'blue'
             });
-
             const handleInputChange = (e) => {
                 const { name, value } = e.target;
                 setFormData(prev => ({ ...prev, [name]: value }));
             };
-
             const handleSubmit = (e) => {
                 e.preventDefault();
                 console.log('Generating website with:', formData);
                 alert('AI Website Generated! (This is a demo)');
             };
-
             return React.createElement('div', { className: "ai-card" }, [
                 React.createElement('h2', {
                     key: 'title',
@@ -725,7 +742,6 @@
                             })
                         ])
                     ]),
-
                     React.createElement('div', { key: 'description' }, [
                         React.createElement('label', {
                             key: 'label',
@@ -740,7 +756,6 @@
                             placeholder: "Brief description of your business..."
                         })
                     ]),
-
                     React.createElement('div', { key: 'color' }, [
                         React.createElement('label', {
                             key: 'label',
@@ -770,7 +785,6 @@
                         "Generate AI Website"
                     ])
                 ]),
-
                 React.createElement('div', {
                     key: 'plans',
                     className: "mt-8 pt-6 border-t border-gray-700"
@@ -853,14 +867,11 @@
                 ])
             ]);
         }
-
         function LivePreview() {
             const [hasWebsite, setHasWebsite] = useState(false);
-
             const downloadDemo = () => {
                 alert('Demo download - In production, this would download the generated website HTML file');
             };
-
             return React.createElement('div', { className: "ai-card" }, [
                 React.createElement('div', {
                     key: 'header',
@@ -918,7 +929,6 @@
                         "• Mobile-responsive layout"
                     ])
                 ]))),
-
                 React.createElement('div', {
                     key: 'employees',
                     className: "mt-6 p-4 bg-gray-800/50 rounded-lg border border-gray-700"
@@ -982,7 +992,6 @@
                 ])
             ]);
         }
-
         function AIChat() {
             const [messages, setMessages] = useState([{
                 id: '1',
@@ -994,7 +1003,6 @@
             const [isVisible, setIsVisible] = useState(false);
             const [isOpen, setIsOpen] = useState(false);
             const messagesEndRef = useRef(null);
-
             const chatResponses = {
                 'hello': 'Hi! Thanks for visiting. What type of business are you looking to launch?',
                 'help': 'I can help you build a professional website with AI employees. Just select your industry from the form!',
@@ -1005,26 +1013,21 @@
                 'ai employees': 'Our AI employees include a 24/7 receptionist, automated scheduler, and follow-up bot. They work around the clock to grow your business!',
                 'default': 'I\'m here to help you launch your business with AI-powered tools. What would you like to know?'
             };
-
             useEffect(() => {
                 const timer = setTimeout(() => setIsVisible(true), 2000);
                 return () => clearTimeout(timer);
             }, []);
-
             useEffect(() => {
                 messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
             }, [messages]);
-
             const sendMessage = () => {
                 if (!inputMessage.trim()) return;
-
                 const userMessage = {
                     id: Date.now().toString(),
                     message: inputMessage,
                     sender: 'user',
                     timestamp: new Date()
                 };
-
                 setMessages(prev => [...prev, userMessage]);
                 
                 setTimeout(() => {
@@ -1037,28 +1040,22 @@
                             break;
                         }
                     }
-
                     const aiMessage = {
                         id: (Date.now() + 1).toString(),
                         message: response,
                         sender: 'ai',
                         timestamp: new Date()
                     };
-
                     setMessages(prev => [...prev, aiMessage]);
                 }, 1000);
-
                 setInputMessage("");
             };
-
             const handleKeyPress = (e) => {
                 if (e.key === 'Enter') {
                     sendMessage();
                 }
             };
-
             if (!isVisible) return null;
-
             return React.createElement(React.Fragment, {}, [
                 React.createElement('div', {
                     key: 'button',
@@ -1067,7 +1064,6 @@
                     onClick: () => setIsOpen(!isOpen),
                     className: "w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
                 }, React.createElement(MessageCircle, { size: 24 }))),
-
                 isOpen && React.createElement('div', {
                     key: 'widget',
                     className: "chat-widget"
@@ -1147,15 +1143,12 @@
                 ])
             ]);
         }
-
         function App() {
             const [currentTheme, setCurrentTheme] = useState("cyberpunk");
-
             const handleThemeChange = (theme) => {
                 setCurrentTheme(theme);
                 document.body.className = `theme-${theme}`;
             };
-
             return React.createElement('div', { className: "min-h-screen" }, [
                 React.createElement(AIEffects, { key: 'effects' }),
                 
@@ -1215,7 +1208,6 @@
                         ]))
                     ])
                 ]))),
-
                 React.createElement('main', {
                     key: 'main',
                     className: "max-w-7xl mx-auto px-6 py-8"
@@ -1227,7 +1219,6 @@
                         React.createElement(WebsiteBuilder, { key: 'builder' }),
                         React.createElement(LivePreview, { key: 'preview' })
                     ]),
-
                     React.createElement('div', {
                         key: 'partnership',
                         className: "ai-card mt-8"
@@ -1329,11 +1320,9 @@
                         ])
                     ])
                 ]),
-
                 React.createElement(AIChat, { key: 'chat' })
             ]);
         }
-
         ReactDOM.render(React.createElement(App), document.getElementById('root'));
     </script>
 </body>
