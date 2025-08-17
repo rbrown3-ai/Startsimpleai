@@ -478,6 +478,15 @@
   overflow-wrap: break-word;
   white-space: pre-wrap;
   max-width: 75%;
+            .chat-bubble {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 75%;        /* keep bubbles from stretching too wide */
+  line-height: 1.4;      /* improve readability */
+  display: inline-block; /* keeps bubble sized around text */
+}
+
 }
     </style>
 </head>
