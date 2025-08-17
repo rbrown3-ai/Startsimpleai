@@ -630,7 +630,11 @@
             const handleSubmit = (e) => {
                 e.preventDefault();
                 console.log('Generating website with:', formData);
-                alert('AI Website Generated! (This is a demo)');
+                const handleSubmit = (e) => {
+  e.preventDefault();
+  console.log('Generating website with:', formData);
+  setHasWebsite(true)};
+;
             };
             return React.createElement('div', { className: "ai-card" }, [
                 React.createElement('h2', {
