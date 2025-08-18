@@ -1144,209 +1144,100 @@
                 ])
             ]);
         }
-      function App() {
+function App() {
   useEffect(() => {
     document.body.className = "theme-cyberpunk";
   }, []);
+
+  return React.createElement('div', { className: "min-h-screen" }, [
+
+    // background effects
     React.createElement(AIEffects, { key: 'effects' }),
 
-    // keep your header
+    // header
     React.createElement('header', { key: 'header', className: "header" },
       React.createElement('div', { className: "max-w-7xl mx-auto px-6 py-4" },
         React.createElement('div', { className: "flex items-center justify-between" }, [
-          React.createElement('h1', { key: 'title', className: "text-2xl font-bold brand-text" }, "StartSimpleAI"),
-          React.createElement('div', { key: 'status', className: "ai-status" }, "AI POWERED")
+          React.createElement('div', { key: 'brand', className: "flex items-center gap-3" }, [
+            React.createElement('div', {
+              key: 'logo',
+              className: "w-10 h-10 rounded-lg bg-gradient-to-br from-pink-500 to-cyan-500 flex items-center justify-center"
+            }, React.createElement(Bot, { className: "text-white", size: 20 })),
+            React.createElement('h1', { key: 'title', className: "text-2xl font-bold brand-text" }, "StartSimpleAI"),
+            React.createElement('span', { key: 'subtitle', className: "text-sm text-gray-400 hidden sm:block" }, "AI-Powered Business Launchpad")
+          ]),
+
+          React.createElement('div', { key: 'controls', className: "flex items-center gap-4" }, [
+            React.createElement('div', { key: 'status', className: "ai-status" }, [
+              React.createElement('div', { key: 'pulse', className: "ai-pulse" }),
+              React.createElement('span', { key: 'text' }, "AI POWERED")
+            ])
+          ])
         ])
       )
     ),
 
-    // keep your main content grid
+    // main content
     React.createElement('main', { key: 'main', className: "max-w-7xl mx-auto px-6 py-8" }, [
       React.createElement('div', { key: 'grid', className: "grid grid-cols-1 lg:grid-cols-2 gap-8" }, [
         React.createElement(WebsiteBuilder, { key: 'builder' }),
         React.createElement(LivePreview, { key: 'preview' })
+      ]),
+
+      // partnership section
+      React.createElement('div', { key: 'partnership', className: "ai-card mt-8" }, [
+        React.createElement('div', { key: 'header', className: "flex items-center justify-between mb-6" }, [
+          React.createElement('div', { key: 'info' }, [
+            React.createElement('h2', { key: 'title', className: "text-2xl font-bold text-white flex items-center gap-3" }, [
+              React.createElement(Users, { key: 'icon', className: "text-yellow-400", size: 24 }),
+              "3LEVELS Partnership"
+            ]),
+            React.createElement('p', { key: 'subtitle', className: "text-gray-400 mt-2" }, "Family-led business incubator for minority, veteran, and small business founders")
+          ]),
+          React.createElement('div', { key: 'cta', className: "text-right" }, [
+            React.createElement('div', { key: 'text', className: "text-sm text-gray-300" }, "Need personal consulting?"),
+            React.createElement('button', { key: 'button', className: "ai-btn mt-2" }, [
+              React.createElement(Users, { key: 'icon', size: 16 }),
+              "Connect with 3LEVELS"
+            ])
+          ])
+        ]),
+
+        React.createElement('div', { key: 'levels', className: "grid grid-cols-1 md:grid-cols-3 gap-6" }, [
+          React.createElement('div', { key: 'level1', className: "text-center" }, [
+            React.createElement('div', { key: 'icon', className: "w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center" },
+              React.createElement(Sparkles, { className: "text-white", size: 20 })
+            ),
+            React.createElement('h3', { key: 'title', className: "font-semibold text-white mb-2" }, "Level 1 - Leadership"),
+            React.createElement('p', { key: 'desc', className: "text-sm text-gray-400" }, "Business consulting and strategy development")
+          ]),
+
+          React.createElement('div', { key: 'level2', className: "text-center" }, [
+            React.createElement('div', { key: 'icon', className: "w-16 h-16 bg-gradient-to-br from-green-500 to-cyan-500 rounded-full mx-auto mb-4 flex items-center justify-center" },
+              React.createElement(Users, { className: "text-white", size: 20 })
+            ),
+            React.createElement('h3', { key: 'title', className: "font-semibold text-white mb-2" }, "Level 2 - Resilience"),
+            React.createElement('p', { key: 'desc', className: "text-sm text-gray-400" }, "Partnerships and public/private affiliations")
+          ]),
+
+          React.createElement('div', { key: 'level3', className: "text-center" }, [
+            React.createElement('div', { key: 'icon', className: "w-16 h-16 bg-gradient-to-br from-pink-500 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center" },
+              React.createElement(Bot, { className: "text-white", size: 20 })
+            ),
+            React.createElement('h3', { key: 'title', className: "font-semibold text-white mb-2" }, "Level 3 - Empowerment"),
+            React.createElement('p', { key: 'desc', className: "text-sm text-gray-400" }, "Digital launch services and automation")
+          ])
+        ])
       ])
     ]),
 
-    // chat widget at the bottom
+    // chat widget
     React.createElement(AIChat, { key: 'chat' })
   ]);
 }
-        React.createElement(AIEffects, { key: 'effects' }),
-        // ... all your other UI elements (header, hero, sections, pricing, etc.)
-        React.createElement(AIChat, { key: 'chat' })
-    ]);
-}
-                React.createElement(AIEffects, { key: 'effects' }),
-                
-                React.createElement('header', {
-                    key: 'header',
-                    className: "header"
-                }, React.createElement('div', {
-                    className: "max-w-7xl mx-auto px-6 py-4"
-                }, React.createElement('div', {
-                    className: "flex items-center justify-between"
-                }, [
-                    React.createElement('div', {
-                        key: 'brand',
-                        className: "flex items-center gap-3"
-                    }, [
-                        React.createElement('div', {
-                            key: 'logo',
-                            className: "w-10 h-10 rounded-lg bg-gradient-to-br from-pink-500 to-cyan-500 flex items-center justify-center"
-                        }, React.createElement(Bot, { className: "text-white", size: 20 })),
-                        React.createElement('h1', {
-                            key: 'title',
-                            className: "text-2xl font-bold brand-text"
-                        }, "StartSimpleAI"),
-                        React.createElement('span', {
-                            key: 'subtitle',
-                            className: "text-sm text-gray-400 hidden sm:block"
-                        }, "AI-Powered Business Launchpad")
-                    ]),
-                    
-                    React.createElement('div', {
-                        key: 'controls',
-                        className: "flex items-center gap-4"
-                    }, [
-                        React.createElement('div', {
-                            key: 'status',
-                            className: "ai-status"
-                        }, [
-                            React.createElement('div', {
-                                key: 'pulse',
-                                className: "ai-pulse"
-                            }),
-                            React.createElement('span', { key: 'text' }, "AI POWERED")
-                        ]),
-                        
-                        React.createElement('div', {
-                            key: 'theme',
-                            className: "relative"
-                        }, React.createElement('select', {
-                            value: currentTheme,
-                            onChange: (e) => handleThemeChange(e.target.value),
-                            className: "ai-select text-xs bg-transparent border-0 pr-8"
-                        }, [
-                        ]))
-                    ])
-                ]))),
-                React.createElement('main', {
-                    key: 'main',
-                    className: "max-w-7xl mx-auto px-6 py-8"
-                }, [
-                    React.createElement('div', {
-                        key: 'grid',
-                        className: "grid grid-cols-1 lg:grid-cols-2 gap-8"
-                    }, [
-                        React.createElement(WebsiteBuilder, { key: 'builder' }),
-                        React.createElement(LivePreview, { key: 'preview' })
-                    ]),
-                    React.createElement('div', {
-                        key: 'partnership',
-                        className: "ai-card mt-8"
-                    }, [
-                        React.createElement('div', {
-                            key: 'header',
-                            className: "flex items-center justify-between mb-6"
-                        }, [
-                            React.createElement('div', { key: 'info' }, [
-                                React.createElement('h2', {
-                                    key: 'title',
-                                    className: "text-2xl font-bold text-white flex items-center gap-3"
-                                }, [
-                                    React.createElement(Users, {
-                                        key: 'icon',
-                                        className: "text-yellow-400",
-                                        size: 24
-                                    }),
-                                    "3LEVELS Partnership"
-                                ]),
-                                React.createElement('p', {
-                                    key: 'subtitle',
-                                    className: "text-gray-400 mt-2"
-                                }, "Family-led business incubator for minority, veteran, and small business founders")
-                            ]),
-                            React.createElement('div', {
-                                key: 'cta',
-                                className: "text-right"
-                            }, [
-                                React.createElement('div', {
-                                    key: 'text',
-                                    className: "text-sm text-gray-300"
-                                }, "Need personal consulting?"),
-                                React.createElement('button', {
-                                    key: 'button',
-                                    className: "ai-btn mt-2"
-                                }, [
-                                    React.createElement(Users, { key: 'icon', size: 16 }),
-                                    "Connect with 3LEVELS"
-                                ])
-                            ])
-                        ]),
-                        
-                        React.createElement('div', {
-                            key: 'levels',
-                            className: "grid grid-cols-1 md:grid-cols-3 gap-6"
-                        }, [
-                            React.createElement('div', {
-                                key: 'level1',
-                                className: "text-center"
-                            }, [
-                                React.createElement('div', {
-                                    key: 'icon',
-                                    className: "w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center"
-                                }, React.createElement(Sparkles, { className: "text-white", size: 20 })),
-                                React.createElement('h3', {
-                                    key: 'title',
-                                    className: "font-semibold text-white mb-2"
-                                }, "Level 1 - Leadership"),
-                                React.createElement('p', {
-                                    key: 'desc',
-                                    className: "text-sm text-gray-400"
-                                }, "Business consulting and strategy development")
-                            ]),
-                            React.createElement('div', {
-                                key: 'level2',
-                                className: "text-center"
-                            }, [
-                                React.createElement('div', {
-                                    key: 'icon',
-                                    className: "w-16 h-16 bg-gradient-to-br from-green-500 to-cyan-500 rounded-full mx-auto mb-4 flex items-center justify-center"
-                                }, React.createElement(Users, { className: "text-white", size: 20 })),
-                                React.createElement('h3', {
-                                    key: 'title',
-                                    className: "font-semibold text-white mb-2"
-                                }, "Level 2 - Resilience"),
-                                React.createElement('p', {
-                                    key: 'desc',
-                                    className: "text-sm text-gray-400"
-                                }, "Partnerships and public/private affiliations")
-                            ]),
-                            React.createElement('div', {
-                                key: 'level3',
-                                className: "text-center"
-                            }, [
-                                React.createElement('div', {
-                                    key: 'icon',
-                                    className: "w-16 h-16 bg-gradient-to-br from-pink-500 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center"
-                                }, React.createElement(Bot, { className: "text-white", size: 20 })),
-                                React.createElement('h3', {
-                                    key: 'title',
-                                    className: "font-semibold text-white mb-2"
-                                }, "Level 3 - Empowerment"),
-                                React.createElement('p', {
-                                    key: 'desc',
-                                    className: "text-sm text-gray-400"
-                                }, "Digital launch services and automation")
-                            ])
-                        ])
-                    ])
-                ]),
-                React.createElement(AIChat, { key: 'chat' })
-            ]);
-        }
-        ReactDOM.render(React.createElement(App), document.getElementById('root'));
+
+// render app
+ReactDOM.render(React.createElement(App), document.getElementById('root'));
     </script>
 </body>
 </html>
