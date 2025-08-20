@@ -61,7 +61,7 @@
     }
 
     // Floating AI Chat widget
-    function AIChat() {
+ function AIChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
@@ -71,22 +71,39 @@
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // --- FAQ / response bank ---
-  const chatbotResponses = {
-    "what do you do": "We help contractors get more leads with AI follow-up, high-ROI ad campaigns, and review automation. 👉 Book a Free Strategy Call: https://3lvls.com/contact",
-    "how much": "Our plans start at $100/mo, Pro is $250/mo + ad spend, Growth is $500/mo + ad spend. 👉 Book a Free Strategy Call: https://3lvls.com/contact",
-    "pricing": "Plans are $100, $250, and $500 depending on your needs. 👉 Book a Free Strategy Call: https://3lvls.com/contact",
-    "ads": "We run high-intent Google & Meta ads tuned for contractors. We launch fast, track calls, and optimize weekly.",
-    "follow up": "We use AI to instantly reply to new leads via text/email, send reminders, and recover no-shows.",
-    "reviews": "Yes — we automate review requests, deflect negatives, and optimize your profile to rank better.",
-    "contact": "You can reach us through the contact page 👉 https://3lvls.com/contact"
-  };
+  // --- FAQ / response bank with trigger arrays ---
+  const chatbotResponses = [
+    {
+      triggers: ["what do you do", "services", "help", "about"],
+      response: "We help contractors win more jobs with AI follow-up, high-ROI ad campaigns, and review automation. 👉 Book a Free Strategy Call: https://3lvls.com/contact",
+    },
+    {
+      triggers: ["how much", "price", "pricing", "cost", "plans"],
+      response: "Our plans are Starter $100/mo, Pro $250/mo + ad spend, and Growth $500/mo + ad spend. 👉 Book a Free Strategy Call: https://3lvls.com/contact",
+    },
+    {
+      triggers: ["ads", "advertising", "campaigns", "google", "meta"],
+      response: "We run high-intent Google & Meta ads tuned for contractors. We launch fast, track calls, and optimize weekly.",
+    },
+    {
+      triggers: ["follow up", "ai", "text", "sms", "email"],
+      response: "We use AI to instantly reply to new leads via text/email, send reminders, and recover no-shows.",
+    },
+    {
+      triggers: ["review", "reviews", "reputation", "feedback", "stars"],
+      response: "Yes — we automate review requests, deflect negatives, and optimize your profile to rank better.",
+    },
+    {
+      triggers: ["contact", "reach", "call", "book"],
+      response: "You can reach us through the contact page 👉 https://3lvls.com/contact",
+    },
+  ];
 
   const getAIResponse = (userInput) => {
     const lower = userInput.toLowerCase();
-    for (const key in chatbotResponses) {
-      if (lower.includes(key)) {
-        return chatbotResponses[key];
+    for (const entry of chatbotResponses) {
+      if (entry.triggers.some((t) => lower.includes(t))) {
+        return entry.response;
       }
     }
     return "I didn’t catch that. We help contractors with ads, AI follow-up, and reviews. 👉 Book a Free Strategy Call: https://3lvls.com/contact";
@@ -109,9 +126,18 @@
       {isOpen ? (
         <div className="ai-card w-80 h-96 flex flex-col">
           <div className="flex-1 overflow-y-auto space-y-2">
-            {messages.map(m => (
-              <div key={m.id} className={`flex ${m.sender==="user" ? "justify-end" : "justify-start"}`}>
-                <div className={`chat-bubble p-2 rounded-lg ${m.sender==="user" ? "bg-cyan-600 text-white" : "bg-gray-700 text-white"}`}>
+            {messages.map((m) => (
+              <div
+                key={m.id}
+                className={`flex ${m.sender === "user" ? "justify-end" : "justify-start"}`}
+              >
+                <div
+                  className={`chat-bubble p-2 rounded-lg ${
+                    m.sender === "user"
+                      ? "bg-cyan-600 text-white"
+                      : "bg-gray-700 text-white"
+                  }`}
+                >
                   {m.message}
                 </div>
               </div>
@@ -122,15 +148,22 @@
             <input
               className="flex-1 bg-gray-800 rounded-l px-2 py-1 text-sm"
               value={inputMessage}
-              onChange={e=>setInputMessage(e.target.value)}
+              onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Type a message..."
             />
-            <button onClick={sendMessage} className="ai-btn rounded-l-none">Send</button>
+            <button onClick={sendMessage} className="ai-btn rounded-l-none">
+              Send
+            </button>
           </div>
         </div>
       ) : null}
-      <button onClick={()=>setIsOpen(!isOpen)} className="ai-btn mt-2">{isOpen?"Close":"Chat"}</button>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="ai-btn mt-2"
+      >
+        {isOpen ? "Close" : "Chat"}
+      </button>
     </div>
   );
 }
