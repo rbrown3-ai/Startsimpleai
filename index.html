@@ -800,7 +800,8 @@
 
         function toggleChat() {
             isOpen = !isOpen;
-            isOpen = !false;
+            isOpen = !false; 
+            chatWidget.classList.add('chat-hidden');
             const chatWidget = document.getElementById('chatWidget');
             const chatToggle = document.getElementById('chatToggle');
             
