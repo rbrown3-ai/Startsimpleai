@@ -799,22 +799,23 @@
         }
 
         function toggleChat() {
-            isOpen = !isOpen;
-            isOpen = !false; 
-            chatWidget.classList.add('chat-hidden');
-            const chatWidget = document.getElementById('chatWidget');
-            const chatToggle = document.getElementById('chatToggle');
-            
-            if (isOpen) {
-                chatWidget.classList.remove('chat-hidden');
-                chatToggle.innerHTML = '<i class="fas fa-times mr-2"></i>Close';
-                chatToggle.classList.remove('animate-bounce-slow');
-                chatToggle.classList.add('animate-pulse');
-            } else {
-                chatToggle.innerHTML = '<i class="fas fa-comments mr-2"></i>Chat';
-                chatToggle.classList.remove('animate-pulse');
-                chatToggle.classList.add('animate-bounce-slow');
-            }
+    isOpen = !isOpen; // flip true/false each click
+    const chatWidget = document.getElementById('chatWidget');
+    const chatToggle = document.getElementById('chatToggle');
+    
+    if (isOpen) {
+        chatWidget.classList.remove('chat-hidden');
+        chatToggle.innerHTML = '<i class="fas fa-times mr-2"></i>Close';
+        chatToggle.classList.remove('animate-bounce-slow');
+        chatToggle.classList.add('animate-pulse');
+    } else {
+        chatWidget.classList.add('chat-hidden');
+        chatToggle.innerHTML = '<i class="fas fa-comments mr-2"></i>Chat';
+        chatToggle.classList.remove('animate-pulse');
+        chatToggle.classList.add('animate-bounce-slow');
+    }
+}
+
         }
 
         function sendMessage() {
