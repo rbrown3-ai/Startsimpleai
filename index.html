@@ -804,22 +804,20 @@
             return "I didn't catch that. We help contractors get more customers with smart marketing. Book a free call to learn more: https://3lvls.com/contact";
         }
 
-        function toggleChat() {
-    isOpen = !isOpen; // flip true/false each click
+      function toggleChat() {
     const chatWidget = document.getElementById('chatWidget');
     const chatToggle = document.getElementById('chatToggle');
-    
-    if (isOpen) {
-        chatWidget.classList.remove('chat-hidden');
-        chatToggle.innerHTML = '<i class="fas fa-times mr-2"></i>Close';
-        chatToggle.classList.remove('animate-bounce-slow');
-        chatToggle.classList.add('animate-pulse');
-    } else {
-        chatWidget.classList.add('chat-hidden');
-        chatToggle.innerHTML = '<i class="fas fa-comments mr-2"></i>Chat';
-        chatToggle.classList.remove('animate-pulse');
-        chatToggle.classList.add('animate-bounce-slow');
-    }
+
+    chatWidget.classList.toggle('chat-hidden');
+
+    const isNowOpen = !chatWidget.classList.contains('chat-hidden');
+    chatToggle.innerHTML = isNowOpen
+        ? '<i class="fas fa-times mr-2"></i>Close'
+        : '<i class="fas fa-comments mr-2"></i>Chat';
+
+    chatToggle.classList.toggle('animate-bounce-slow', !isNowOpen);
+    chatToggle.classList.toggle('animate-pulse', isNowOpen);
+}
 
         }
 
