@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StartSimpleAI — Smart Marketing for Contractors</title>
     <meta name="description" content="We help contractors get more customers and book more jobs with smart marketing. We handle the ads and follow-up so you can focus on the work.">
-    <link rel="icon" type="image/png" sizes="32x32" href="/StartSimpleAI_logo_favicon.png">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,12 +31,16 @@
                         'card-dark': '#1e293b',
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
-                        'slide-up': 'slideUp 0.8s ease-out',
-                        'fade-in': 'fadeIn 1s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'glow': 'glow 3s ease-in-out infinite',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'slide-in-left': 'slideInFromLeft 0.8s ease-out',
+                        'slide-in-right': 'slideInFromRight 0.8s ease-out',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'scale-in': 'scaleIn 0.6s ease-out',
+                        'bounce-gentle': 'bounceGentle 2s ease-in-out infinite',
                         'bounce-slow': 'bounce 3s infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'pulse-slow': 'pulse 3s infinite',
                     }
                 }
             }
@@ -59,27 +62,37 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            color: #e2e8f0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #334155;
             overflow-x: hidden;
             margin: 0;
             padding: 0;
         }
 
-        /* Animations */
+        /* Enhanced Animations */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-10px); }
         }
 
         @keyframes glow {
-            from { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
-            to { box-shadow: 0 0 30px rgba(6, 182, 212, 0.6), 0 0 40px rgba(6, 182, 212, 0.3); }
+            0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.6), 0 0 30px rgba(59, 130, 246, 0.4); }
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(50px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInFromLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInFromRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         @keyframes fadeIn {
@@ -87,65 +100,43 @@
             to { opacity: 1; }
         }
 
-        @keyframes particle-float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(50px, -50px) rotate(90deg); }
-            50% { transform: translate(-30px, -100px) rotate(180deg); }
-            75% { transform: translate(-70px, -50px) rotate(270deg); }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        /* Particle Background */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
+        @keyframes bounceGentle {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
         }
 
-        .particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: linear-gradient(45deg, var(--work-blue), var(--trust-blue));
-            border-radius: 50%;
-            animation: particle-float 25s infinite linear;
-            opacity: 0.8;
-        }
+        /* Utility Classes */
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-glow { animation: glow 3s ease-in-out infinite; }
+        .animate-slide-up { animation: slideUp 0.6s ease-out; }
+        .animate-slide-in-left { animation: slideInFromLeft 0.8s ease-out; }
+        .animate-slide-in-right { animation: slideInFromRight 0.8s ease-out; }
+        .animate-fade-in { animation: fadeIn 0.8s ease-out; }
+        .animate-scale-in { animation: scaleIn 0.6s ease-out; }
+        .animate-bounce-gentle { animation: bounceGentle 2s ease-in-out infinite; }
+        .animate-bounce-slow { animation: bounce 3s infinite; }
+        .animate-pulse-slow { animation: pulse 3s infinite; }
 
         /* Professional Cards */
         .cyber-card {
-            background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
-            border: 1px solid rgba(59, 130, 246, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 0.75rem;
             padding: 2rem;
-            backdrop-filter: blur(15px);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .cyber-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.12), transparent);
-            transition: left 0.5s;
-        }
-
-        .cyber-card:hover::before {
-            left: 100%;
-        }
-
         .cyber-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(59, 130, 246, 0.5);
-            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
         /* Professional Buttons */
@@ -160,22 +151,8 @@
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .cyber-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .cyber-btn:hover::before {
-            left: 100%;
+            border: none;
+            cursor: pointer;
         }
 
         .cyber-btn:hover {
@@ -183,728 +160,901 @@
             box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
         }
 
-        /* Professional Chat */
-        .glass-chat {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 1rem;
+        /* Chat Widget */
+        .chat-widget {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .chat-hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.95);
         }
 
         /* Logo Enhancement */
         .logo-glow {
             filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
-            animation: glow 4s ease-in-out infinite alternate;
         }
 
-        /* Scroll Animation Observer */
-        .fade-in-up {
+        /* Hover Effects */
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--work-blue), var(--trust-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Scroll Animation */
+        .scroll-animate {
             opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease-out;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
         }
 
-        .fade-in-up.visible {
+        .scroll-animate.visible {
             opacity: 1;
             transform: translateY(0);
         }
-
-        /* Service Cards Enhancement */
-        .service-card {
-            position: relative;
-            background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            border-color: rgba(59, 130, 246, 0.6);
-            box-shadow: 0 15px 45px rgba(59, 130, 246, 0.2);
-        }
-
-        .pricing-card {
-            background: linear-gradient(145deg, rgba(51, 65, 85, 0.95), rgba(30, 41, 59, 0.98));
-            backdrop-filter: blur(15px);
-            border: 2px solid transparent;
-            background-clip: padding-box;
-            position: relative;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .pricing-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            z-index: -1;
-            margin: -2px;
-            border-radius: inherit;
-            background: linear-gradient(135deg, var(--work-blue), var(--trust-blue));
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* Hero Enhancement */
-        .hero-bg {
-            background: radial-gradient(ellipse at center top, rgba(59, 130, 246, 0.1), transparent 50%),
-                        radial-gradient(ellipse at center bottom, rgba(6, 182, 212, 0.08), transparent 50%);
-        }
-
-        /* Utility Classes */
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .animate-glow {
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        .animate-slide-up {
-            animation: slideUp 0.8s ease-out;
-        }
-
-        .animate-fade-in {
-            animation: fadeIn 1s ease-out;
-        }
-
-        .animate-bounce-slow {
-            animation: bounce 3s infinite;
-        }
-
-        .animate-pulse-slow {
-            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-
-        .chat-hidden {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(50px);
-    transition: all 0.3s ease;
-}
-
-#chatWidget {
-    transition: all 0.3s ease;
-}
     </style>
 </head>
 
-<body>
-    <!-- Particle Background -->
-    <div class="particles" id="particles"></div>
-
+<body class="bg-slate-50 text-slate-800">
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-40 bg-dark-space/80 backdrop-blur-xl border-b border-gray-700/50">
-        <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-            <div class="flex items-center">
-                <div class="logo-glow mr-3">
-                    <i class="fas fa-tools text-2xl text-work-blue"></i>
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center logo-glow">
+                        <i class="fas fa-tools text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold gradient-text">StartSimpleAI</span>
                 </div>
-                <div class="font-bold text-xl bg-gradient-to-r from-work-blue to-trust-blue bg-clip-text text-transparent">
-                    StartSimpleAI
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#services" class="text-gray-600 hover:text-blue-600 transition-colors font-medium">Services</a>
+                    <a href="#pricing" class="text-gray-600 hover:text-blue-600 transition-colors font-medium">Pricing</a>
+                    <a href="#testimonials" class="text-gray-600 hover:text-blue-600 transition-colors font-medium">Reviews</a>
+                    <a href="#contact" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium">Get Started</a>
                 </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-gray-600"></i>
+                </button>
             </div>
-            <div class="hidden md:flex items-center gap-8">
-                <a href="#services" class="hover:text-work-blue transition-colors duration-300">What We Do</a>
-                <a href="#pricing" class="hover:text-work-blue transition-colors duration-300">Pricing</a>
-                <a href="#results" class="hover:text-work-blue transition-colors duration-300">Success Stories</a>
-                <a href="https://3lvls.com/contact" target="_blank" rel="noopener noreferrer" class="cyber-btn text-sm">
-                    <i class="fas fa-phone mr-2"></i>Book a Call
-                </a>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden py-4 border-t border-gray-200">
+                <div class="flex flex-col space-y-4">
+                    <a href="#services" class="text-gray-600 hover:text-blue-600 transition-colors font-medium">Services</a>
+                    <a href="#pricing" class="text-gray-600 hover:text-blue-600 transition-colors font-medium">Pricing</a>
+                    <a href="#testimonials" class="text-gray-600 hover:text-blue-600 transition-colors font-medium">Reviews</a>
+                    <a href="#contact" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium text-center">Get Started</a>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero-bg min-h-screen flex items-center justify-center text-center px-6 pt-20">
-        <div class="max-w-4xl mx-auto animate-fade-in">
-            <div class="logo-glow mb-8">
-                <i class="fas fa-hard-hat text-6xl text-work-blue animate-float"></i>
-            </div>
-            <h1 class="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-white via-work-blue to-trust-blue bg-clip-text text-transparent leading-tight">
-                Get More Jobs With 
-                <span class="block text-work-blue animate-pulse">Smart Marketing</span>
-            </h1>
-            <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto font-light leading-relaxed">
-                We help contractors get <span class="text-work-blue font-semibold">more customers</span>, 
-                <span class="text-trust-blue font-semibold"> better reviews</span>, and 
-                <span class="text-success-green font-semibold"> book more jobs</span> with smart marketing that actually works.
-            </p>
-            <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
-                <a href="https://3lvls.com/contact" target="_blank" rel="noopener noreferrer" class="cyber-btn text-lg">
-                    <i class="fas fa-rocket mr-2"></i>Book a Free Strategy Call
-                </a>
-                <a href="#services" class="text-work-blue hover:text-trust-blue transition-colors duration-300 text-lg font-medium">
-                    <i class="fas fa-arrow-down mr-2"></i>See How It Works
-                </a>
-            </div>
-            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
-                <div class="cyber-card text-center">
-                    <div class="text-3xl font-bold text-work-blue mb-2">500+</div>
-                    <div class="text-sm text-gray-300">Contractors Helped</div>
+    <section class="pt-24 pb-16 bg-gradient-to-br from-blue-50 to-cyan-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8 animate-slide-in-left">
+                    <div class="space-y-4">
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                            Get More Jobs with <span class="gradient-text">Smart Marketing</span>
+                        </h1>
+                        <p class="text-xl text-gray-600 leading-relaxed max-w-2xl">
+                            Professional marketing automation designed specifically for contractors.
+                            We handle your ads, follow-ups, and lead generation so you can focus on the work you love.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#contact" class="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-all font-semibold text-center hover-lift">
+                            <i class="fas fa-rocket mr-2"></i>Start Growing Today
+                        </a>
+                        <a href="#services" class="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-600 hover:text-white transition-all font-semibold text-center">
+                            <i class="fas fa-play mr-2"></i>See How It Works
+                        </a>
+                    </div>
+
+                    <div class="flex items-center space-x-8 pt-4">
+                        <div class="text-center animate-scale-in">
+                            <div class="text-2xl font-bold text-blue-600 animate-bounce-gentle">500+</div>
+                            <div class="text-sm text-gray-500">Contractors Served</div>
+                        </div>
+                        <div class="text-center animate-scale-in" style="animation-delay: 0.2s;">
+                            <div class="text-2xl font-bold text-cyan-600 animate-bounce-gentle">95%</div>
+                            <div class="text-sm text-gray-500">Success Rate</div>
+                        </div>
+                        <div class="text-center animate-scale-in" style="animation-delay: 0.4s;">
+                            <div class="text-2xl font-bold text-green-600 animate-bounce-gentle">$2M+</div>
+                            <div class="text-sm text-gray-500">Revenue Generated</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="cyber-card text-center">
-                    <div class="text-3xl font-bold text-trust-blue mb-2">95%</div>
-                    <div class="text-sm text-gray-300">Customers Get Quick Response</div>
-                </div>
-                <div class="cyber-card text-center">
-                    <div class="text-3xl font-bold text-success-green mb-2">3x</div>
-                    <div class="text-sm text-gray-300">More Jobs Booked</div>
+
+                <div class="relative animate-slide-in-right">
+                    <img
+                        src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600"
+                        alt="Professional contractor working on construction site with tools"
+                        class="rounded-2xl shadow-2xl w-full h-auto animate-float"
+                    />
+
+                    <div class="absolute -bottom-6 -left-6 bg-white rounded-xl p-4 shadow-xl animate-glow">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-900">Verified Reviews</div>
+                                <div class="text-sm text-gray-500">4.9/5 Average Rating</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-20 px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-16 fade-in-up">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-work-blue to-trust-blue bg-clip-text text-transparent">
-                What We Do For You
-            </h2>
-            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                Simple, effective marketing that brings in more customers and helps you book more jobs
-            </p>
-        </div>
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="service-card p-8 rounded-2xl group fade-in-up">
-                <div class="text-4xl text-work-blue mb-6 group-hover:animate-bounce">
-                    <i class="fas fa-bullhorn"></i>
-                </div>
-                <h3 class="text-2xl font-bold mb-4 text-white">Get More Customers</h3>
-                <p class="text-gray-300 mb-6 leading-relaxed">We run Google and Facebook ads that target people who need your services. No tech jargon - just more phone calls from potential customers.</p>
-                <ul class="space-y-2">
-                    <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
-                        Google Ads
-                    </li>
-                    <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
-                        Facebook Ads
-                    </li>
-                    <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
-                        Call Tracking
-                    </li>
-                    <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
-                        Weekly Reports
-                    </li>
-                </ul>
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Complete Marketing Solutions for Contractors
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    From lead generation to customer follow-up, we handle every aspect of your marketing
+                    so you can focus on delivering excellent work.
+                </p>
             </div>
-            <div class="service-card p-8 rounded-2xl group fade-in-up">
-                <div class="text-4xl text-trust-blue mb-6 group-hover:animate-bounce">
-                    <i class="fas fa-phone"></i>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-50 rounded-xl p-8 hover-lift scroll-animate animate-scale-in" style="animation-delay: 0s;">
+                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-bullhorn text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Lead Generation</h3>
+                    <p class="text-gray-600 mb-4">
+                        Targeted ads that reach homeowners actively looking for your services. Only pay for qualified leads in your service area.
+                    </p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-600 mr-2"></i>Google & Facebook Ads
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-600 mr-2"></i>Local SEO Optimization
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-600 mr-2"></i>Lead Qualification
+                        </li>
+                    </ul>
                 </div>
-                <h3 class="text-2xl font-bold mb-4 text-white">Never Miss A Lead</h3>
-                <p class="text-gray-300 mb-6 leading-relaxed">Our system automatically responds to new leads in seconds via text and email, so you never lose a potential job while you're busy working.</p>
-                <ul class="space-y-2">
-                    <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
-                        Instant Text Replies
-                    </li>
-                    <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
-                        Email Follow-Up
-                    </li>
-                    <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
-                        Appointment Reminders
-                    </li>
-                    <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
-                        No-Show Recovery
-                    </li>
-                </ul>
-            </div>
-            <div class="service-card p-8 rounded-2xl group fade-in-up">
-                <div class="text-4xl text-success-green mb-6 group-hover:animate-bounce">
-                    <i class="fas fa-star"></i>
+
+                <div class="bg-gray-50 rounded-xl p-8 hover-lift scroll-animate animate-scale-in" style="animation-delay: 0.2s;">
+                    <div class="w-16 h-16 bg-cyan-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-comments text-cyan-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Automated Follow-Up</h3>
+                    <p class="text-gray-600 mb-4">
+                        Never lose a lead again. Our smart system follows up with prospects automatically until they book or opt out.
+                    </p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-600 mr-2"></i>SMS & Email Sequences
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-600 mr-2"></i>Appointment Scheduling
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-600 mr-2"></i>Review Requests
+                        </li>
+                    </ul>
                 </div>
-                <h3 class="text-2xl font-bold mb-4 text-white">Build Your Reputation</h3>
-                <p class="text-gray-300 mb-6 leading-relaxed">We automatically ask happy customers for reviews and help you handle negative ones, so you look better than your competition online.</p>
-                <ul class="space-y-2">
-                    <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
-                        Review Requests
-                    </li>
-                    <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
-                        Online Reputation
-                    </li>
-                    <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
-                        5-Star Management
-                    </li>
-                    <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
-                        Trust Building
-                    </li>
-                </ul>
+
+                <div class="bg-gray-50 rounded-xl p-8 hover-lift scroll-animate animate-scale-in" style="animation-delay: 0.4s;">
+                    <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-star text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Reputation Management</h3>
+                    <p class="text-gray-600 mb-4">
+                        Build trust with more positive reviews. We help you get reviews from happy customers and address any issues quickly.
+                    </p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-600 mr-2"></i>Review Generation
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-600 mr-2"></i>Review Monitoring
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-600 mr-2"></i>Response Management
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Results Section -->
-    <section id="results" class="py-20 px-6 bg-gradient-to-b from-dark-space to-dark-gray">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 fade-in-up">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-work-blue to-trust-blue bg-clip-text text-transparent">
-                    What Other Contractors Say
-                </h2>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    Real business owners getting real results with our marketing system
+    <!-- How It Works Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How We Help You Succeed</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Our proven 4-step process has helped hundreds of contractors double their leads and grow their business.
                 </p>
             </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="cyber-card group fade-in-up">
-                    <div class="text-work-blue font-bold text-sm mb-2">Elite Roofing Co.</div>
-                    <div class="text-2xl font-bold mb-4 text-white">3x more customers calling in just 2 months</div>
-                    <blockquote class="text-gray-300 mb-4 italic">"These guys know what they're doing. My phone started ringing more within weeks. Best investment I've made for my business."</blockquote>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-gradient-to-r from-work-blue to-trust-blue rounded-full flex items-center justify-center mr-3">
-                            <i class="fas fa-user text-white"></i>
-                        </div>
-                        <div>
-                            <div class="font-semibold">Mike Johnson</div>
-                            <div class="text-sm text-gray-400">Owner</div>
-                        </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center scroll-animate animate-slide-up" style="animation-delay: 0s;">
+                    <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-gentle">
+                        <span class="text-2xl font-bold text-white">1</span>
                     </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Setup & Strategy</h3>
+                    <p class="text-gray-600">
+                        We analyze your business and create a custom marketing strategy tailored to your local market and services.
+                    </p>
                 </div>
-                <div class="cyber-card group fade-in-up">
-                    <div class="text-work-blue font-bold text-sm mb-2">Premier HVAC Services</div>
-                    <div class="text-2xl font-bold mb-4 text-white">Never miss a lead anymore - 95% response rate</div>
-                    <blockquote class="text-gray-300 mb-4 italic">"Now every lead gets answered right away, even when I'm on a job. Way more customers booking with us."</blockquote>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-gradient-to-r from-work-blue to-trust-blue rounded-full flex items-center justify-center mr-3">
-                            <i class="fas fa-user text-white"></i>
-                        </div>
-                        <div>
-                            <div class="font-semibold">Sarah Chen</div>
-                            <div class="text-sm text-gray-400">Operations Manager</div>
-                        </div>
+
+                <div class="text-center scroll-animate animate-slide-up" style="animation-delay: 0.15s;">
+                    <div class="w-20 h-20 bg-cyan-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-gentle">
+                        <span class="text-2xl font-bold text-white">2</span>
                     </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Launch Campaigns</h3>
+                    <p class="text-gray-600">
+                        We create and launch targeted ad campaigns to start generating qualified leads for your business within days.
+                    </p>
                 </div>
-                <div class="cyber-card group fade-in-up">
-                    <div class="text-work-blue font-bold text-sm mb-2">Sunset Landscaping</div>
-                    <div class="text-2xl font-bold mb-4 text-white">Went from 2 stars to 5 stars online</div>
-                    <blockquote class="text-gray-300 mb-4 italic">"My Google reviews look amazing now. People actually trust us before we even show up. More jobs, better prices."</blockquote>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-gradient-to-r from-work-blue to-trust-blue rounded-full flex items-center justify-center mr-3">
-                            <i class="fas fa-user text-white"></i>
-                        </div>
-                        <div>
-                            <div class="font-semibold">Carlos Rodriguez</div>
-                            <div class="text-sm text-gray-400">Owner</div>
-                        </div>
+
+                <div class="text-center scroll-animate animate-slide-up" style="animation-delay: 0.3s;">
+                    <div class="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-gentle">
+                        <span class="text-2xl font-bold text-white">3</span>
                     </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Automate Follow-Up</h3>
+                    <p class="text-gray-600">
+                        Our system automatically follows up with leads, schedules appointments, and nurtures prospects until they convert.
+                    </p>
+                </div>
+
+                <div class="text-center scroll-animate animate-slide-up" style="animation-delay: 0.45s;">
+                    <div class="w-20 h-20 bg-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-gentle">
+                        <span class="text-2xl font-bold text-white">4</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Optimize & Scale</h3>
+                    <p class="text-gray-600">
+                        We continuously optimize your campaigns and scale what works to maximize your ROI and business growth.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Pricing Section -->
-    <section id="pricing" class="py-20 px-6 bg-gray-800">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 fade-in-up">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-work-blue to-trust-blue bg-clip-text text-transparent">
-                    Straightforward Pricing
-                </h2>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    Pick the plan that works for your business. No hidden fees, no surprises - just results.
+    <section id="pricing" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Simple, Transparent Pricing</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Choose the plan that fits your business size and growth goals. All plans include our complete marketing automation system.
                 </p>
             </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="pricing-card p-8 rounded-2xl relative fade-in-up">
-                    <div class="text-center mb-6">
-                        <h3 class="text-2xl font-bold mb-2 text-white">Starter</h3>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="rounded-2xl p-8 relative overflow-hidden scroll-animate animate-scale-in bg-gray-50" style="animation-delay: 0s;">
+                    <div class="text-center mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-900">Starter</h3>
                         <div class="flex items-baseline justify-center mb-2">
-                            <span class="text-5xl font-black" style="color: #fbbf24;">$100</span>
-                            <span class="text-gray-200 ml-1 text-lg">/month</span>
+                            <span class="text-4xl font-bold text-gray-900">$997</span>
+                            <span class="text-lg ml-1 text-gray-500">/mo</span>
                         </div>
-                        <p class="text-gray-200 text-base">Perfect for getting started with smart marketing</p>
+                        <p class="text-gray-600">Perfect for new contractors</p>
                     </div>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center text-gray-100 text-base">
-                            <i class="fas fa-check-circle text-trust-blue mr-3 text-lg"></i>
-                            Lead intake form + call tracking number
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-600 mr-3"></i>
+                            <span class="text-gray-600">Up to 50 leads/month</span>
                         </li>
-                        <li class="flex items-center text-gray-100 text-base">
-                            <i class="fas fa-check-circle text-trust-blue mr-3 text-lg"></i>
-                            AI chat widget (basic responses)
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-600 mr-3"></i>
+                            <span class="text-gray-600">Google & Facebook Ads</span>
                         </li>
-                        <li class="flex items-center text-gray-100 text-base">
-                            <i class="fas fa-check-circle text-trust-blue mr-3 text-lg"></i>
-                            Monthly performance summary
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-600 mr-3"></i>
+                            <span class="text-gray-600">Basic automation</span>
                         </li>
-                        <li class="flex items-center text-gray-100 text-base">
-                            <i class="fas fa-check-circle text-trust-blue mr-3 text-lg"></i>
-                            Email support
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-600 mr-3"></i>
+                            <span class="text-gray-600">Email support</span>
                         </li>
                     </ul>
-                    <a href="https://3lvls.com/contact" target="_blank" rel="noopener noreferrer" class="cyber-btn w-full text-center block">
-                        <i class="fas fa-rocket mr-2"></i>Get Started
+
+                    <a href="#contact" class="w-full py-3 rounded-lg font-semibold text-center block bg-gray-200 text-gray-800 hover:bg-gray-300 transition-colors">
+                        Get Started
                     </a>
                 </div>
-                <div class="pricing-card p-8 rounded-2xl relative fade-in-up transform scale-105">
-                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                        <span class="bg-gradient-to-r from-work-blue to-trust-blue px-4 py-2 rounded-full text-sm font-bold text-white">
-                            Most Popular
-                        </span>
+
+                <div class="rounded-2xl p-8 relative overflow-hidden scroll-animate animate-scale-in animate-glow bg-blue-600 transform scale-105" style="animation-delay: 0.2s;">
+                    <div class="absolute top-4 right-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        Most Popular
                     </div>
-                    <div class="text-center mb-6">
-                        <h3 class="text-2xl font-bold mb-2 text-white">Pro</h3>
+                    
+                    <div class="text-center mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-white">Professional</h3>
                         <div class="flex items-baseline justify-center mb-2">
-                            <span class="text-5xl font-black" style="color: #fbbf24;">$250</span>
-                            <span class="text-gray-200 ml-1 text-lg">/month + ad spend</span>
+                            <span class="text-4xl font-bold text-white">$1,997</span>
+                            <span class="text-lg ml-1 text-blue-200">/mo + ad spend</span>
                         </div>
-                        <p class="text-gray-200 text-base">Everything you need to grow your business</p>
+                        <p class="text-blue-100">For growing businesses</p>
                     </div>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center text-gray-100 text-base">
-                            <i class="fas fa-check-circle text-trust-blue mr-3 text-lg"></i>
-                            Everything in Starter
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-white">Up to 150 leads/month</span>
                         </li>
-                        <li class="flex items-center text-gray-100 text-base">
-                            <i class="fas fa-check-circle text-trust-blue mr-3 text-lg"></i>
-                            Google or Meta ads (setup + weekly optimization)
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-white">All advertising platforms</span>
                         </li>
-                        <li class="flex items-center text-gray-100 text-base">
-                            <i class="fas fa-check-circle text-trust-blue mr-3 text-lg"></i>
-                            AI follow-up sequences (SMS/email)
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-white">Advanced automation</span>
                         </li>
-                        <li class="flex items-center text-gray-100 text-base">
-                            <i class="fas fa-check-circle text-trust-blue mr-3 text-lg"></i>
-                            Basic review automation
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-white">Phone & email support</span>
                         </li>
-                        <li class="flex items-center text-gray-100 text-base">
-                            <i class="fas fa-check-circle text-trust-blue mr-3 text-lg"></i>
-                            Priority support
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-white">Monthly strategy calls</span>
                         </li>
                     </ul>
-                    <a href="https://3lvls.com/contact" target="_blank" rel="noopener noreferrer" class="cyber-btn w-full text-center block">
-                        <i class="fas fa-rocket mr-2"></i>Get Started
+
+                    <a href="#contact" class="w-full py-3 rounded-lg font-semibold text-center block bg-white text-blue-600 hover:bg-gray-100 transition-colors">
+                        Get Started
                     </a>
                 </div>
-                <div class="pricing-card p-8 rounded-2xl relative fade-in-up">
-                    <div class="text-center mb-6">
-                        <h3 class="text-2xl font-bold mb-2 text-white">Growth</h3>
+
+                <div class="rounded-2xl p-8 relative overflow-hidden scroll-animate animate-scale-in bg-gray-50" style="animation-delay: 0.4s;">
+                    <div class="text-center mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-gray-900">Enterprise</h3>
                         <div class="flex items-baseline justify-center mb-2">
-                            <span class="text-5xl font-black" style="color: #fbbf24;">$500</span>
-                            <span class="text-gray-200 ml-1 text-lg">/month + ad spend</span>
+                            <span class="text-4xl font-bold text-gray-900">$3,997</span>
+                            <span class="text-lg ml-1 text-gray-500">/mo + ad spend</span>
                         </div>
-                        <p class="text-gray-200 text-base">Complete marketing package for serious growth</p>
+                        <p class="text-gray-600">For established contractors</p>
                     </div>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center text-gray-100 text-base">
-                            <i class="fas fa-check-circle text-trust-blue mr-3 text-lg"></i>
-                            Everything in Pro
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-600 mr-3"></i>
+                            <span class="text-gray-600">Unlimited leads</span>
                         </li>
-                        <li class="flex items-center text-gray-100 text-base">
-                            <i class="fas fa-check-circle text-trust-blue mr-3 text-lg"></i>
-                            Google + Meta ads + retargeting
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-600 mr-3"></i>
+                            <span class="text-gray-600">Custom campaigns</span>
                         </li>
-                        <li class="flex items-center text-gray-100 text-base">
-                            <i class="fas fa-check-circle text-trust-blue mr-3 text-lg"></i>
-                            Advanced AI follow-up (nurture + no-show recovery)
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-600 mr-3"></i>
+                            <span class="text-gray-600">Premium automation</span>
                         </li>
-                        <li class="flex items-center text-gray-100 text-base">
-                            <i class="fas fa-check-circle text-trust-blue mr-3 text-lg"></i>
-                            Complete review management + profile optimization
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-600 mr-3"></i>
+                            <span class="text-gray-600">Dedicated account manager</span>
                         </li>
-                        <li class="flex items-center text-gray-100 text-base">
-                            <i class="fas fa-check-circle text-trust-blue mr-3 text-lg"></i>
-                            Dedicated success manager
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-600 mr-3"></i>
+                            <span class="text-gray-600">Weekly strategy calls</span>
                         </li>
                     </ul>
-                    <a href="https://3lvls.com/contact" target="_blank" rel="noopener noreferrer" class="cyber-btn w-full text-center block">
-                        <i class="fas fa-rocket mr-2"></i>Get Started
+
+                    <a href="#contact" class="w-full py-3 rounded-lg font-semibold text-center block bg-gray-200 text-gray-800 hover:bg-gray-300 transition-colors">
+                        Get Started
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Partnership Section -->
-    <section class="py-20 px-6 bg-gradient-to-b from-dark-gray to-dark-space">
-        <div class="max-w-4xl mx-auto text-center fade-in-up">
-            <div class="cyber-card">
-                <div class="text-4xl text-work-blue mb-6">
-                    <i class="fas fa-handshake"></i>
-                </div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-work-blue to-trust-blue bg-clip-text text-transparent">
-                    Proud Partnership with 3LEVELS
-                </h2>
-                <p class="text-xl text-gray-300 mb-8 leading-relaxed">
-                    We partner with 3LEVELS to provide complete business growth and support 
-                    for contractors across the country. Together, we help you build a stronger business.
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Success Stories from Real Contractors</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    See how our marketing solutions have helped contractors like you grow their business and increase revenue.
                 </p>
-                <div class="flex flex-col md:flex-row gap-4 justify-center">
-                    <a href="https://3lvls.com/contact" target="_blank" rel="noopener noreferrer" class="cyber-btn">
-                        <i class="fas fa-external-link-alt mr-2"></i>Connect with 3LEVELS
-                    </a>
-                    <a href="#services" class="text-work-blue hover:text-trust-blue transition-colors duration-300 font-medium self-center">
-                        <i class="fas fa-arrow-up mr-2"></i>Back to What We Do
-                    </a>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl p-8 shadow-sm hover-lift scroll-animate animate-fade-in" style="animation-delay: 0s;">
+                    <div class="flex mb-4">
+                        <div class="flex text-yellow-500">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-6 italic">
+                        "StartSimpleAI doubled our leads in the first month. The automated follow-up system is incredible - we're booking jobs we never would have gotten before."
+                    </p>
+                    
+                    <div class="flex items-center">
+                        <img
+                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&h=150"
+                            alt="Mike Rodriguez, Professional Contractor"
+                            class="w-12 h-12 rounded-full mr-4"
+                        />
+                        <div>
+                            <div class="font-semibold text-gray-900">Mike Rodriguez</div>
+                            <div class="text-sm text-gray-500">Rodriguez Roofing</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-8 shadow-sm hover-lift scroll-animate animate-fade-in" style="animation-delay: 0.3s;">
+                    <div class="flex mb-4">
+                        <div class="flex text-yellow-500">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-6 italic">
+                        "The review management system helped us go from 3.2 to 4.8 stars on Google. Now customers trust us before we even meet them."
+                    </p>
+                    
+                    <div class="flex items-center">
+                        <img
+                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&h=150"
+                            alt="David Thompson, Professional Contractor"
+                            class="w-12 h-12 rounded-full mr-4"
+                        />
+                        <div>
+                            <div class="font-semibold text-gray-900">David Thompson</div>
+                            <div class="text-sm text-gray-500">Thompson HVAC</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-8 shadow-sm hover-lift scroll-animate animate-fade-in" style="animation-delay: 0.6s;">
+                    <div class="flex mb-4">
+                        <div class="flex text-yellow-500">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-6 italic">
+                        "I was skeptical about marketing automation, but this system just works. I'm booked solid for the next 3 months without lifting a finger."
+                    </p>
+                    
+                    <div class="flex items-center">
+                        <img
+                            src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&h=150"
+                            alt="Sarah Johnson, Professional Contractor"
+                            class="w-12 h-12 rounded-full mr-4"
+                        />
+                        <div>
+                            <div class="font-semibold text-gray-900">Sarah Johnson</div>
+                            <div class="text-sm text-gray-500">Johnson Plumbing</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3LVLS Partner Services Section -->
+    <section class="py-16 bg-gradient-to-r from-slate-800 to-slate-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12 scroll-animate">
+                <div class="flex items-center justify-center space-x-3 mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center animate-glow">
+                        <i class="fas fa-rocket text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-bold">Need More Than Marketing?</h2>
+                </div>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-6">
+                    Take your contractor business to the next level with our comprehensive business consulting services.
+                </p>
+                <div class="inline-block bg-gradient-to-r from-blue-600 to-cyan-600 px-6 py-2 rounded-full">
+                    <span class="font-semibold text-sm tracking-wide">Powered by 3LVLS.COM</span>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 hover-lift animate-scale-in" style="animation-delay: 0s;">
+                    <div class="w-14 h-14 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center mb-4 animate-bounce-gentle">
+                        <i class="fas fa-chart-line text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-3">Business Growth Strategy</h3>
+                    <p class="text-gray-300 text-sm">
+                        Custom strategies to scale your contractor business beyond local markets.
+                    </p>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 hover-lift animate-scale-in" style="animation-delay: 0.2s;">
+                    <div class="w-14 h-14 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center mb-4 animate-bounce-gentle">
+                        <i class="fas fa-users text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-3">Team Development</h3>
+                    <p class="text-gray-300 text-sm">
+                        Build and train high-performing teams that deliver exceptional results.
+                    </p>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 hover-lift animate-scale-in" style="animation-delay: 0.4s;">
+                    <div class="w-14 h-14 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center mb-4 animate-bounce-gentle">
+                        <i class="fas fa-cogs text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-3">Operations Optimization</h3>
+                    <p class="text-gray-300 text-sm">
+                        Streamline your processes and increase efficiency across all business areas.
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a
+                    href="https://3lvls.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 animate-glow"
+                >
+                    <i class="fas fa-external-link-alt mr-2"></i>
+                    Explore 3LVLS Business Services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-blue-600">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="scroll-animate">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Grow Your Contractor Business?</h2>
+                <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+                    Get a free strategy call and see how we can help you get more leads, better reviews, and more jobs in the next 30 days.
+                </p>
+
+                <div class="bg-white rounded-2xl p-8 max-w-md mx-auto">
+                    <form class="space-y-4" onsubmit="handleSubmit(event)">
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Your Name"
+                            required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email Address"
+                            required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                        <input
+                            type="tel"
+                            name="phone"
+                            placeholder="Phone Number"
+                            required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                        <select
+                            name="tradeType"
+                            required
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        >
+                            <option value="">Select Your Trade</option>
+                            <option value="roofing">Roofing</option>
+                            <option value="hvac">HVAC</option>
+                            <option value="plumbing">Plumbing</option>
+                            <option value="electrical">Electrical</option>
+                            <option value="general">General Contractor</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <button
+                            type="submit"
+                            class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                        >
+                            <i class="fas fa-calendar-alt mr-2"></i>
+                            Book My Free Strategy Call
+                        </button>
+                    </form>
+
+                    <div class="mt-4 text-sm text-gray-500">
+                        <i class="fas fa-lock mr-1"></i>
+                        Your information is secure and will never be shared.
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-gray-700 bg-dark-space py-12 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
+    <footer class="bg-slate-800 text-gray-300 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
                 <div class="col-span-2">
-                    <div class="flex items-center mb-4">
-                        <div class="logo-glow mr-3">
-                            <i class="fas fa-tools text-2xl text-work-blue"></i>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-tools text-white text-lg"></i>
                         </div>
-                        <div class="font-bold text-xl bg-gradient-to-r from-work-blue to-trust-blue bg-clip-text text-transparent">
-                            StartSimpleAI
-                        </div>
+                        <span class="text-xl font-bold gradient-text">StartSimpleAI</span>
                     </div>
                     <p class="text-gray-400 mb-4 max-w-md">
-                        Smart marketing solutions that help contractors get more customers and book more jobs without the hassle.
+                        Professional marketing automation and lead generation services designed specifically for contractors who want to grow their business.
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-work-blue transition-colors">
-                            <i class="fab fa-facebook-f text-xl"></i>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+                            <i class="fab fa-facebook text-xl"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-work-blue transition-colors">
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
                             <i class="fab fa-twitter text-xl"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-work-blue transition-colors">
-                            <i class="fab fa-linkedin-in text-xl"></i>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
                         </a>
                     </div>
                 </div>
+
                 <div>
-                    <h4 class="font-semibold text-white mb-4">What We Do</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#services" class="hover:text-work-blue transition-colors">Get More Customers</a></li>
-                        <li><a href="#services" class="hover:text-work-blue transition-colors">Never Miss A Lead</a></li>
-                        <li><a href="#services" class="hover:text-work-blue transition-colors">Build Your Reputation</a></li>
+                    <h4 class="font-semibold text-white mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Lead Generation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Marketing Automation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Reputation Management</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Local SEO</a></li>
                     </ul>
                 </div>
+
                 <div>
                     <h4 class="font-semibold text-white mb-4">Contact</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li>
-                            <a href="https://3lvls.com/contact" target="_blank" rel="noopener noreferrer" class="hover:text-work-blue transition-colors">
-                                <i class="fas fa-phone mr-2"></i>Book a Call
-                            </a>
+                    <ul class="space-y-2">
+                        <li class="text-gray-400">
+                            <i class="fas fa-phone mr-2"></i>(555) 123-4567
                         </li>
-                        <li>
-                            <a href="#" class="hover:text-work-blue transition-colors">
-                                <i class="fas fa-envelope mr-2"></i>Support
-                            </a>
+                        <li class="text-gray-400">
+                            <i class="fas fa-envelope mr-2"></i>hello@startsimpleai.com
+                        </li>
+                        <li class="text-gray-400">
+                            <i class="fas fa-clock mr-2"></i>Mon-Fri 9AM-6PM EST
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm">
-                <p>
-                    © <span id="current-year"></span> StartSimpleAI. Proud partner of 3LEVELS. 
-                    <a href="https://3lvls.com/contact" target="_blank" rel="noopener noreferrer" class="text-work-blue hover:text-trust-blue transition-colors ml-2">
-                        Book a Strategy Call
-                    </a>
-                </p>
+
+            <div class="border-t border-gray-700 mt-8 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-4">
+                    <div class="text-gray-400 text-sm">© 2025 StartSimpleAI. All rights reserved.</div>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors text-sm">Terms of Service</a>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <p class="text-gray-400 text-sm">
+                        Want personal consulting? Contact 
+                        <a href="mailto:contact@3lvls.com" class="text-blue-400 hover:text-cyan-400 transition-colors ml-1">@3lvls.com</a>
+                    </p>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- AI Chat Widget -->
-    <div class="fixed bottom-6 right-6 z-50">
-        <div class="glass-chat w-80 h-96 flex flex-col p-4 mb-4" id="chatWidget">
-            <div class="flex items-center mb-3 pb-2 border-b border-gray-600">
-                <div class="w-3 h-3 bg-green-400 rounded-full mr-2 animate-pulse"></div>
-                <span class="text-sm font-medium">AI Assistant</span>
-            </div>
-            <div class="flex-1 overflow-y-auto space-y-3" id="chatMessages">
-                <!-- Messages will be inserted here -->
-            </div>
-            <div class="mt-3 flex">
-                <input
-                    class="flex-1 bg-gray-800 rounded-l-xl px-4 py-2 text-sm border border-gray-600 focus:border-work-blue focus:outline-none transition-colors"
-                    id="chatInput"
-                    placeholder="Ask about our services..."
-                />
-                <button onclick="sendMessage()" class="cyber-btn rounded-l-none px-4 py-2">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
+    <!-- Chat Widget -->
+    <div class="fixed bottom-6 right-6 z-50 chat-widget">
+        <!-- Chat Button -->
         <button
             onclick="toggleChat()"
-            class="cyber-btn animate-bounce-slow"
-            id="chatToggle"
+            class="w-14 h-14 bg-blue-600 rounded-full shadow-lg flex items-center justify-center text-white hover:bg-blue-700 transition-all hover-lift"
+            id="chatButton"
         >
-            <i class="fas fa-comments mr-2"></i>Chat
+            <i class="fas fa-comments text-xl" id="chatIcon"></i>
         </button>
+
+        <!-- Chat Window -->
+        <div
+            class="absolute bottom-16 right-0 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden chat-widget chat-hidden"
+            id="chatWindow"
+        >
+            <div class="bg-blue-600 text-white p-4 flex justify-between items-center">
+                <div>
+                    <h3 class="font-semibold">Chat with us</h3>
+                    <p class="text-sm text-blue-100">We're here to help!</p>
+                </div>
+                <button
+                    onclick="closeChat()"
+                    class="text-white hover:text-gray-200 hover:bg-blue-700 p-1 rounded"
+                >
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="h-64 overflow-y-auto p-4 space-y-3" id="chatMessages">
+                <div class="flex justify-start">
+                    <div class="max-w-xs rounded-lg p-3 bg-gray-100 text-gray-800">
+                        <p class="text-sm">Hi! I'm here to help you grow your contractor business. What questions do you have about our marketing services?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-gray-200">
+                <div class="flex space-x-2">
+                    <input
+                        type="text"
+                        placeholder="Type your message..."
+                        id="chatInput"
+                        class="flex-1 text-sm border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        onkeypress="handleChatKeyPress(event)"
+                    />
+                    <button
+                        onclick="sendChatMessage()"
+                        class="bg-blue-600 text-white hover:bg-blue-700 transition-colors px-4 py-2 rounded-lg"
+                    >
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Initialize particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-                particlesContainer.appendChild(particle);
+        // Navigation
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Chat Functionality
+        let chatOpen = false;
+        let chatMessages = [];
+
+        function toggleChat() {
+            chatOpen = !chatOpen;
+            const chatWindow = document.getElementById('chatWindow');
+            const chatIcon = document.getElementById('chatIcon');
+            
+            if (chatOpen) {
+                chatWindow.classList.remove('chat-hidden');
+                chatIcon.className = 'fas fa-times text-xl';
+            } else {
+                chatWindow.classList.add('chat-hidden');
+                chatIcon.className = 'fas fa-comments text-xl';
             }
         }
 
-        // Chat functionality
-        let isOpen = false;
-        let messages = [];
-
-        const chatbotResponses = [
-            {
-                triggers: ["what do you do", "services", "help", "about"],
-                response: "We help contractors get more customers and book more jobs with smart marketing. We handle the ads and follow-up so you can focus on the work. Book a call: https://3lvls.com/contact",
-            },
-            {
-                triggers: ["how much", "price", "pricing", "cost", "plans"],
-                response: "Starter is $100/month, Pro is $250/month plus ad spend, Growth is $500/month plus ad spend. No hidden fees. Book a call to discuss: https://3lvls.com/contact",
-            },
-            {
-                triggers: ["ads", "advertising", "campaigns", "google", "facebook"],
-                response: "We run Google and Facebook ads that target people who need your services. We track every call and optimize weekly to get you more customers.",
-            },
-            {
-                triggers: ["follow up", "text", "sms", "email", "leads"],
-                response: "Our system automatically texts and emails new leads in seconds, so you never lose a potential job while you're working.",
-            },
-            {
-                triggers: ["review", "reviews", "reputation", "feedback", "stars"],
-                response: "We automatically ask happy customers for reviews and help handle any negative ones, so you look better than your competition online.",
-            },
-            {
-                triggers: ["contact", "reach", "call", "book"],
-                response: "Ready to grow your business? Book a free call with us: https://3lvls.com/contact",
-            },
-        ];
-
-        function getAIResponse(userInput) {
-            const lower = userInput.toLowerCase();
-            for (const entry of chatbotResponses) {
-                if (entry.triggers.some(trigger => lower.includes(trigger))) {
-                    return entry.response;
-                }
-            }
-            return "I didn't catch that. We help contractors get more customers with smart marketing. Book a free call to learn more: https://3lvls.com/contact";
+        function closeChat() {
+            chatOpen = false;
+            const chatWindow = document.getElementById('chatWindow');
+            const chatIcon = document.getElementById('chatIcon');
+            
+            chatWindow.classList.add('chat-hidden');
+            chatIcon.className = 'fas fa-comments text-xl';
         }
 
-      function toggleChat() {
-    const chatWidget = document.getElementById('chatWidget');
-    const chatToggle = document.getElementById('chatToggle');
-
-    chatWidget.classList.toggle('chat-hidden');
-
-    const isNowOpen = !chatWidget.classList.contains('chat-hidden');
-    chatToggle.innerHTML = isNowOpen
-        ? '<i class="fas fa-times mr-2"></i>Close'
-        : '<i class="fas fa-comments mr-2"></i>Chat';
-
-    chatToggle.classList.toggle('animate-bounce-slow', !isNowOpen);
-    chatToggle.classList.toggle('animate-pulse', isNowOpen);
-}
-
-        }
-
-        function sendMessage() {
+        function sendChatMessage() {
             const input = document.getElementById('chatInput');
             const message = input.value.trim();
             if (!message) return;
 
-            const userMsg = { sender: 'user', message: message };
-            const aiMsg = { sender: 'ai', message: getAIResponse(message) };
-            
-            messages.push(userMsg, aiMsg);
+            // Add user message
+            addChatMessage(message, true);
             input.value = '';
+
+            // Simulate AI response
+            setTimeout(() => {
+                const aiResponse = "Thanks for your message! One of our marketing specialists will be with you shortly. In the meantime, feel free to book a free strategy call using the form on this page.";
+                addChatMessage(aiResponse, false);
+            }, 1000);
+        }
+
+        function addChatMessage(message, isUser) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
             
-            renderMessages();
-            scrollToBottom();
-        }
-
-        function renderMessages() {
-            const container = document.getElementById('chatMessages');
-            container.innerHTML = '';
+            const messageBubble = document.createElement('div');
+            messageBubble.className = `max-w-xs rounded-lg p-3 ${
+                isUser 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-gray-100 text-gray-800'
+            }`;
+            messageBubble.innerHTML = `<p class="text-sm">${message}</p>`;
             
-            messages.forEach(msg => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`;
-                
-                const messageBubble = document.createElement('div');
-                messageBubble.className = `max-w-xs p-3 rounded-2xl ${
-                    msg.sender === 'user'
-                        ? 'bg-gradient-to-r from-work-blue to-trust-blue text-white'
-                        : 'bg-gray-700 text-white'
-                }`;
-                messageBubble.textContent = msg.message;
-                
-                messageDiv.appendChild(messageBubble);
-                container.appendChild(messageDiv);
-            });
+            messageDiv.appendChild(messageBubble);
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        function scrollToBottom() {
-            const container = document.getElementById('chatMessages');
-            container.scrollTop = container.scrollHeight;
-        }
-
-        // Smooth scrolling for anchor links
-        function setupSmoothScrolling() {
-            const anchors = document.querySelectorAll('a[href^="#"]');
-            anchors.forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
-        }
-
-        // Scroll animation observer
-        function setupScrollAnimations() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            });
-
-            const elements = document.querySelectorAll('.fade-in-up');
-            elements.forEach(el => observer.observe(el));
-        }
-
-        // Allow Enter key to send messages
-        document.getElementById('chatInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
             }
-        });
+        }
+
+        // Form Submission
+        function handleSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            // Here you would normally submit to your backend
+            alert('Thank you for your interest! We\'ll contact you within 24 hours to schedule your free strategy call.');
+            form.reset();
+        }
+
+        // Scroll Animations
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                },
+                {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px',
+                }
+            );
+
+            document.querySelectorAll('.scroll-animate').forEach((el) => {
+                observer.observe(el);
+            });
+        }
+
+        // Smooth Scrolling
+        function setupSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    if (href && href !== '#') {
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start',
+                            });
+                        }
+                    }
+                });
+            });
+        }
 
         // Initialize everything when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            setupSmoothScrolling();
             setupScrollAnimations();
-            
-            // Set current year in footer
-            document.getElementById('current-year').textContent = new Date().getFullYear();
+            setupSmoothScrolling();
         });
     </script>
 </body>
