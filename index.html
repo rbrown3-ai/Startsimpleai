@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StartSimpleAI — Smart Marketing for Contractors</title>
     <meta name="description" content="We help contractors get more customers and book more jobs with smart marketing. We handle the ads and follow-up so you can focus on the work.">
-
     <link rel="icon" type="image/png" sizes="32x32" href="/StartSimpleAI_logo_favicon.png">
-
+    
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -44,8 +43,9 @@
             }
         }
     </script>
-
+    
     <style>
+        /* Custom CSS */
         :root {
             --work-blue: #3b82f6;
             --trust-blue: #06b6d4;
@@ -66,143 +66,234 @@
             padding: 0;
         }
 
-        @keyframes float { 0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)} }
-        @keyframes glow { from{box-shadow:0 0 20px rgba(6,182,212,0.3)} to{box-shadow:0 0 30px rgba(6,182,212,0.6),0 0 40px rgba(6,182,212,0.3)} }
-        @keyframes slideUp { from{opacity:0;transform:translateY(50px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-        @keyframes particle-float {
-            0%,100%{transform:translate(0,0) rotate(0deg)}
-            25%{transform:translate(50px,-50px) rotate(90deg)}
-            50%{transform:translate(-30px,-100px) rotate(180deg)}
-            75%{transform:translate(-70px,-50px) rotate(270deg)}
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
         }
 
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
+            to { box-shadow: 0 0 30px rgba(6, 182, 212, 0.6), 0 0 40px rgba(6, 182, 212, 0.3); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes particle-float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, -50px) rotate(90deg); }
+            50% { transform: translate(-30px, -100px) rotate(180deg); }
+            75% { transform: translate(-70px, -50px) rotate(270deg); }
+        }
+
+        /* Particle Background */
         .particles {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
         }
 
         .particle {
-            position: absolute; width: 3px; height: 3px;
+            position: absolute;
+            width: 3px;
+            height: 3px;
             background: linear-gradient(45deg, var(--work-blue), var(--trust-blue));
-            border-radius: 50%; animation: particle-float 25s infinite linear;
+            border-radius: 50%;
+            animation: particle-float 25s infinite linear;
             opacity: 0.8;
         }
 
+        /* Professional Cards */
         .cyber-card {
-            background: linear-gradient(145deg, rgba(30,41,59,0.9), rgba(15,23,42,0.95));
-            border: 1px solid rgba(59,130,246,0.3);
-            border-radius: 0.75rem; padding: 2rem;
-            backdrop-filter: blur(15px); transition: all 0.3s ease;
-            position: relative; overflow: hidden;
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            backdrop-filter: blur(15px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
+
         .cyber-card::before {
-            content: ''; position: absolute; top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(59,130,246,0.12), transparent);
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.12), transparent);
             transition: left 0.5s;
         }
-        .cyber-card:hover::before { left: 100%; }
+
+        .cyber-card:hover::before {
+            left: 100%;
+        }
+
         .cyber-card:hover {
             transform: translateY(-3px);
-            border-color: rgba(59,130,246,0.5);
-            box-shadow: 0 8px 32px rgba(59,130,246,0.2);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2);
         }
 
+        /* Professional Buttons */
         .cyber-btn {
             background: linear-gradient(135deg, var(--work-blue), var(--trust-blue));
-            border-radius: 0.5rem; padding: 1rem 2rem;
-            color: white; font-weight: 600; text-decoration: none;
-            display: inline-block; position: relative;
-            overflow: hidden; transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .cyber-btn::before {
-            content: ''; position: absolute; top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-        .cyber-btn:hover::before { left: 100%; }
-        .cyber-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(59,130,246,0.4);
+            border-radius: 0.5rem;
+            padding: 1rem 2rem;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        .cyber-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cyber-btn:hover::before {
+            left: 100%;
+        }
+
+        .cyber-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Professional Chat */
         .glass-chat {
-            background: rgba(30,41,59,0.85);
+            background: rgba(30, 41, 59, 0.85);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(59,130,246,0.3);
+            border: 1px solid rgba(59, 130, 246, 0.3);
             border-radius: 1rem;
         }
 
+        /* Logo Enhancement */
         .logo-glow {
-            filter: drop-shadow(0 0 8px rgba(59,130,246,0.5));
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
             animation: glow 4s ease-in-out infinite alternate;
         }
 
+        /* Scroll Animation Observer */
         .fade-in-up {
-            opacity: 0; transform: translateY(50px);
+            opacity: 0;
+            transform: translateY(50px);
             transition: all 0.8s ease-out;
         }
+
         .fade-in-up.visible {
-            opacity: 1; transform: translateY(0);
+            opacity: 1;
+            transform: translateY(0);
         }
 
+        /* Service Cards Enhancement */
         .service-card {
             position: relative;
-            background: linear-gradient(145deg, rgba(30,41,59,0.9), rgba(15,23,42,0.95));
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(59,130,246,0.3);
-            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         .service-card:hover {
             transform: translateY(-5px) scale(1.01);
-            border-color: rgba(59,130,246,0.6);
-            box-shadow: 0 15px 45px rgba(59,130,246,0.2);
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 15px 45px rgba(59, 130, 246, 0.2);
         }
 
         .pricing-card {
-            background: linear-gradient(145deg, rgba(51,65,85,0.95), rgba(30,41,59,0.98));
+            background: linear-gradient(145deg, rgba(51, 65, 85, 0.95), rgba(30, 41, 59, 0.98));
             backdrop-filter: blur(15px);
-            border: 2px solid transparent; background-clip: padding-box;
-            position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
+
         .pricing-card::before {
-            content: ''; position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0; z-index: -1;
-            margin: -2px; border-radius: inherit;
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            margin: -2px;
+            border-radius: inherit;
             background: linear-gradient(135deg, var(--work-blue), var(--trust-blue));
         }
-        .pricing-card:hover { transform: translateY(-5px); }
 
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Hero Enhancement */
         .hero-bg {
-            background:
-              radial-gradient(ellipse at center top, rgba(59,130,246,0.1), transparent 50%),
-              radial-gradient(ellipse at center bottom, rgba(6,182,212,0.08), transparent 50%);
+            background: radial-gradient(ellipse at center top, rgba(59, 130, 246, 0.1), transparent 50%),
+                        radial-gradient(ellipse at center bottom, rgba(6, 182, 212, 0.08), transparent 50%);
         }
 
-        .animate-float { animation: float 6s ease-in-out infinite; }
-        .animate-glow { animation: glow 2s ease-in-out infinite alternate; }
-        .animate-slide-up { animation: slideUp 0.8s ease-out; }
-        .animate-fade-in { animation: fadeIn 1s ease-out; }
-        .animate-bounce-slow { animation: bounce 3s infinite; }
-        .animate-pulse-slow { animation: pulse 4s cubic-bezier(0.4,0,0.6,1) infinite; }
+        /* Utility Classes */
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
 
-        /* UPDATED: Hide chat with fade and slide */
+        .animate-glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .animate-bounce-slow {
+            animation: bounce 3s infinite;
+        }
+
+        .animate-pulse-slow {
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
         .chat-hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(50px);
-            transition: all 0.3s ease;
-        }
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(50px);
+    transition: all 0.3s ease;
+}
 
-        /* Ensure the chat transitions smoothly */
-        #chatWidget {
-            transition: all 0.3s ease;
-        }
+#chatWidget {
+    transition: all 0.3s ease;
+}
     </style>
 </head>
+
 <body>
     <!-- Particle Background -->
     <div class="particles" id="particles"></div>
@@ -236,13 +327,13 @@
                 <i class="fas fa-hard-hat text-6xl text-work-blue animate-float"></i>
             </div>
             <h1 class="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-white via-work-blue to-trust-blue bg-clip-text text-transparent leading-tight">
-                Get More Jobs With
+                Get More Jobs With 
                 <span class="block text-work-blue animate-pulse">Smart Marketing</span>
             </h1>
             <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto font-light leading-relaxed">
-                We help contractors get <span class="text-work-blue font-semibold">more customers</span>,
-                <span class="text-trust-blue font-semibold">better reviews</span>, and
-                <span class="text-success-green font-semibold">book more jobs</span> with smart marketing that actually works.
+                We help contractors get <span class="text-work-blue font-semibold">more customers</span>, 
+                <span class="text-trust-blue font-semibold"> better reviews</span>, and 
+                <span class="text-success-green font-semibold"> book more jobs</span> with smart marketing that actually works.
             </p>
             <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
                 <a href="https://3lvls.com/contact" target="_blank" rel="noopener noreferrer" class="cyber-btn text-lg">
@@ -285,21 +376,23 @@
                     <i class="fas fa-bullhorn"></i>
                 </div>
                 <h3 class="text-2xl font-bold mb-4 text-white">Get More Customers</h3>
-                <p class="text-gray-300 mb-6 leading-relaxed">
-                    We run Google and Facebook ads that target people who need your services. No tech jargon—just more phone calls from potential customers.
-                </p>
+                <p class="text-gray-300 mb-6 leading-relaxed">We run Google and Facebook ads that target people who need your services. No tech jargon - just more phone calls from potential customers.</p>
                 <ul class="space-y-2">
                     <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>Google Ads
+                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
+                        Google Ads
                     </li>
                     <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>Facebook Ads
+                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
+                        Facebook Ads
                     </li>
                     <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>Call Tracking
+                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
+                        Call Tracking
                     </li>
                     <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>Weekly Reports
+                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
+                        Weekly Reports
                     </li>
                 </ul>
             </div>
@@ -308,21 +401,23 @@
                     <i class="fas fa-phone"></i>
                 </div>
                 <h3 class="text-2xl font-bold mb-4 text-white">Never Miss A Lead</h3>
-                <p class="text-gray-300 mb-6 leading-relaxed">
-                    Our system automatically responds to new leads in seconds via text and email, so you never lose a potential job while you're busy working.
-                </p>
+                <p class="text-gray-300 mb-6 leading-relaxed">Our system automatically responds to new leads in seconds via text and email, so you never lose a potential job while you're busy working.</p>
                 <ul class="space-y-2">
                     <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>Instant Text Replies
+                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
+                        Instant Text Replies
                     </li>
                     <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>Email Follow-Up
+                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
+                        Email Follow-Up
                     </li>
                     <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>Appointment Reminders
+                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
+                        Appointment Reminders
                     </li>
                     <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>No-Show Recovery
+                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
+                        No-Show Recovery
                     </li>
                 </ul>
             </div>
@@ -331,21 +426,23 @@
                     <i class="fas fa-star"></i>
                 </div>
                 <h3 class="text-2xl font-bold mb-4 text-white">Build Your Reputation</h3>
-                <p class="text-gray-300 mb-6 leading-relaxed">
-                    We automatically ask happy customers for reviews and help you handle negative ones, so you look better than your competition online.
-                </p>
+                <p class="text-gray-300 mb-6 leading-relaxed">We automatically ask happy customers for reviews and help you handle negative ones, so you look better than your competition online.</p>
                 <ul class="space-y-2">
                     <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>Review Requests
+                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
+                        Review Requests
                     </li>
                     <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>Online Reputation
+                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
+                        Online Reputation
                     </li>
                     <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>5-Star Management
+                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
+                        5-Star Management
                     </li>
                     <li class="flex items-center text-sm text-gray-400">
-                        <i class="fas fa-check-circle text-work-blue mr-2"></i>Trust Building
+                        <i class="fas fa-check-circle text-work-blue mr-2"></i>
+                        Trust Building
                     </li>
                 </ul>
             </div>
@@ -367,9 +464,7 @@
                 <div class="cyber-card group fade-in-up">
                     <div class="text-work-blue font-bold text-sm mb-2">Elite Roofing Co.</div>
                     <div class="text-2xl font-bold mb-4 text-white">3x more customers calling in just 2 months</div>
-                    <blockquote class="text-gray-300 mb-4 italic">
-                        "These guys know what they're doing. My phone started ringing more within weeks. Best investment I've made for my business."
-                    </blockquote>
+                    <blockquote class="text-gray-300 mb-4 italic">"These guys know what they're doing. My phone started ringing more within weeks. Best investment I've made for my business."</blockquote>
                     <div class="flex items-center">
                         <div class="w-10 h-10 bg-gradient-to-r from-work-blue to-trust-blue rounded-full flex items-center justify-center mr-3">
                             <i class="fas fa-user text-white"></i>
@@ -382,10 +477,8 @@
                 </div>
                 <div class="cyber-card group fade-in-up">
                     <div class="text-work-blue font-bold text-sm mb-2">Premier HVAC Services</div>
-                    <div class="text-2xl font-bold mb-4 text-white">Never miss a lead anymore – 95% response rate</div>
-                    <blockquote class="text-gray-300 mb-4 italic">
-                        "Now every lead gets answered right away, even when I'm on a job. Way more customers booking with us."
-                    </blockquote>
+                    <div class="text-2xl font-bold mb-4 text-white">Never miss a lead anymore - 95% response rate</div>
+                    <blockquote class="text-gray-300 mb-4 italic">"Now every lead gets answered right away, even when I'm on a job. Way more customers booking with us."</blockquote>
                     <div class="flex items-center">
                         <div class="w-10 h-10 bg-gradient-to-r from-work-blue to-trust-blue rounded-full flex items-center justify-center mr-3">
                             <i class="fas fa-user text-white"></i>
@@ -399,9 +492,7 @@
                 <div class="cyber-card group fade-in-up">
                     <div class="text-work-blue font-bold text-sm mb-2">Sunset Landscaping</div>
                     <div class="text-2xl font-bold mb-4 text-white">Went from 2 stars to 5 stars online</div>
-                    <blockquote class="text-gray-300 mb-4 italic">
-                        "My Google reviews look amazing now. People actually trust us before we even show up. More jobs, better prices."
-                    </blockquote>
+                    <blockquote class="text-gray-300 mb-4 italic">"My Google reviews look amazing now. People actually trust us before we even show up. More jobs, better prices."</blockquote>
                     <div class="flex items-center">
                         <div class="w-10 h-10 bg-gradient-to-r from-work-blue to-trust-blue rounded-full flex items-center justify-center mr-3">
                             <i class="fas fa-user text-white"></i>
@@ -424,7 +515,7 @@
                     Straightforward Pricing
                 </h2>
                 <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    Pick the plan that works for your business. No hidden fees, no surprises – just results.
+                    Pick the plan that works for your business. No hidden fees, no surprises - just results.
                 </p>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
@@ -432,7 +523,7 @@
                     <div class="text-center mb-6">
                         <h3 class="text-2xl font-bold mb-2 text-white">Starter</h3>
                         <div class="flex items-baseline justify-center mb-2">
-                            <span class="text-5xl font-black" style="color:#fbbf24;">$100</span>
+                            <span class="text-5xl font-black" style="color: #fbbf24;">$100</span>
                             <span class="text-gray-200 ml-1 text-lg">/month</span>
                         </div>
                         <p class="text-gray-200 text-base">Perfect for getting started with smart marketing</p>
@@ -468,7 +559,7 @@
                     <div class="text-center mb-6">
                         <h3 class="text-2xl font-bold mb-2 text-white">Pro</h3>
                         <div class="flex items-baseline justify-center mb-2">
-                            <span class="text-5xl font-black" style="color:#fbbf24;">$250</span>
+                            <span class="text-5xl font-black" style="color: #fbbf24;">$250</span>
                             <span class="text-gray-200 ml-1 text-lg">/month + ad spend</span>
                         </div>
                         <p class="text-gray-200 text-base">Everything you need to grow your business</p>
@@ -503,7 +594,7 @@
                     <div class="text-center mb-6">
                         <h3 class="text-2xl font-bold mb-2 text-white">Growth</h3>
                         <div class="flex items-baseline justify-center mb-2">
-                            <span class="text-5xl font-black" style="color:#fbbf24;">$500</span>
+                            <span class="text-5xl font-black" style="color: #fbbf24;">$500</span>
                             <span class="text-gray-200 ml-1 text-lg">/month + ad spend</span>
                         </div>
                         <p class="text-gray-200 text-base">Complete marketing package for serious growth</p>
@@ -618,7 +709,7 @@
             </div>
             <div class="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm">
                 <p>
-                    © <span id="current-year"></span> StartSimpleAI. Proud partner of 3LEVELS.
+                    © <span id="current-year"></span> StartSimpleAI. Proud partner of 3LEVELS. 
                     <a href="https://3lvls.com/contact" target="_blank" rel="noopener noreferrer" class="text-work-blue hover:text-trust-blue transition-colors ml-2">
                         Book a Strategy Call
                     </a>
@@ -648,12 +739,17 @@
                 </button>
             </div>
         </div>
-        <button onclick="toggleChat()" class="cyber-btn animate-bounce-slow" id="chatToggle">
+        <button
+            onclick="toggleChat()"
+            class="cyber-btn animate-bounce-slow"
+            id="chatToggle"
+        >
             <i class="fas fa-comments mr-2"></i>Chat
         </button>
     </div>
 
     <script>
+        // Initialize particles
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             for (let i = 0; i < 50; i++) {
@@ -667,6 +763,8 @@
             }
         }
 
+        // Chat functionality
+        let isOpen = false;
         let messages = [];
 
         const chatbotResponses = [
@@ -706,14 +804,108 @@
             return "I didn't catch that. We help contractors get more customers with smart marketing. Book a free call to learn more: https://3lvls.com/contact";
         }
 
-        function toggleChat() {
-            console.log('toggleChat() called');
-            const chatWidget = document.getElementById('chatWidget');
-            const chatToggle = document.getElementById('chatToggle');
+      function toggleChat() {
+    const chatWidget = document.getElementById('chatWidget');
+    const chatToggle = document.getElementById('chatToggle');
 
-            chatWidget.classList.toggle('chat-hidden');
+    chatWidget.classList.toggle('chat-hidden');
 
-            const isNowOpen = !chatWidget.class    
+    const isNowOpen = !chatWidget.classList.contains('chat-hidden');
+    chatToggle.innerHTML = isNowOpen
+        ? '<i class="fas fa-times mr-2"></i>Close'
+        : '<i class="fas fa-comments mr-2"></i>Chat';
+
+    chatToggle.classList.toggle('animate-bounce-slow', !isNowOpen);
+    chatToggle.classList.toggle('animate-pulse', isNowOpen);
+}
+
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const userMsg = { sender: 'user', message: message };
+            const aiMsg = { sender: 'ai', message: getAIResponse(message) };
+            
+            messages.push(userMsg, aiMsg);
+            input.value = '';
+            
+            renderMessages();
+            scrollToBottom();
+        }
+
+        function renderMessages() {
+            const container = document.getElementById('chatMessages');
+            container.innerHTML = '';
+            
+            messages.forEach(msg => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`;
+                
+                const messageBubble = document.createElement('div');
+                messageBubble.className = `max-w-xs p-3 rounded-2xl ${
+                    msg.sender === 'user'
+                        ? 'bg-gradient-to-r from-work-blue to-trust-blue text-white'
+                        : 'bg-gray-700 text-white'
+                }`;
+                messageBubble.textContent = msg.message;
+                
+                messageDiv.appendChild(messageBubble);
+                container.appendChild(messageDiv);
+            });
+        }
+
+        function scrollToBottom() {
+            const container = document.getElementById('chatMessages');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Smooth scrolling for anchor links
+        function setupSmoothScrolling() {
+            const anchors = document.querySelectorAll('a[href^="#"]');
+            anchors.forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        // Scroll animation observer
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            });
+
+            const elements = document.querySelectorAll('.fade-in-up');
+            elements.forEach(el => observer.observe(el));
+        }
+
+        // Allow Enter key to send messages
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            setupSmoothScrolling();
+            setupScrollAnimations();
+            
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        });
     </script>
 </body>
 </html>
