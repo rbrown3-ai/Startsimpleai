@@ -281,10 +281,16 @@
             animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        /* Hide chat initially */
         .chat-hidden {
-            display: none;
-        }
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(50px);
+    transition: all 0.3s ease;
+}
+
+#chatWidget {
+    transition: all 0.3s ease;
+}
     </style>
 </head>
 
